@@ -1,0 +1,41 @@
+// DM Environment file for phantasma.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
+
+// BEGIN_INTERNALS
+// END_INTERNALS
+
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+
+// BEGIN_PREFERENCES
+#define DEBUG
+// END_PREFERENCES
+
+// BEGIN_INCLUDE
+#include "code\world.dm"
+#include "code\_defines\battle.dm"
+#include "code\_defines\turf.dm"
+#include "code\battles\battle.dm"
+#include "code\battles\battle_data.dm"
+#include "code\battles\battle_data_player.dm"
+#include "code\battles\battle_icon.dm"
+#include "code\battles\battle_input.dm"
+#include "code\client\click.dm"
+#include "code\effects\effect.dm"
+#include "code\helpers\gc.dm"
+#include "code\helpers\move.dm"
+#include "code\helpers\text.dm"
+#include "code\minions\minion.dm"
+#include "code\minions\minion_instance.dm"
+#include "code\mob\_mob.dm"
+#include "code\mob\hud.dm"
+#include "code\mob\speech.dm"
+#include "code\mob\trainer.dm"
+#include "code\screen\screen.dm"
+#include "code\techniques\technique.dm"
+#include "code\terrain\terrain.dm"
+#include "code\turf\turf.dm"
+#include "maps\overworld.dmm"
+// END_INCLUDE
