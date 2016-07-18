@@ -103,7 +103,7 @@
 		animate(bar, pixel_x = 0, transform = matrix(), color = "#00FF00", time = 8)
 	else
 		var/target_color
-		if(raw_hp_left < 0.1)
+		if(raw_hp_left < 0.2)
 			target_color = "#FF0000"
 		else if(raw_hp_left < 0.7)
 			target_color = "#FFFF00"

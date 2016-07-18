@@ -1,4 +1,4 @@
-var/list/overhead_icon_states = icon_states('icons/characters/dialogue_overhead_icons.dmi')
+var/list/overhead_icon_states = icon_states('icons/overworld/dialogue_overhead_icons.dmi')
 
 /mob/verb/emote(var/message as text)
 	if(!message)

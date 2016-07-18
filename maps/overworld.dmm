@@ -1,6 +1,7 @@
 "a" = (/turf/wall,/area)
 "b" = (/turf,/area)
 "c" = (/obj/terrain/grass,/turf,/area)
+"d" = (/obj/item/potion,/turf,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -44,11 +45,11 @@ abbbbbbbbbbcccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbcccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbcccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbbbbcccccccbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbba
 abbbccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbcccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbbcccccbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba

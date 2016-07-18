@@ -68,7 +68,7 @@
 		if(minion_img)
 			last_alpha = minion_img.alpha
 			client.images -= minion_img
-		minion_img =  new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_rear.dmi',  icon_state = (minion ? minion.template.icon_state : ""))
+		minion_img =  new /image/battle(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = (minion ? minion.template.icon_state : ""))
 		if(!isnull(last_alpha))
 			minion_img.alpha = last_alpha
 		client.images += minion_img
@@ -78,7 +78,7 @@
 		if(opponent_img)
 			last_alpha = opponent_img.alpha
 			client.images -= opponent_img
-		opponent_img = new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_front.dmi', icon_state = (opponent_minion ? opponent_minion.template.icon_state : ""))
+		opponent_img = new /image/battle(loc = owner, icon = 'icons/battle/icons_front.dmi', icon_state = (opponent_minion ? opponent_minion.template.icon_state : ""))
 		if(!isnull(last_alpha))
 			opponent_img.alpha = last_alpha
 		client.images += opponent_img
@@ -89,9 +89,9 @@
 
 	client.screen += all_objects
 
-	trainer_self = new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_rear.dmi',  icon_state = initial(owner.icon_state))
+	trainer_self = new /image/battle(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(owner.icon_state))
 	client.images += trainer_self
-	trainer_other = new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_front.dmi',  icon_state = (!wild_mob ? initial(opponent.icon_state) : ""))
+	trainer_other = new /image/battle(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = (!wild_mob ? initial(opponent.icon_state) : ""))
 	client.images += trainer_other
 
 	minion_backlight = new /image/battle(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
@@ -122,15 +122,15 @@
 	trainer_other.pixel_x = -600
 	trainer_other.pixel_y = -42
 
-	animate(minion_health, alpha = 255, time = 5)
-	animate(enemy_health, alpha = 255, time = 5)
-	animate(minion_health.mask, alpha = 255, time = 5)
-	animate(enemy_health.mask, alpha = 255, time = 5)
-	animate(minion_health.bar, alpha = 255, time = 5)
-	animate(enemy_health.bar, alpha = 255, time = 5)
-
 	spawn(10)
-		animate(minion_backlight, alpha = 255, time = 8)
+
+		animate(minion_health,      alpha = 255, time = 5)
+		animate(enemy_health,       alpha = 255, time = 5)
+		animate(minion_health.mask, alpha = 255, time = 5)
+		animate(enemy_health.mask,  alpha = 255, time = 5)
+		animate(minion_health.bar,  alpha = 255, time = 5)
+		animate(enemy_health.bar,   alpha = 255, time = 5)
+		animate(minion_backlight,   alpha = 255, time = 8)
 		animate(opponent_backlight, alpha = 255, time = 8)
 
 	spawn(15)
@@ -268,9 +268,23 @@
 	end_turn()
 
 /battle_data/player/proc/try_switch()
-	owner.visible_message("<b>\The [owner]</b> is trying to switch to another phantasm.")
-	next_action = list("action" = "switch")
-	end_turn()
+	var/mob/trainer/T = owner
+	var/list/usable_minions = list()
+	var/i=0
+	for(var/minion/M in T.minions)
+		i++
+		if(M == minion || (M.status & STATUS_FAINTED))
+			continue
+		usable_minions["[i]. [M.name]"] = M
+
+	if(!usable_minions.len)
+		owner << "You have no other fit minions!"
+		return
+
+	var/switching_to = input("Select a replacement.") as null|anything in usable_minions
+	if(switching_to)
+		next_action = list("action" = "switch", "ref" = usable_minions[switching_to])
+		end_turn()
 
 /battle_data/player/update_health()
 	minion_health.update()

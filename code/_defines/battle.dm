@@ -13,5 +13,16 @@
 #define MD_SPEED_VAR_MAX "speedvarmax"
 
 #define DAM_NEUTRAL "neutral"
+#define DAM_EARTH   "earth"
+#define DAM_FIRE    "fire"
+#define DAM_AIR    "wind"
+#define DAM_WATER   "water"
 
 #define STATUS_FAINTED 1
+
+#define TECHNIQUE_FAIL        0
+#define TECHNIQUE_MISSED      1
+#define TECHNIQUE_SUCCESS     2
+#define TECHNIQUE_EFFECTIVE   4
+#define TECHNIQUE_INEFFECTIVE 8
+#define TECHNIQUE_CRITICAL    16

@@ -24,7 +24,7 @@
 	qdel(src)
 
 /obj/effect/speech
-	icon = 'icons/characters/dialogue_overhead_icons.dmi'
+	icon = 'icons/overworld/dialogue_overhead_icons.dmi'
 	pixel_z = 28
 	alpha = 0
 	var/fadeout_step = 8

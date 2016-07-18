@@ -40,7 +40,7 @@
 	battle_state = BATTLE_IN_PROGRESS
 	for(var/battle_data/player in players)
 		if(!player.self_wild_mob)
-			spawn(50)
+			spawn(40)
 				player.owner.say("Go! [player.minion.name]!")
 		player.do_intro_animation()
 
@@ -90,6 +90,21 @@
 				player.do_ai_action()
 
 			switch(player.next_action["action"])
+				if("switch")
+					player.owner.say("[player.minion.name], come back!")
+					player.remove_minion()
+					for(var/battle_data/witness in players-player)
+						witness.remove_opponent()
+					player.minion = player.next_action["ref"]
+					player.update(1)
+					sleep(10)
+					player.owner.say("Go! [player.minion.name]!")
+					player.reveal_minion()
+					for(var/battle_data/witness in players-player)
+						witness.opponent_minion = player.minion
+						witness.reveal_opponent()
+					continue
+
 				if("flee")
 					player.owner.visible_message("<b>\The [player.owner]</b> ran away!")
 					battle_state = BATTLE_ENDING
@@ -104,38 +119,53 @@
 						player.owner.visible_message("\The [player.owner]'s [player.minion.name] used <b>[tech.name]</b>!")
 
 					player.owner.do_battle_anim()
-					if(tech.apply_to(player.minion, target))
-						tech.do_user_rear_anim(player)
-						tech.do_target_front_anim(player)
-						// This is going to need to be worked over for multi-user battles.
-						for(var/battle_data/witness in (players-player))
-							tech.do_target_rear_anim(witness)
-							tech.do_user_front_anim(witness)
-						sleep(tech.delay)
-
-						for(var/battle_data/witness in players)
-							if(witness.minion == target)
-								witness.update_health()
-								break
-						player.update_health()
-
-						sleep(15)
-
-						if(target.data[MD_CHP] <= 0)
-							player.owner.visible_message("\The [target.owner ? "[target.owner]'s" : "wild"] [target] fainted!")
-							target.status |= STATUS_FAINTED
-							for(var/battle_data/witness in players)
-								if(witness.minion == target)
-									if(!witness.self_wild_mob)
-										witness.owner.say("[witness.minion.name], come back!")
-									witness.remove_minion()
-								else if(witness.opponent_minion == target)
-									witness.remove_opponent()
-							sleep(3)
-
-					else
+					var/tech_result = tech.apply_to(player.minion, target)
+					if(tech_result == TECHNIQUE_FAIL)
 						player.owner.visible_message("...but it failed!")
 						sleep(5)
+						continue
+
+					else if(tech_result & TECHNIQUE_MISSED)
+						player.owner.visible_message("...but it missed!")
+						sleep(5)
+						continue
+
+					tech.do_user_rear_anim(player)
+					tech.do_target_front_anim(player)
+					// This is going to need to be worked over for multi-user battles.
+					for(var/battle_data/witness in (players-player))
+						tech.do_target_rear_anim(witness)
+						tech.do_user_front_anim(witness)
+					sleep(tech.delay)
+
+					for(var/battle_data/witness in players)
+						witness.update_health()
+
+					sleep(8)
+
+					if(tech_result & TECHNIQUE_CRITICAL)
+						player.owner.visible_message("A critical hit!")
+						sleep(8)
+
+					if(tech_result & TECHNIQUE_INEFFECTIVE)
+						player.owner.visible_message("It's not very effective...")
+						sleep(8)
+					else if(tech_result & TECHNIQUE_EFFECTIVE)
+						player.owner.visible_message("It's super effective!")
+						sleep(8)
+
+					if(target.data[MD_CHP] <= 0)
+						player.owner.visible_message("\The [target.owner ? "[target.owner]'s" : "wild"] [target] fainted!")
+						target.status |= STATUS_FAINTED
+						for(var/battle_data/witness in players)
+							if(witness.minion == target)
+								if(!witness.self_wild_mob)
+									witness.owner.say("[witness.minion.name], come back!")
+								witness.remove_minion()
+							else if(witness.opponent_minion == target)
+								witness.remove_opponent()
+						sleep(3)
+
 
 				else
 					player.owner.visible_message("\The [player.owner] performed action '[player.next_action["action"]]'.")

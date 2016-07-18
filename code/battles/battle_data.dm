@@ -76,7 +76,8 @@
 	if(!minion || !opponent_minion)
 		next_action = list("action"="flee")
 		return
-	next_action = list("action"="tech","ref" = pick(minion.techs),"tar" = opponent_minion)
+	var/technique/T = pick(minion.techs)
+	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? minion : opponent_minion))
 
 /battle_data/proc/get_next_minion()
 	if(self_wild_mob)

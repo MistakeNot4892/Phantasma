@@ -77,7 +77,7 @@
 /obj/battle_icon/menu/tech/clicked(var/client/clicker)
 	if(!..() || !tech)
 		return
-	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = battle.opponent_minion)
+	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = tech.target_self ? battle.minion : battle.opponent_minion)
 	battle.end_turn()
 
 /battle_data/proc/start_turn()
