@@ -41,3 +41,6 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, SINE_EASING|EASE_IN, time = 2)
 	sleep(2)
 	animate(src, pixel_x = last_pixel_x, pixel_y = last_pixel_y, SINE_EASING|EASE_OUT, time = 2)
+
+/mob/proc/get_minion()
+	return

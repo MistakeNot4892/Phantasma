@@ -12,6 +12,8 @@ var/list/minion_data_templates = list()
 	var/mob/trainer/owner
 	var/list/techs = list()
 	var/list/tech_uses = list()
+	var/list/battle_modifiers = list()
+	var/status = 0 //bitfield
 
 /minion/New(var/minion_path, var/mob/trainer/_owner)
 	if(_owner != null)
@@ -27,3 +29,9 @@ var/list/minion_data_templates = list()
 	data[MD_CHP] = data[MD_MHP]
 	data[MD_LVL] = 1
 	data[MD_EXP] = 0
+
+/minion/proc/get_turn_speed()
+	return data[MD_SPEED]
+
+/minion/proc/get_turn_speed_variance()
+	return rand(data[MD_SPEED_VAR_MIN],data[MD_SPEED_VAR_MAX])

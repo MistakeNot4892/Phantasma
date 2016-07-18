@@ -39,6 +39,9 @@
 /battle/proc/start_battle()
 	battle_state = BATTLE_IN_PROGRESS
 	for(var/battle_data/player in players)
+		if(!player.self_wild_mob)
+			spawn(50)
+				player.owner.say("Go! [player.minion.name]!")
 		player.do_intro_animation()
 
 	var/battle_data/victor
@@ -54,10 +57,33 @@
 			sleep(battle_tick_delay)
 			continue
 
-		// TODO sort player list by speed each turn.
+		if(battle_state == BATTLE_ENDING)
+			break
+
+		// Sort players by speed. Roll for init!
+		var/list/sorted_players = list()
+		var/list/sorted_player_speed = list()
 		for(var/battle_data/player in players)
 
-			if(player.minion.data[MD_CHP] <= 0)
+			if(!player.minion)
+				continue
+
+			var/spd = player.minion.get_turn_speed() + player.minion.get_turn_speed_variance()
+			if(!sorted_players.len)
+				sorted_players += player
+				sorted_player_speed += spd
+			else
+				for(var/i=1 to sorted_players.len)
+					if(spd > sorted_player_speed[i])
+						sorted_players.Insert(i,player)
+						sorted_player_speed.Insert(i,spd)
+					else if(i == sorted_players.len)
+						sorted_players += player
+						sorted_player_speed += spd
+
+		// Proceed with the turn order.
+		for(var/battle_data/player in sorted_players)
+			if(!player.minion || (player.minion.status & STATUS_FAINTED))
 				continue
 
 			if(player.dummy)
@@ -87,30 +113,52 @@
 						sleep(tech.delay)
 
 						if(target.data[MD_CHP] <= 0)
-							player.owner.visible_message("The [target] fainted!")
+							player.owner.visible_message("\The [target.owner ? "[target.owner]'s" : "wild"] [target] fainted!")
+							target.status |= STATUS_FAINTED
 							for(var/battle_data/witness in players)
 								if(witness.minion == target)
+									if(!witness.self_wild_mob)
+										witness.owner.say("[witness.minion.name], come back!")
 									witness.remove_minion()
 								else if(witness.opponent_minion == target)
 									witness.remove_opponent()
-							victor = player
-							battle_state = BATTLE_ENDING
-							continue
+							sleep(3)
 
 					else
 						player.owner.visible_message("...but it failed!")
-						sleep(10)
+						sleep(5)
 
 				else
 					player.owner.visible_message("\The [player.owner] performed action '[player.next_action["action"]]'.")
 
+		// Check if anyone needs to send in a new minion.
+		for(var/battle_data/player in players)
+			if(!player.minion || (player.minion.status & STATUS_FAINTED))
+				player.get_next_minion()
+				if(player.minion)
+					for(var/battle_data/witness in players)
+						if(witness == player)
+							if(!witness.self_wild_mob)
+								witness.owner.say("Go! [player.minion.name]!")
+							witness.reveal_minion()
+						else if(witness.opponent == player.owner)
+							witness.opponent_minion = player.minion
+							witness.reveal_opponent()
+					sleep(10)
+				else
+					// TODO: multibattle victory checks.
+					for(var/battle_data/witness in players)
+						if(witness.owner != player.owner)
+							victor = witness
+							break
+					battle_state = BATTLE_ENDING
+					break
 
-		sleep(10)
-
-		// Next turn!
 		if(battle_state != BATTLE_ENDING)
 			for(var/battle_data/player in players)
 				player.start_turn()
+
+		sleep(3)
 
 	if(victor)
 		victor.owner.visible_message("<b>\The [victor.opponent]</b> was defeated by <b>\the [victor.owner]</b>!")

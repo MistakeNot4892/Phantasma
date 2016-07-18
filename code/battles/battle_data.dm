@@ -3,6 +3,14 @@
 	var/battle/battle
 	var/mob/owner
 	var/minion/minion
+
+	//todo
+	var/list/allied_trainers = list()
+	var/list/allied_minions = list()
+	var/list/opponent_trainers = list()
+	var/list/opponent_minions = list()
+	//todo
+
 	var/mob/opponent
 	var/minion/opponent_minion
 
@@ -18,21 +26,16 @@
 	owner = _owner
 	opponent = _opponent
 
-	if(istype(owner, /mob/minion))
-		var/mob/minion/M = owner
-		minion = M.minion_data
-		self_wild_mob = 1
-	else
-		var/mob/trainer/T = owner
-		minion = T.minions[1]
+	minion = owner.get_minion()
+	if(!minion)
+		owner.visible_message("<b>\The [owner]</b> somehow managed to get into a fight with no unfainted minions.")
 
+	opponent_minion = opponent.get_minion()
+
+	if(istype(owner, /mob/minion))
+		self_wild_mob = 1
 	if(istype(opponent, /mob/minion))
-		var/mob/minion/M = opponent
-		opponent_minion = M.minion_data
 		wild_mob = 1
-	else
-		var/mob/trainer/T = opponent
-		opponent_minion = T.minions[1]
 
 /battle_data/proc/joined_battle(var/client/C)
 	return
@@ -70,4 +73,22 @@
 	del(src)
 
 /battle_data/proc/do_ai_action()
+	if(!minion || !opponent_minion)
+		next_action = list("action"="flee")
+		return
 	next_action = list("action"="tech","ref" = pick(minion.techs),"tar" = opponent_minion)
+
+/battle_data/proc/get_next_minion()
+	if(self_wild_mob)
+		minion = null
+		return
+	var/mob/trainer/T = owner
+	if(!istype(T))
+		return
+	minion = null
+	for(var/minion/M in T.minions)
+		if(!(M.status & STATUS_FAINTED))
+			minion = M
+			break
+	update(update_minon=1)
+	return

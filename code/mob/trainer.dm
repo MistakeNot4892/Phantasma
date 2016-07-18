@@ -12,9 +12,10 @@
 	var/tmp/turf/last_loc
 
 /mob/trainer/New()
-	minions += new /minion(pick(typesof(/minion_template)), src)
-	following = new(get_turf(src), minions[1])
-	following.density = 0
+	for(var/i=1 to 3)
+		minions += new /minion(pick(typesof(/minion_template)-/minion_template), src)
+	update_following_minion()
+
 	battle_background = new /obj/battle_icon/background()
 	battle_background.mouse_opacity = 0
 	battle_background.invisibility = 100
@@ -27,7 +28,7 @@
 
 	last_loc = get_turf(src)
 	. = ..()
-	if(following && following.minion_data.data[MD_CHP] > 0 && loc != last_loc)
+	if(following && loc != last_loc)
 		following.Move(last_loc)
 
 /mob/trainer/update_icon()
@@ -131,19 +132,54 @@
 	new /battle(list(trainer, src))
 
 /mob/trainer/verb/switch_minion()
-	minions.Cut()
-	minions += new /minion(pick(typesof(/minion_template)), src)
-	var/mob/minion/M = new(get_turf(src), minions[1])
-	M.density = 0
-	if(following)
-		M.move_to(get_turf(following))
-		M.dir = following.dir
-		M.return_loc = following.dir
-		qdel(following)
-	following = M
+	var/minion/switching = minions[1]
+	minions -= switching
+	minions += switching
+	update_following_minion()
+
+/mob/trainer/verb/show_minion_status()
+	src << "<b>Minion status for [src]:</b>"
+	var/i=0
+	for(var/minion/M in minions)
+		i++
+		src << "[i]. [M.name] - [M.data[MD_CHP]]/[M.data[MD_MHP]] [(M.status & STATUS_FAINTED) ? "FAINTED" : "Active"]"
+
+/mob/trainer/proc/update_following_minion(var/minion/new_minion)
+
+	if(following && following.minion_data == new_minion)
+		return
+
+	if(!new_minion || (new_minion.status & STATUS_FAINTED))
+		for(var/minion/temp in minions)
+			if(temp.status & STATUS_FAINTED)
+				continue
+			new_minion = temp
+
+	if(!new_minion)
+		if(following)
+			spawn(0)
+				animate(following, alpha=0, time = 3)
+				sleep(3)
+				qdel(following)
+		return
+
+	if(!following)
+		following = new(get_turf(src), new_minion)
+		following.density = 0
+	else
+		following.change_to_minion(new_minion)
 
 /mob/trainer/do_battle_anim()
 	if(following)
 		following.do_battle_anim()
 		return
 	. = ..()
+
+/mob/trainer/get_minion()
+	if(following && !(following.minion_data.status & STATUS_FAINTED))
+		return following.minion_data
+	else
+		for(var/minion/minion in minions)
+			if(!(minion.status & STATUS_FAINTED))
+				return minion
+	return

@@ -9,4 +9,9 @@
 #define MD_EXP   "experience"
 #define MD_FLEE  "fleechance"
 
+#define MD_SPEED_VAR_MIN "speedvarmin"
+#define MD_SPEED_VAR_MAX "speedvarmax"
+
 #define DAM_NEUTRAL "neutral"
+
+#define STATUS_FAINTED 1

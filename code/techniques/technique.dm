@@ -47,9 +47,7 @@ var/list/techniques_by_path = list()
 	var/initial_px = target.minion_img.pixel_x
 	animate(target.minion_img, pixel_x = initial_px - 64, easing = SINE_EASING|EASE_OUT, time = 3)
 	sleep(3)
-	animate(target.minion_img, pixel_x = initial_px + 32, easing = SINE_EASING|EASE_IN, time = 3)
-	sleep(3)
-	animate(target.minion_img, pixel_x = initial_px, easing = SINE_EASING|EASE_OUT, time = 5)
+	animate(target.minion_img, pixel_x = initial_px, easing = SINE_EASING|EASE_IN, time = 3)
 
 /technique/proc/do_target_front_anim(var/battle_data/player/target)
 

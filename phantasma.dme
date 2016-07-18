@@ -28,6 +28,7 @@
 #include "code\helpers\move.dm"
 #include "code\helpers\text.dm"
 #include "code\minions\minion.dm"
+#include "code\minions\minion_definitions.dm"
 #include "code\minions\minion_instance.dm"
 #include "code\mob\_mob.dm"
 #include "code\mob\hud.dm"

@@ -10,7 +10,7 @@
 	battle = _battle
 
 /obj/battle_icon/menu/clicked(var/client/clicker)
-	return ((clicker == battle.client) && battle.taking_commands)
+	return ((clicker == battle.client) && isnull(battle.next_action) && battle.taking_commands == 1)
 
 /obj/battle_icon/menu/fight
 	name = "\improper Fight"
@@ -67,21 +67,23 @@
 	maptext = null
 	tech = _tech
 	invisibility = 0
-	if(!tech)
+	if(!tech || !battle.minion)
 		invisibility = 100
 		return
 	name = "[tech.name]"
 	maptext = "[tech.name] \[[battle.minion.tech_uses[tech.name]]/[tech.max_uses]\]"
 
 /obj/battle_icon/menu/tech/clicked(var/client/clicker)
-	if(!..())
+	if(!..() || !tech)
 		return
 	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = battle.opponent_minion)
 	battle.end_turn()
 
 /battle_data/proc/start_turn()
+	owner.visible_message("<b>\The [owner]</b> is starting their turn.")
 	next_action = null
 	taking_commands = 1
 
 /battle_data/proc/end_turn()
+	owner.visible_message("<b>\The [owner]</b> is ending their turn.")
 	taking_commands = 0

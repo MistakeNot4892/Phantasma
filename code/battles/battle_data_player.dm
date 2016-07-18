@@ -31,7 +31,7 @@
 	menu_objects += new /obj/battle_icon/menu/switch_out(src)
 	menu_objects += new /obj/battle_icon/menu/flee(src)
 
-	for(var/sloc in list("12,1","12,2","16,1","16,2"))
+	for(var/sloc in list("12,2","16,2","12,1","16,1"))
 		var/obj/battle_icon/menu/tech/T = new (src)
 		T.screen_loc = sloc
 		technique_objects += T
@@ -45,14 +45,22 @@
 	if(!owner)
 		return
 	if(update_minon)
+		var/last_alpha
 		if(minion_img)
+			last_alpha = minion_img.alpha
 			client.images -= minion_img
-		minion_img =  new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_rear.dmi',  icon_state = minion.template.icon_state)
+		minion_img =  new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_rear.dmi',  icon_state = (minion ? minion.template.icon_state : ""))
+		if(!isnull(last_alpha))
+			minion_img.alpha = last_alpha
 		client.images += minion_img
 	if(update_opponent)
+		var/last_alpha
 		if(opponent_img)
+			last_alpha = opponent_img.alpha
 			client.images -= opponent_img
-		opponent_img = new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_front.dmi', icon_state = opponent_minion.template.icon_state)
+		opponent_img = new /image/battle(loc = owner, icon = 'icons/characters/battle_icons_front.dmi', icon_state = (opponent_minion ? opponent_minion.template.icon_state : ""))
+		if(!isnull(last_alpha))
+			opponent_img.alpha = last_alpha
 		client.images += opponent_img
 	if(update_health_minion)
 		if(minion_hp)
@@ -149,6 +157,7 @@
 		start_turn()
 
 /battle_data/player/remove_minion()
+
 	animate(minion_img, color = "#FF0000", time = 3)
 	sleep(3)
 	animate(minion_img, alpha=0, time = 5)
@@ -162,12 +171,25 @@
 
 /battle_data/player/reveal_minion()
 
-	// Update technique menu.
-	var/i = 1
-	for(var/technique/T in minion.techs)
-		var/obj/battle_icon/menu/tech/t_menu = technique_objects[i]
-		t_menu.update_tech(T)
-		i++
+	// Clear tech menu.
+	for(var/obj/battle_icon/menu/tech/t_menu in technique_objects)
+		t_menu.update_tech()
+
+	// Update tech menu.
+	if(minion)
+		var/i = 1
+		for(var/technique/T in minion.techs)
+			var/obj/battle_icon/menu/tech/t_menu = technique_objects[i]
+			t_menu.update_tech(T)
+			i++
+	else
+		return
+
+	if(istype(owner, /mob/trainer))
+		var/mob/trainer/T = owner
+		T.update_following_minion(minion)
+
+	update(update_minon=1)
 
 	// Update visuals.
 	minion_img.pixel_x =  -320
@@ -183,6 +205,9 @@
 
 
 /battle_data/player/reveal_opponent()
+
+	update(update_opponent=1)
+
 	opponent_img.pixel_x = 40
 	opponent_img.pixel_y = -40
 	opponent_img.invisibility = 0
@@ -222,7 +247,7 @@
 
 	..()
 
-/battle_data/player/start_turn()
+/battle_data/player/start_turn(var/new_turn)
 	. = ..()
 	for(var/obj/O in menu_objects)
 		O.invisibility = 0
@@ -236,11 +261,11 @@
 			O.invisibility = 100
 
 /battle_data/player/proc/try_item()
-	world << "\The [owner] is trying to use an item."
+	owner.visible_message("<b>\The [owner]</b> is trying to use an item.")
 	next_action = list("action" = "item")
 	end_turn()
 
 /battle_data/player/proc/try_switch()
-	world << "\The [owner] is trying to switch to another phantasm."
+	owner.visible_message("<b>\The [owner]</b> is trying to switch to another phantasm.")
 	next_action = list("action" = "switch")
 	end_turn()

@@ -7,7 +7,11 @@
 	icon_state = "grass"
 	icon = 'icons/terrain/grass.dmi'
 	var/encounter_chance = 10
-	var/list/can_encounter = list(/minion_template)
+	var/list/can_encounter = list()
+
+/obj/terrain/grass/New()
+	. = ..()
+	can_encounter = typesof(/minion_template)-/minion_template
 
 /obj/terrain/grass/Cross(var/atom/movable/crosser)
 	. = ..()
@@ -25,6 +29,7 @@
 
 	var/encounter_path = pick(can_encounter)
 	var/mob/minion/wild/encounter = new(get_turf(src), new /minion(encounter_path))
+	sleep(1)
 	encounter.dir = get_dir(encounter,trainer)
 	encounter.show_overhead_icon("shout")
 	trainer << "<b>A wild [encounter.name]</b> appears!"

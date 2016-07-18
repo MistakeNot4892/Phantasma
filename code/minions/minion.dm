@@ -1,6 +1,6 @@
 /minion_template
-	var/name = "Airbird"
-	var/icon_state = "airbird"
+	var/name = "Minion"
+	var/icon_state = "minion"
 	var/list/techs = list(
 		/technique
 		)
@@ -12,21 +12,26 @@
 		MD_SPATK = 10,
 		MD_SPDEF = 10,
 		MD_SPEED = 10,
-		MD_FLEE = 20
+		MD_FLEE = 5,
+		MD_SPEED_VAR_MIN = 1,
+		MD_SPEED_VAR_MAX = 3
 		)
 
 /mob/minion
 	name = "minion"
 	desc = "A minion."
 	icon = 'icons/minions/overmap.dmi'
-	density = 1
-	var/wild
+	density = 0
+	layer = MOB_LAYER-0.1
 
+	var/wild
 	var/minion/minion_data
 	var/turf/return_loc
 
 /mob/minion/wild
 	wild = 1
+	density = 1
+	layer = MOB_LAYER
 
 /mob/minion/clicked(var/client/clicker)
 	clicker << "<b>[minion_data.owner ? "\The [minion_data.owner]'s" : "A wild"] [name].</b>"
@@ -42,10 +47,17 @@
 
 /mob/minion/New(var/newloc, var/minion/_data)
 	..(newloc)
+	change_to_minion(_data)
+
+/mob/minion/proc/change_to_minion(var/minion/_data)
+	set waitfor=0
+	set background=1
 	minion_data = _data
 	name = minion_data.name
+	animate(src, alpha=0, time = 3)
+	sleep(3)
 	icon_state = minion_data.template.icon_state
-	layer = MOB_LAYER-0.1
+	animate(src, alpha=255, time = 3)
 
 /mob/minion/end_battle()
 	if(wild)
@@ -54,3 +66,6 @@
 			animate(src,alpha=0,time=5)
 		sleep(15)
 		qdel(src)
+
+/mob/minion/get_minion()
+	return minion_data
