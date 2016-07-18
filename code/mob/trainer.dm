@@ -110,6 +110,18 @@
 		battle_background.color = null
 	spawn(20)
 		current_battle = null
+		// testing purposes only
+		for(var/minion/M in minions)
+			if(!(M.status & STATUS_FAINTED))
+				return
+		world << "Having been defeated, \the [src] cheats and has their minions restored."
+		restore()
+		// testing purposes only
+
+/mob/trainer/restore()
+	for(var/minion/M in minions)
+		M.restore()
+	update_following_minion()
 
 /mob/trainer/clicked(var/client/clicker)
 	if(clicker.mob == src)
@@ -132,12 +144,16 @@
 	new /battle(list(trainer, src))
 
 /mob/trainer/verb/switch_minion()
+	if(current_battle)
+		return
 	var/minion/switching = minions[1]
 	minions -= switching
 	minions += switching
 	update_following_minion()
 
 /mob/trainer/verb/show_minion_status()
+	if(current_battle)
+		return
 	src << "<b>Minion status for [src]:</b>"
 	var/i=0
 	for(var/minion/M in minions)

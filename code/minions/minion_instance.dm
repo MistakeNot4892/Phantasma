@@ -35,3 +35,9 @@ var/list/minion_data_templates = list()
 
 /minion/proc/get_turn_speed_variance()
 	return rand(data[MD_SPEED_VAR_MIN],data[MD_SPEED_VAR_MAX])
+
+/minion/proc/restore()
+	data[MD_CHP] = data[MD_MHP]
+	status = 0
+	for(var/technique/T in techs)
+		tech_uses[T.name] = T.max_uses

@@ -20,7 +20,8 @@
 /obj/battle_icon/menu/fight/clicked(var/client/clicker)
 	if(!..())
 		return
-	for(var/obj/O in battle.technique_objects)
+	for(var/obj/battle_icon/menu/tech/O in battle.technique_objects)
+		O.update_tech(O.tech)
 		O.invisibility = 0
 		animate(O, alpha = 255, time = 3)
 
@@ -80,10 +81,8 @@
 	battle.end_turn()
 
 /battle_data/proc/start_turn()
-	owner.visible_message("<b>\The [owner]</b> is starting their turn.")
 	next_action = null
 	taking_commands = 1
 
 /battle_data/proc/end_turn()
-	owner.visible_message("<b>\The [owner]</b> is ending their turn.")
 	taking_commands = 0

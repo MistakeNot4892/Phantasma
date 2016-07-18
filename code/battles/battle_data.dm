@@ -40,7 +40,7 @@
 /battle_data/proc/joined_battle(var/client/C)
 	return
 
-/battle_data/proc/update(var/update_minon, var/update_opponent, var/update_health_minion, var/update_health_opponent, var/update_self, var/update_other, var/update_backlights)
+/battle_data/proc/update(var/update_minon, var/update_opponent)
 	return
 
 /battle_data/proc/do_intro_animation()
@@ -91,4 +91,7 @@
 			minion = M
 			break
 	update(update_minon=1)
+	return
+
+/battle_data/proc/update_health()
 	return

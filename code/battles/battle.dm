@@ -97,6 +97,7 @@
 				if("tech")
 					var/technique/tech = player.next_action["ref"]
 					var/minion/target = player.next_action["tar"]
+
 					if(player.self_wild_mob)
 						player.owner.visible_message("The wild [player.minion.name] used <b>[tech.name]</b>!")
 					else
@@ -111,6 +112,14 @@
 							tech.do_target_rear_anim(witness)
 							tech.do_user_front_anim(witness)
 						sleep(tech.delay)
+
+						for(var/battle_data/witness in players)
+							if(witness.minion == target)
+								witness.update_health()
+								break
+						player.update_health()
+
+						sleep(15)
 
 						if(target.data[MD_CHP] <= 0)
 							player.owner.visible_message("\The [target.owner ? "[target.owner]'s" : "wild"] [target] fainted!")

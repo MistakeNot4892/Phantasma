@@ -44,3 +44,5 @@
 
 /mob/proc/get_minion()
 	return
+
+/mob/proc/restore()

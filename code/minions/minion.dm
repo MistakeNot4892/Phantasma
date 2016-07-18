@@ -69,3 +69,6 @@
 
 /mob/minion/get_minion()
 	return minion_data
+
+/mob/minion/restore()
+	minion_data.restore()
