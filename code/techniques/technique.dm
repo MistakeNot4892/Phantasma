@@ -17,30 +17,30 @@ var/list/techniques_by_path = list()
 	user.tech_uses[name]--
 	return (prob(accuracy) ? TECHNIQUE_SUCCESS : TECHNIQUE_MISSED)
 
-/technique/proc/do_user_front_anim(var/battle_data/player/target)
+/technique/proc/do_user_front_anim(var/image/target)
 	set waitfor=0
 	set background=1
-	if(!istype(target) || !target.opponent_img)
+	if(!istype(target))
 		return
 	return 1
 
-/technique/proc/do_user_rear_anim(var/battle_data/player/target)
+/technique/proc/do_user_rear_anim(var/image/target)
 	set waitfor=0
 	set background=1
-	if(!istype(target) || !target.minion_img)
+	if(!istype(target))
 		return
 	return 1
 
-/technique/proc/do_target_front_anim(var/battle_data/player/target)
+/technique/proc/do_target_front_anim(var/image/target)
 	set waitfor=0
 	set background=1
-	if(!istype(target) || !target.opponent_img)
+	if(!istype(target))
 		return
 	return 1
 
-/technique/proc/do_target_rear_anim(var/battle_data/player/target)
+/technique/proc/do_target_rear_anim(var/image/target)
 	set waitfor=0
 	set background=1
-	if(!istype(target) || !target.minion_img)
+	if(!istype(target))
 		return
 	return 1

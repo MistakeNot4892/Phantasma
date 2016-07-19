@@ -89,10 +89,10 @@
 
 /technique/combat/apply_to(var/minion/user, var/minion/target)
 
-	. = ..()
+	var/prev = ..()
 
-	if(. & (TECHNIQUE_MISSED|TECHNIQUE_FAIL))
-		return .
+	if(prev & (TECHNIQUE_MISSED|TECHNIQUE_FAIL))
+		return prev
 
 	var/list/damage_result = calculate_technique_damage(src, user, target)
 	var/total_damage = damage_result["damage"]
@@ -104,49 +104,49 @@
 		target.data[MD_CHP] = 0
 	return damage_result["flags"]
 
-/technique/combat/do_user_front_anim(var/battle_data/player/target)
+/technique/combat/do_user_front_anim(var/image/target)
 	if(!..())
 		return
-	var/initial_px = target.opponent_img.pixel_x
-	animate(target.opponent_img, pixel_x = initial_px + 64, easing = SINE_EASING|EASE_OUT, time = 3)
+	var/initial_px = target.pixel_x
+	animate(target, pixel_x = initial_px + 64, easing = SINE_EASING|EASE_OUT, time = 3)
 	sleep(3)
-	animate(target.opponent_img, pixel_x = initial_px - 32, easing = SINE_EASING|EASE_IN, time = 3)
+	animate(target, pixel_x = initial_px - 32, easing = SINE_EASING|EASE_IN, time = 3)
 	sleep(3)
-	animate(target.opponent_img, pixel_x = initial_px, easing = SINE_EASING|EASE_OUT, time = 5)
+	animate(target, pixel_x = initial_px, easing = SINE_EASING|EASE_OUT, time = 5)
 
-/technique/combat/do_user_rear_anim(var/battle_data/player/target)
+/technique/combat/do_user_rear_anim(var/image/target)
 	if(!..())
 		return
-	var/initial_px = target.minion_img.pixel_x
-	animate(target.minion_img, pixel_x = initial_px - 64, easing = SINE_EASING|EASE_OUT, time = 3)
+	var/initial_px = target.pixel_x
+	animate(target, pixel_x = initial_px - 64, easing = SINE_EASING|EASE_OUT, time = 3)
 	sleep(3)
-	animate(target.minion_img, pixel_x = initial_px, easing = SINE_EASING|EASE_IN, time = 3)
+	animate(target, pixel_x = initial_px, easing = SINE_EASING|EASE_IN, time = 3)
 
-/technique/combat/do_target_front_anim(var/battle_data/player/target)
+/technique/combat/do_target_front_anim(var/image/target)
 	if(!..())
 		return
 	sleep(6)
 	var/end_time = world.time + 15
 	while(world.time < end_time)
-		if(target.opponent_img.alpha == 255)
-			target.opponent_img.alpha = 160
+		if(target.alpha == 255)
+			target.alpha = 160
 		else
-			target.opponent_img.alpha = 255
+			target.alpha = 255
 		sleep(1)
-	target.opponent_img.alpha = 255
+	target.alpha = 255
 
-/technique/combat/do_target_rear_anim(var/battle_data/player/target)
+/technique/combat/do_target_rear_anim(var/image/target)
 	if(!..())
 		return
 	sleep(6)
 	var/end_time = world.time + 15
 	while(world.time < end_time)
-		if(target.minion_img.alpha == 255)
-			target.minion_img.alpha = 160
+		if(target.alpha == 255)
+			target.alpha = 160
 		else
-			target.minion_img.alpha = 255
+			target.alpha = 255
 		sleep(1)
-	target.minion_img.alpha = 255
+	target.alpha = 255
 
 /technique/combat/earth
 	name = "Stone Pummel"

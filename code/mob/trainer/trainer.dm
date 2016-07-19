@@ -41,6 +41,7 @@
 /mob/trainer/Login()
 	. = ..()
 	client.screen += battle_background
+	client.screen += screen_hud
 	if(sleeping)
 		visible_message("<b>\The [src] wakes up!</b>")
 	density = 1
@@ -58,3 +59,46 @@
 	density = 0
 	sleeping = 1
 	update_icon()
+
+/mob/trainer/destroy()
+	if(radio)
+		qdel(radio)
+		radio = null
+	if(client)
+		if(battle_background)
+			client.screen -= battle_background
+		client.screen -= screen_hud
+		for(var/obj/O in screen_hud)
+			qdel(O)
+		screen_hud.Cut()
+	if(battle_background)
+		qdel(battle_background)
+		battle_background = null
+	last_loc = null
+	for(var/minion/M in minions)
+		qdel(M)
+	minions.Cut()
+	for(var/obj/O in contents)
+		qdel(O)
+	inventory_contents.Cut()
+	inventory_data.Cut()
+	if(following)
+		qdel(following)
+		following = null
+	return ..()
+
+var/temporary_trainer_count = 100
+/mob/trainer/temporary
+	name = "figment"
+
+/mob/trainer/temporary/New()
+	. = ..()
+	name += " #[temporary_trainer_count]"
+	temporary_trainer_count++
+
+/mob/trainer/temporary/end_battle()
+	density = 0
+	spawn(10)
+		animate(src,alpha=0,time=5)
+	sleep(15)
+	qdel(src)

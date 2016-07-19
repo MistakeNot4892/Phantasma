@@ -3,8 +3,8 @@
 	target_self = 1
 	delay = 15
 	max_uses = 5
-	var/heal_min = 0.4
-	var/heal_max = 0.6
+	var/heal_min = 0.2
+	var/heal_max = 0.4
 
 /technique/healing/apply_to(var/minion/user, var/minion/target)
 
@@ -18,16 +18,16 @@
 		target.data[MD_CHP] = mhealth
 	return TECHNIQUE_SUCCESS
 
-/technique/healing/do_user_front_anim(var/battle_data/player/target)
+/technique/healing/do_user_front_anim(var/image/target)
 	if(!..())
 		return
-	animate(target.opponent_img, color = "#00FF00", time = 5)
+	animate(target, color = "#00FF00", time = 5)
 	sleep(5)
-	animate(target.opponent_img, color = "#FFFFFF", time = 5)
+	animate(target, color = "#FFFFFF", time = 5)
 
-/technique/healing/do_user_rear_anim(var/battle_data/player/target)
+/technique/healing/do_user_rear_anim(var/image/target)
 	if(!..())
 		return
-	animate(target.minion_img, color = "#00FF00", time = 5)
+	animate(target, color = "#00FF00", time = 5)
 	sleep(5)
-	animate(target.minion_img, color = "#FFFFFF", time = 5)
+	animate(target, color = "#FFFFFF", time = 5)

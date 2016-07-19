@@ -1,3 +1,6 @@
+/mob/trainer
+	var/list/screen_hud = list()
+
 /mob/trainer/create_hud()
 	sleep(1)
-	client.screen += list(new /obj/screen/menu(src), new /obj/screen/sprint(src))
+	screen_hud = list(new /obj/screen/menu(src), new /obj/screen/sprint(src))

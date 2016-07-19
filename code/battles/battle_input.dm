@@ -6,6 +6,10 @@
 	invisibility = 100
 	var/battle_data/player/battle
 
+/obj/battle_icon/menu/destroy()
+	battle = null
+	return ..()
+
 /obj/battle_icon/menu/New(var/battle_data/_battle)
 	battle = _battle
 
@@ -15,7 +19,7 @@
 /obj/battle_icon/menu/fight
 	name = "\improper Fight"
 	icon_state = "fight"
-	screen_loc = "12,3"
+	screen_loc = "11,3"
 
 /obj/battle_icon/menu/fight/clicked(var/client/clicker)
 	if(!..())
@@ -28,7 +32,7 @@
 /obj/battle_icon/menu/use_item
 	name = "\improper Use Item"
 	icon_state = "item"
-	screen_loc = "14,3"
+	screen_loc = "13,3"
 
 /obj/battle_icon/menu/use_item/clicked(var/client/clicker)
 	if(!..())
@@ -38,7 +42,7 @@
 /obj/battle_icon/menu/switch_out
 	name = "\improper Switch Phantasm"
 	icon_state = "switch"
-	screen_loc = "16,3"
+	screen_loc = "15,3"
 
 /obj/battle_icon/menu/switch_out/clicked(var/client/clicker)
 	if(!..())
@@ -48,7 +52,7 @@
 /obj/battle_icon/menu/flee
 	name = "\improper Flee"
 	icon_state = "flee"
-	screen_loc = "18,3"
+	screen_loc = "17,3"
 
 /obj/battle_icon/menu/flee/clicked(var/client/clicker)
 	if(!..())
@@ -77,7 +81,36 @@
 /obj/battle_icon/menu/tech/clicked(var/client/clicker)
 	if(!..() || !tech)
 		return
-	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = tech.target_self ? battle.minion : battle.opponent_minion)
+
+	var/list/possible_targets
+	var/battle_data/target
+	if(tech.target_self)
+		if(battle.allies.len > 1)
+			possible_targets = battle.allies
+		else
+			target = battle.allies[1]
+	else
+		if(battle.opponents.len > 1)
+			possible_targets = battle.opponents
+		else
+			target = battle.opponents[1]
+
+	if(!target)
+		var/list/targets = list()
+		var/i = 1
+		for(var/battle_data/possible_target in possible_targets)
+			if(possible_target.minion)
+				targets["[i]. [possible_target.minion.name]"] = possible_target
+			i++
+		if(targets.len>1)
+			var/choice = input("Select a target.") as null|anything in targets
+			if(!choice)
+				return
+			target = targets[choice]
+		else
+			target = targets[targets[1]]
+
+	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = target)
 	battle.end_turn()
 
 /battle_data/proc/start_turn()

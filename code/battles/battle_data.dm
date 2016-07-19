@@ -1,46 +1,38 @@
 /* Structure that handles image tracking and animations for a given player. */
 /battle_data
+
 	var/battle/battle
+
 	var/mob/owner
 	var/minion/minion
 
-	//todo
-	var/list/allied_trainers = list()
-	var/list/allied_minions = list()
-	var/list/opponent_trainers = list()
-	var/list/opponent_minions = list()
-	//todo
-
-	var/mob/opponent
-	var/minion/opponent_minion
+	var/list/opponents
+	var/list/allies
 
 	var/dummy = 1
 	var/wild_mob
-	var/self_wild_mob
 	var/suspend_battle = 1
 	var/taking_commands = 0
-	var/next_action = null
+	var/list/next_action = null
+	var/team_position
 
-/battle_data/New(var/battle/_battle, var/mob/_owner, var/mob/_opponent)
+/battle_data/New(var/battle/_battle, var/mob/_owner)
 	battle = _battle
 	owner = _owner
-	opponent = _opponent
-
 	minion = owner.get_minion()
-	if(!minion)
-		owner.visible_message("<b>\The [owner]</b> somehow managed to get into a fight with no unfainted minions.")
+	wild_mob = istype(owner, /mob/minion)
 
-	opponent_minion = opponent.get_minion()
-
-	if(istype(owner, /mob/minion))
-		self_wild_mob = 1
-	if(istype(opponent, /mob/minion))
-		wild_mob = 1
-
-/battle_data/proc/joined_battle(var/client/C)
+/battle_data/proc/initialize()
 	return
 
-/battle_data/proc/update(var/update_minon, var/update_opponent)
+/battle_data/proc/set_opponents(var/list/_opponents)
+	opponents = _opponents
+
+/battle_data/proc/set_allies(var/list/_allies)
+	allies = _allies
+	team_position = allies.Find(src)-1
+
+/battle_data/proc/update_minion_images(var/update_minon, var/update_opponent)
 	return
 
 /battle_data/proc/do_intro_animation()
@@ -57,13 +49,7 @@
 /battle_data/proc/remove_minion()
 	return
 
-/battle_data/proc/remove_opponent()
-	return
-
 /battle_data/proc/reveal_minion()
-	return
-
-/battle_data/proc/reveal_opponent()
 	return
 
 /battle_data/proc/battle_ended()
@@ -73,14 +59,14 @@
 	del(src)
 
 /battle_data/proc/do_ai_action()
-	if(!minion || !opponent_minion)
+	if(!minion)
 		next_action = list("action"="flee")
 		return
 	var/technique/T = pick(minion.techs)
-	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? minion : opponent_minion))
+	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? pick(allies) : pick(opponents)))
 
 /battle_data/proc/get_next_minion()
-	if(self_wild_mob)
+	if(wild_mob)
 		minion = null
 		return
 	var/mob/trainer/T = owner
@@ -91,8 +77,27 @@
 		if(!(M.status & STATUS_FAINTED))
 			minion = M
 			break
-	update(update_minon=1)
+	update_minion_images(update_minon=1)
 	return
 
 /battle_data/proc/update_health()
 	return
+
+/battle_data/proc/do_tech_animations(var/technique/tech, var/battle_data/user, var/battle_data/target)
+	return
+
+/battle_data/proc/award_xp(var/val=0)
+	return
+
+/battle_data/proc/award_winnings(var/val=0)
+	return
+
+/battle_data/proc/destroy()
+	battle = null
+	owner = null
+	minion = null
+	opponents.Cut()
+	allies.Cut()
+	if(next_action)
+		next_action.Cut()
+	return 1

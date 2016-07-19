@@ -24,6 +24,12 @@
 	data[MD_LVL] = 1
 	data[MD_EXP] = 0
 
+/minion/proc/destroy()
+	techs.Cut()
+	owner = null
+	template = null
+	return 1
+
 /minion/proc/get_turn_speed()
 	return data[MD_SPEED]
 

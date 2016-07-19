@@ -17,8 +17,26 @@
 	message = trim_spaces(message)
 	return message
 
+/proc/capitalize(var/message = "")
+	return "[uppertext(copytext(message,1,2))][copytext(message,2)]"
+
 /proc/format_and_capitalize(var/message = "")
-	message = "[uppertext(copytext(message,1,2))][copytext(message,2)]"
+	message = capitalize(message)
 	if(!(copytext(message, length(message)) in list("!","?",".")))
 		message += "."
 	return message
+
+/proc/concat_list(var/list/_list, var/prepend)
+	var/result = ""
+	var/i = 1
+	for(var/entry in _list)
+		if(prepend)
+			result+= "[prepend]"
+		result += "[entry]"
+		if(_list.len>1 && i != _list.len)
+			if(i+1 != _list.len)
+				result += ", "
+			else
+				result += " and "
+		i++
+	return result

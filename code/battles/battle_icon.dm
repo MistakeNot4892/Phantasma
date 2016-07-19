@@ -26,6 +26,11 @@
 	var/image/sprite
 	mouse_opacity = 0
 
+/obj/battle_icon/overlay/destroy()
+	overlays.Cut()
+	sprite = null
+	return ..()
+
 /obj/battle_icon/overlay/New(var/image/_sprite)
 	sprite = _sprite
 	overlays += sprite
@@ -35,12 +40,14 @@
 	icon_state = "hp_over"
 	maptext_width = 230
 	alpha = 0
+	plane = 30
 
 /obj/battle_icon/healthbar_bar
 	icon = 'icons/screen/battle_hp_underlay.dmi'
 	icon_state = "hp_bar"
 	color = "#00FF00"
 	alpha = 0
+	plane = 30
 
 /obj/battle_icon/healthbar_bar/New()
 	. = ..()
@@ -55,23 +62,40 @@
 	icon = 'icons/screen/battle_hp_underlay.dmi'
 	icon_state = "hp_base"
 	alpha = 0
+	plane = 30
 
 	var/current_hp = 0
 	var/last_raw_hp = 0
 	var/battle_data/battle
-	var/detailed = 1
+	var/friendly = 1
 	var/const/bar_size = 241
-
 	var/obj/battle_icon/healthbar_bar/bar
 	var/obj/battle_icon/healthbar_mask/mask
+	var/screen_loc_x = 11
+	var/screen_loc_y = 4
+
+/obj/battle_icon/healthbar/destroy()
+	battle = null
+	qdel(bar)
+	bar = null
+	qdel(mask)
+	mask = null
+	return ..()
 
 /obj/battle_icon/healthbar/enemy
-	detailed = 0
-	screen_loc = "2,11"
+	friendly = 0
+	screen_loc_x = 2
+	screen_loc_y = 11
 
-/obj/battle_icon/healthbar/New(var/battle_data/_battle)
+/obj/battle_icon/healthbar/New(var/battle_data/_battle, var/count=0)
+
 	battle = _battle
 	layer += 0.1
+
+	if(friendly)
+		screen_loc = "[screen_loc_x+count],[screen_loc_y+count]"
+	else
+		screen_loc = "[screen_loc_x-count],[screen_loc_y-count]"
 
 	bar = new(src)
 	bar.layer = layer+0.1
@@ -87,10 +111,10 @@
 		return
 
 	mask.maptext = null
-	var/minion/tracking = (detailed ? battle.minion : battle.opponent_minion)
+	var/minion/tracking = battle.minion
 	if(tracking)
 		mask.maptext = "[tracking.name]"
-		if(detailed)
+		if(friendly)
 			mask.maptext = "[mask.maptext] \[[tracking.data[MD_CHP]]/[tracking.data[MD_MHP]]\]"
 
 	var/raw_hp_left = (tracking ? (tracking.data[MD_CHP]/tracking.data[MD_MHP]) : 0)

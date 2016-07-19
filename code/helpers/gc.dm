@@ -1,4 +1,7 @@
 /atom/proc/destroy()
+	if(contents)
+		for(var/thing in contents)
+			qdel(thing)
 	return 1
 
 /atom/movable/destroy()
@@ -6,6 +9,5 @@
 	return ..()
 
 // placeholder for later
-/proc/qdel(var/atom/thing)
-	thing.destroy()
-	del(thing)
+/proc/qdel(var/thing)
+	thing:destroy() // if this runtimes then someone fucked up and should fix it.

@@ -9,6 +9,11 @@
 	var/minion/minion_data
 	var/turf/return_loc
 
+/mob/minion/destroy()
+	return_loc = null
+	minion_data = null
+	return ..()
+
 /mob/minion/wild
 	wild = 1
 	density = 1

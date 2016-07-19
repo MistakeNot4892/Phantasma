@@ -6,6 +6,7 @@ var/list/minion_data_templates = list()
 
 /minion_template
 	var/name = "Minion"
+	var/description = "A minion."
 	var/icon_state = "minion"
 	var/list/techs = list(
 		/technique/combat

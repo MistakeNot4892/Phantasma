@@ -15,14 +15,14 @@
 
 /mob/trainer/proc/start_battle(var/battle/battle)
 
-	battle_background.invisibility = 0
-	battle_background.mouse_opacity = 2
+	if(battle_background)
+		battle_background.invisibility = 0
+		battle_background.mouse_opacity = 2
+		spawn(8)
+			animate(battle_background, alpha = 160, time = 3)
+		spawn(12)
+			animate(battle_background, color = "#000000", time = 10)
 	current_battle = battle
-
-	spawn(8)
-		animate(battle_background, alpha = 160, time = 3)
-	spawn(12)
-		animate(battle_background, color = "#000000", time = 10)
 
 	if(following)
 
@@ -92,4 +92,75 @@
 
 	dir = get_dir(src, trainer)
 	trainer.dir = get_dir(trainer, src)
-	new /battle(list(trainer, src))
+	start_new_battle(list(trainer), list(src))
+
+/mob/trainer/verb/test_battle()
+	set name = "Test Battle"
+	set desc = "Start an immediate battle."
+
+	var/num = input("How many opponents?") as num
+	if(!num)
+		return
+	if(num < 1)
+		num = 1
+	else if(num > 5)
+		num = 5
+
+	var/trainer_count = 0
+	var/wild_count = 0
+
+	switch(input("What kind of opponents?") as null|anything in list("trainer", "wild", "mixed"))
+		if("trainer")
+			trainer_count = num
+		if("wild")
+			wild_count = num
+		if("mixed")
+			var/each_side = max(1,round(num/2))
+			trainer_count = each_side
+			wild_count = each_side
+		else
+			return
+
+	var/list/encounters = list()
+	if(wild_count)
+		for(var/i=1 to wild_count)
+			var/encounter_path = pick(typesof(/minion_template)-/minion_template)
+			encounters += new /mob/minion/wild(get_turf(src), new /minion(encounter_path))
+
+	if(trainer_count)
+		for(var/i=1 to trainer_count)
+			encounters += new /mob/trainer/temporary(get_turf(src))
+
+	var/list/allies = list(src)
+	var/ally_count = input("How many allies?") as num
+	if(ally_count < 0)
+		ally_count = 0
+	else if(ally_count > 4)
+		ally_count = 4
+	if(ally_count)
+		trainer_count = 0
+		wild_count = 0
+
+		switch(input("What kind of allies?") as null|anything in list("trainer", "wild", "mixed"))
+			if("trainer")
+				trainer_count = ally_count
+			if("wild")
+				wild_count = ally_count
+			if("mixed")
+				var/each_side = max(1,round(ally_count/2))
+				trainer_count = each_side
+				wild_count = each_side
+			else
+				return
+
+		if(wild_count)
+			for(var/i=1 to wild_count)
+				var/encounter_path = pick(typesof(/minion_template)-/minion_template)
+				allies += new /mob/minion/wild(get_turf(src), new /minion(encounter_path))
+		if(trainer_count)
+			for(var/i=1 to trainer_count)
+				allies += new /mob/trainer/temporary(get_turf(src))
+
+
+	if(encounters.len)
+		start_new_battle(allies, encounters)

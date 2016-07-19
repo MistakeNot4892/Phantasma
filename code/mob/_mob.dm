@@ -14,3 +14,7 @@
 		return 0
 	next_move = world.time + get_movement_delay()
 	. = ..()
+
+/mob/destroy()
+	current_battle = null
+	return ..()
