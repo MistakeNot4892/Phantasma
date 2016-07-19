@@ -65,7 +65,7 @@
 		for(var/minion/M in minions)
 			if(!(M.status & STATUS_FAINTED))
 				return
-		world << "Having been defeated, \the [src] cheats and has their minions restored."
+		visible_message("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
 		restore()
 		// testing purposes only
 

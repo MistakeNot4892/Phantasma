@@ -1,9 +1,3 @@
-var/list/minion_data_templates = list()
-/proc/get_minion_data_by_path(var/minion_path)
-	if(!minion_data_templates[minion_path])
-		minion_data_templates[minion_path] = new minion_path
-	return minion_data_templates[minion_path]
-
 /minion
 	var/name
 	var/level = 1
@@ -12,7 +6,7 @@ var/list/minion_data_templates = list()
 	var/mob/trainer/owner
 	var/list/techs = list()
 	var/list/tech_uses = list()
-	var/list/battle_modifiers = list()
+	var/list/modifiers = list()
 	var/status = 0 //bitfield
 
 /minion/New(var/minion_path, var/mob/trainer/_owner)
@@ -42,22 +36,14 @@ var/list/minion_data_templates = list()
 	for(var/technique/T in techs)
 		tech_uses[T.name] = T.max_uses
 
-/minion_template
-	var/name = "Minion"
-	var/icon_state = "minion"
-	var/list/techs = list(
-		/technique/combat
-		)
-	var/list/weak_against = list()
-	var/list/strong_against = list()
-	var/list/data = list(
-		MD_MHP =   100,
-		MD_ATK =   10,
-		MD_DEF =   10,
-		MD_SPATK = 10,
-		MD_SPDEF = 10,
-		MD_SPEED = 10,
-		MD_FLEE = 5,
-		MD_SPEED_VAR_MIN = 1,
-		MD_SPEED_VAR_MAX = 3
-		)
+/minion/proc/get_type_weakness(var/damtype)
+	return template.get_type_weakness(damtype)
+
+/minion/proc/get_type_strength(var/damtype)
+	return template.get_type_strength(damtype)
+
+/minion/proc/get_same_type_attack_bonus(var/damtype)
+	return template.get_same_type_attack_bonus(damtype)
+
+/minion/proc/get_misc_damage_mods()
+	return 1

@@ -5,8 +5,15 @@
 		/technique/healing,
 		/technique/combat/earth
 	)
-	weak_against = list(DAM_AIR)
-	strong_against = list(DAM_WATER)
+	elemental_types = list(DAM_EARTH)
+	data = list(
+		MD_MHP =   45,
+		MD_ATK =   49,
+		MD_DEF =   49,
+		MD_SPATK = 65,
+		MD_SPDEF = 65,
+		MD_SPEED = 45
+		)
 
 /minion_template/waterfish
 	name = "Waterfish"
@@ -15,8 +22,15 @@
 		/technique/healing,
 		/technique/combat/water
 	)
-	weak_against = list(DAM_EARTH)
-	strong_against = list(DAM_FIRE)
+	elemental_types = list(DAM_WATER)
+	data = list(
+		MD_MHP =   44,
+		MD_ATK =   48,
+		MD_DEF =   65,
+		MD_SPATK = 50,
+		MD_SPDEF = 64,
+		MD_SPEED = 43
+		)
 
 /minion_template/firelizard
 	name = "Firelizard"
@@ -25,8 +39,15 @@
 		/technique/combat,
 		/technique/combat/fire
 	)
-	weak_against = list(DAM_WATER)
-	strong_against = list(DAM_AIR)
+	elemental_types = list(DAM_FIRE)
+	data = list(
+		MD_MHP =   39,
+		MD_ATK =   52,
+		MD_DEF =   43,
+		MD_SPATK = 60,
+		MD_SPDEF = 50,
+		MD_SPEED = 65
+		)
 
 /minion_template/airbird
 	name = "Airbird"
@@ -35,5 +56,12 @@
 		/technique/combat,
 		/technique/combat/air
 	)
-	weak_against = list(DAM_FIRE)
-	strong_against = list(DAM_EARTH)
+	elemental_types = list(DAM_AIR)
+	data = list(
+		MD_MHP =   35,
+		MD_ATK =   55,
+		MD_DEF =   30,
+		MD_SPATK = 50,
+		MD_SPDEF = 40,
+		MD_SPEED = 90
+		)

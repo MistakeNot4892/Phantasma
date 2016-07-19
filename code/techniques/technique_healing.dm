@@ -2,12 +2,15 @@
 	name = "Recover"
 	target_self = 1
 	delay = 15
-	var/heal_min = 0.3
-	var/heal_max = 0.5
+	max_uses = 5
+	var/heal_min = 0.4
+	var/heal_max = 0.6
 
 /technique/healing/apply_to(var/minion/user, var/minion/target)
-	if(!..())
-		return
+
+	. = ..()
+	if(. & TECHNIQUE_FAIL)
+		return .
 
 	var/mhealth = target.data[MD_MHP]
 	target.data[MD_CHP] += round(rand(mhealth*heal_min, mhealth*heal_max))

@@ -67,42 +67,51 @@
 		var/last_alpha
 		if(minion_img)
 			last_alpha = minion_img.alpha
-			client.images -= minion_img
+			if(client)
+				client.images -= minion_img
 		minion_img =  new /image/battle(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = (minion ? minion.template.icon_state : ""))
 		if(!isnull(last_alpha))
 			minion_img.alpha = last_alpha
-		client.images += minion_img
+		if(client)
+			client.images += minion_img
 
 	if(update_opponent)
 		var/last_alpha
 		if(opponent_img)
 			last_alpha = opponent_img.alpha
-			client.images -= opponent_img
+			if(client)
+				client.images -= opponent_img
 		opponent_img = new /image/battle(loc = owner, icon = 'icons/battle/icons_front.dmi', icon_state = (opponent_minion ? opponent_minion.template.icon_state : ""))
 		if(!isnull(last_alpha))
 			opponent_img.alpha = last_alpha
-		client.images += opponent_img
+		if(client)
+			client.images += opponent_img
 
 /battle_data/player/do_intro_animation()
 
 	. = ..()
 
-	client.screen += all_objects
+	if(client)
+		client.screen += all_objects
 
 	trainer_self = new /image/battle(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(owner.icon_state))
-	client.images += trainer_self
+	if(client)
+		client.images += trainer_self
 	trainer_other = new /image/battle(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = (!wild_mob ? initial(opponent.icon_state) : ""))
-	client.images += trainer_other
+	if(client)
+		client.images += trainer_other
 
 	minion_backlight = new /image/battle(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
 	minion_backlight.layer-=0.1
-	client.images += minion_backlight
+	if(client)
+		client.images += minion_backlight
 	opponent_backlight = new /image/battle(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
 	opponent_backlight.layer-=0.1
 	var/matrix/M = matrix()
 	M.Scale(0.75)
 	opponent_backlight.transform = M
-	client.images += opponent_backlight
+	if(client)
+		client.images += opponent_backlight
 
 	opponent_img.pixel_x = -600
 	opponent_img.pixel_y = -40
@@ -237,7 +246,7 @@
 
 	sleep(5)
 
-	if(owner && client)
+	if(owner && client && owner.client)
 		client.images -= minion_img
 		client.images -= opponent_img
 		client.images -= trainer_self

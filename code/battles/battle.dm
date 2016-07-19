@@ -121,13 +121,15 @@
 					player.owner.do_battle_anim()
 					var/tech_result = tech.apply_to(player.minion, target)
 					if(tech_result == TECHNIQUE_FAIL)
+						sleep(12)
 						player.owner.visible_message("...but it failed!")
-						sleep(5)
+						sleep(8)
 						continue
 
 					else if(tech_result & TECHNIQUE_MISSED)
+						sleep(12)
 						player.owner.visible_message("...but it missed!")
-						sleep(5)
+						sleep(8)
 						continue
 
 					tech.do_user_rear_anim(player)
@@ -233,4 +235,4 @@
 	set waitfor=0
 	set background=1
 	trainer.visible_message("As <b>\the [trainer]</b> has passed out, the battle has been cut short.")
-	end_battle()
+	battle_state = BATTLE_ENDING

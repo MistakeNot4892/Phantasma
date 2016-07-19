@@ -1,42 +1,108 @@
+/proc/get_type_strength(var/tech_type, var/list/target_elements = list())
+
+	// Neutral v. anything or pure same-type damage is neutral.
+	if(!target_elements.len || (target_elements.len == 1 && (tech_type in target_elements)))
+		return 1
+
+	// TODO: type weakness datums
+	var/strong_type
+	var/weak_type
+	switch(tech_type)
+		if(DAM_EARTH)
+			strong_type = DAM_WATER
+			weak_type =   DAM_AIR
+		if(DAM_WATER)
+			strong_type = DAM_FIRE
+			weak_type =   DAM_EARTH
+		if(DAM_FIRE)
+			strong_type = DAM_AIR
+			weak_type =   DAM_WATER
+		if(DAM_AIR)
+			strong_type = DAM_EARTH
+			weak_type =   DAM_FIRE
+
+	if(!weak_type && !strong_type)
+		return 1
+
+	var/strength_score = 1
+	for(var/checktype in target_elements)
+		if(strong_type == checktype)
+			strength_score++
+		else if(weak_type == checktype)
+			strength_score--
+
+	// TODO: better granularity for dual types.
+	if(strength_score>1)
+		strength_score = 4
+	else if(strength_score<1)
+		strength_score = 0.25
+	return strength_score
+
+/proc/calculate_technique_damage(var/technique/combat/tech, var/minion/user, var/minion/target)
+
+	var/user_atk = 1
+	var/target_def = 1
+	if(tech.use_special_values)
+		user_atk =     user.data[MD_SPATK] +   user.modifiers[MD_SPATK]
+		target_def = target.data[MD_SPDEF] + target.modifiers[MD_SPDEF]
+	else
+		user_atk =     user.data[MD_ATK] +   user.modifiers[MD_ATK]
+		target_def = target.data[MD_DEF] + target.modifiers[MD_DEF]
+
+	// Avoid division by zero.
+	if(target_def<=0)
+		target_def = 1
+
+	// Calculate type bonuses, crits, etc.
+	var/stab = user.get_same_type_attack_bonus(tech.damage_type)
+	var/type_str = get_type_strength(tech.damage_type, target.template.elemental_types)
+	var/crit = prob((user.data[MD_SPEED]+user.modifiers[MD_SPEED])/512)
+
+	var/techflags = TECHNIQUE_SUCCESS
+	if(type_str>1)
+		techflags += TECHNIQUE_EFFECTIVE
+	else if(type_str<1)
+		techflags += TECHNIQUE_INEFFECTIVE
+	if(crit)
+		techflags += TECHNIQUE_CRITICAL
+
+	var/damage_total = ((2*(user.level + 10))/250)
+	damage_total *= (user_atk/target_def)
+	damage_total *= (tech.damage_value+2)
+
+	var/modrand = rand(85.0, 100.0)/100.0
+	var/mod = stab * type_str * (crit ? 2 : 1) * user.get_misc_damage_mods() * modrand
+	damage_total *= mod
+
+	return list(
+		"damage" = damage_total,
+		"flags" = techflags
+		)
+
 /technique/combat
 	name = "Strike"
-
-	var/damage_value = 20
+	max_uses = 35
+	accuracy = 100
+	var/damage_value = 50
 	var/damage_type = DAM_NEUTRAL
-	var/dam_var_min = 0
-	var/dam_var_max = 20
-	var/crit_chance = 1
+	var/use_special_values
 
 /technique/combat/apply_to(var/minion/user, var/minion/target)
 
-	. = TECHNIQUE_FAIL
+	. = ..()
 
-	if(!..())
-		return
+	if(. & (TECHNIQUE_MISSED|TECHNIQUE_FAIL))
+		return .
 
-	. = TECHNIQUE_SUCCESS
-
-	var/total_damage = damage_value + rand(dam_var_min, dam_var_max)
-	total_damage *= (user.data[MD_ATK]/10)
-	total_damage -= total_damage * (user.data[MD_DEF]/100)
-
-	if(damage_type in target.template.strong_against)
-		. += TECHNIQUE_INEFFECTIVE
-		total_damage *= rand(0.5,0.75)
-	else if(damage_type in target.template.weak_against)
-		. += TECHNIQUE_EFFECTIVE
-		total_damage *= rand(1.8,2.2)
-	if(prob(crit_chance))
-		. += TECHNIQUE_CRITICAL
-		total_damage *= rand(2,3)
-
-	if(total_damage <= 0)
-		total_damage = 1
+	var/list/damage_result = calculate_technique_damage(src, user, target)
+	var/total_damage = damage_result["damage"]
+	if(total_damage < 0)
+		total_damage = 0
 	target.data[MD_CHP] -= round(total_damage)
+
 	if(target.data[MD_CHP] <= 0)
 		target.data[MD_CHP] = 0
-
-	return .
+	return damage_result["flags"]
 
 /technique/combat/do_user_front_anim(var/battle_data/player/target)
 	if(!..())
@@ -85,15 +151,26 @@
 /technique/combat/earth
 	name = "Stone Pummel"
 	damage_type = DAM_EARTH
+	accuracy = 90
+	damage_value = 50
+	max_uses = 25
 
 /technique/combat/fire
 	name = "Fireball"
 	damage_type = DAM_FIRE
-
-/technique/combat/water
-	name = "Ice Shard"
-	damage_type = DAM_WATER
+	damage_value = 40
+	max_uses = 25
+	use_special_values = 1
 
 /technique/combat/air
 	name = "Air Blade"
 	damage_type = DAM_AIR
+	damage_value = 40
+	max_uses = 25
+	use_special_values = 1
+
+/technique/combat/water
+	name = "Ice Shard"
+	damage_type = DAM_WATER
+	max_uses = 25
+	damage_value = 40

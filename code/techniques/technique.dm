@@ -5,16 +5,17 @@ var/list/techniques_by_path = list()
 	return techniques_by_path[techpath]
 
 /technique
-	var/name = "Strike"
-	var/max_uses = 5
+	var/name = "Filler Tech"
+	var/max_uses = 0
 	var/delay = 25
+	var/accuracy = 0
 	var/target_self
 
 /technique/proc/apply_to(var/minion/user, var/minion/target)
 	if(user.tech_uses[name] <= 0)
-		return 0
+		return TECHNIQUE_FAIL
 	user.tech_uses[name]--
-	return 1
+	return (prob(accuracy) ? TECHNIQUE_SUCCESS : TECHNIQUE_MISSED)
 
 /technique/proc/do_user_front_anim(var/battle_data/player/target)
 	set waitfor=0
