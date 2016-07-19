@@ -80,8 +80,11 @@
 	minions.Cut()
 	for(var/obj/O in contents)
 		qdel(O)
-	inventory_contents.Cut()
-	inventory_data.Cut()
+	for(var/thing in inventory)
+		var/data/inventory_item/I = inventory[thing]
+		inventory[thing] = null
+		qdel(I)
+	inventory.Cut()
 	if(following)
 		qdel(following)
 		following = null

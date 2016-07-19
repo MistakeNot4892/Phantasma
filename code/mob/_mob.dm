@@ -18,3 +18,6 @@
 /mob/destroy()
 	current_battle = null
 	return ..()
+
+/mob/proc/remove_item(var/data/inventory_item/item, var/amt=1)
+	return

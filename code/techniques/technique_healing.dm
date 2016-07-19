@@ -1,7 +1,7 @@
 /technique/healing
 	name = "Recover"
 	target_self = 1
-	delay = 15
+	delay = 25
 	max_uses = 5
 	var/heal_min = 0.2
 	var/heal_max = 0.4
@@ -21,13 +21,13 @@
 /technique/healing/do_user_front_anim(var/image/target)
 	if(!..())
 		return
-	animate(target, color = "#00FF00", time = 5)
-	sleep(5)
-	animate(target, color = "#FFFFFF", time = 5)
+	animate(target, color = "#00FF00", time = 10)
+	sleep(10)
+	animate(target, color = "#FFFFFF", time = 10)
 
 /technique/healing/do_user_rear_anim(var/image/target)
 	if(!..())
 		return
-	animate(target, color = "#00FF00", time = 5)
-	sleep(5)
-	animate(target, color = "#FFFFFF", time = 5)
+	animate(target, color = "#00FF00", time = 10)
+	sleep(10)
+	animate(target, color = "#FFFFFF", time = 10)

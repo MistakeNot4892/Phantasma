@@ -263,9 +263,48 @@
 			O.invisibility = 100
 
 /battle_data/player/proc/try_item()
-	owner.visible_message("<b>\The [owner]</b> is trying to use an item.")
-	next_action = list("action" = "item")
-	end_turn()
+	var/mob/trainer/trainer = owner
+
+	if(!trainer.inventory.len)
+		owner << "You don't have any items."
+		return
+
+	var/chosen_item = input("Which item do you wish to use?") as null|anything in trainer.inventory
+	if(chosen_item)
+		var/data/inventory_item/use_item = trainer.inventory[chosen_item]
+		if(!use_item.template.can_use_battle)
+			owner << "You can't use \the [use_item.template.name] in battle!"
+			return
+
+		var/battle_data/target
+		var/list/check_targets = list()
+		var/list/possible_targets = list()
+
+		if(use_item.template.hostile)
+			check_targets = opponents
+		else
+			check_targets = allies
+
+		var/i=1
+		for(var/battle_data/possible_target in check_targets)
+			if(possible_target.minion && !(possible_target.minion.status & STATUS_FAINTED))
+				possible_targets["[i]. [possible_target.minion.name]"] = possible_target
+			i++
+
+		if(!possible_targets.len)
+			owner << "There are no suitable targets for \the [use_item.template.name]."
+			return
+
+		if(possible_targets.len == 1)
+			target = possible_targets[possible_targets[1]]
+		else
+			var/chosen_target = input("Who do you wish to use this item on?") as null|anything in possible_targets
+			if(!chosen_target)
+				return
+			target = possible_targets[chosen_target]
+
+		next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.template.hostile)
+		end_turn()
 
 /battle_data/player/proc/try_switch()
 	var/mob/trainer/T = owner
@@ -336,3 +375,9 @@
 	hp_objects.Cut()
 	hp_bars.Cut()
 	return ..()
+
+/battle_data/player/do_item_animation(var/data/item/template, var/battle_data/target)
+	var/image/I = minion_images["\ref[target]"]
+	if(istype(I))
+		template.do_battle_animation(I)
+	return

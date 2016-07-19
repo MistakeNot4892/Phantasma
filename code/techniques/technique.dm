@@ -10,6 +10,7 @@ var/list/techniques_by_path = list()
 	var/delay = 25
 	var/accuracy = 0
 	var/target_self
+	var/is_hostile
 
 /technique/proc/apply_to(var/minion/user, var/minion/target)
 	if(user.tech_uses[name] <= 0)

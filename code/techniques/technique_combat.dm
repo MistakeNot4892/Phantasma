@@ -83,6 +83,8 @@
 	name = "Strike"
 	max_uses = 35
 	accuracy = 100
+	is_hostile = 1
+
 	var/damage_value = 50
 	var/damage_type = DAM_NEUTRAL
 	var/use_special_values

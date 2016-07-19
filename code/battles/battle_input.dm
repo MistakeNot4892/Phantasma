@@ -110,7 +110,7 @@
 		else
 			target = targets[targets[1]]
 
-	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = target)
+	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = target, "hostile_action" = tech.is_hostile)
 	battle.end_turn()
 
 /battle_data/proc/start_turn()

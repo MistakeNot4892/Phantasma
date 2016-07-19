@@ -8,6 +8,9 @@
 	loc = null
 	return ..()
 
+/data/proc/destroy()
+	return 1
+
 // placeholder for later
 /proc/qdel(var/thing)
 	thing:destroy() // if this runtimes then someone fucked up and should fix it.

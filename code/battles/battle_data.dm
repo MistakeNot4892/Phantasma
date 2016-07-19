@@ -63,7 +63,7 @@
 		next_action = list("action"="flee")
 		return
 	var/technique/T = pick(minion.techs)
-	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? pick(allies) : pick(opponents)))
+	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? pick(allies) : pick(opponents)), "hostile_action" = T.is_hostile)
 
 /battle_data/proc/get_next_minion()
 	if(wild_mob)
@@ -101,3 +101,6 @@
 	if(next_action)
 		next_action.Cut()
 	return 1
+
+/battle_data/proc/do_item_animation(var/data/item/template, var/battle_data/target)
+	return

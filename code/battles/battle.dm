@@ -114,13 +114,45 @@
 
 		// Proceed with the turn order.
 		for(var/battle_data/player in sorted_players)
+
+			// Is there any point giving this schmuck a turn?
 			if(!player.minion || (player.minion.status & STATUS_FAINTED))
 				continue
 
+			// Let the AI make a decision about which skill to use.
 			if(player.dummy)
 				player.do_ai_action()
 
+			// This may be null, since actions like switch/flee don't need it.
+			var/battle_data/target = player.next_action["tar"]
+			// If we've lost our target, try to update it.
+			if(!target || !target.minion)
+				var/list/candidates = player.next_action["hostile_action"] ? player.opponents : player.allies
+				if(!(target in player.opponents))
+					candidates = player.allies
+				for(var/battle_data/candidate in candidates)
+					if(candidate.minion && !(candidate.minion.status & STATUS_FAINTED))
+						target = candidate
+						break
+
 			switch(player.next_action["action"])
+
+				if("item")
+					var/data/inventory_item/I = player.next_action["ref"]
+					central_turf.visible_message("<b>\The [player.owner]</b> uses \the <b>[I.template.name]</b>!")
+					sleep(5)
+					if(target.minion)
+						I.template.apply(target.minion)
+						do_item_animation(I.template, target)
+						sleep(I.template.battle_use_delay)
+						for(var/battle_data/witness in players)
+							witness.update_health()
+					else
+						sleep(5)
+						central_turf.visible_message("...but it failed!")
+					player.owner.remove_item(I,1)
+					sleep(8)
+
 				if("switch")
 					remove_minion(player)
 					player.minion = player.next_action["ref"]
@@ -138,29 +170,18 @@
 					continue
 
 				if("tech")
+
 					var/technique/tech = player.next_action["ref"]
-					var/battle_data/target = player.next_action["tar"]
-
 					player.owner.do_battle_anim()
-
-					// If we've lost our target, try to update it.
-					if(!target.minion)
-						var/list/candidates = player.opponents
-						if(!(target in player.opponents))
-							candidates = player.allies
-						for(var/battle_data/candidate in candidates)
-							if(candidate.minion && !(candidate.minion.status & STATUS_FAINTED))
-								target = candidate
-								break
-						if(!target || !target.minion)
-							if(player.wild_mob)
-								central_turf.visible_message("The wild [player.minion.name] used <b>[tech.name]</b>!")
-							else
-								central_turf.visible_message("\The [player.owner]'s [player.minion.name] used <b>[tech.name]</b>!")
-							sleep(12)
-							central_turf.visible_message("...but it failed!")
-							sleep(8)
-							continue
+					if(!target || !target.minion)
+						if(player.wild_mob)
+							central_turf.visible_message("The wild [player.minion.name] used <b>[tech.name]</b>!")
+						else
+							central_turf.visible_message("\The [player.owner]'s [player.minion.name] used <b>[tech.name]</b>!")
+						sleep(12)
+						central_turf.visible_message("...but it failed!")
+						sleep(8)
+						continue
 
 					var/target_descriptor = "itself"
 					if(target != player)
@@ -360,3 +381,7 @@
 		qdel(player)
 	players.Cut()
 	return 1
+
+/battle/proc/do_item_animation(var/data/item/template, var/battle_data/target)
+	for(var/battle_data/player in players)
+		player.do_item_animation(template, target)
