@@ -146,6 +146,9 @@
 		all_images += I
 		client.images += I
 
+/data/battle_data/player/update_minion_image(var/data/battle_data/player)
+	update_images_with(list(player), (player in opponents))
+
 /data/battle_data/player/update_minion_images(var/update_minon, var/update_opponent)
 	if(!owner || !client)
 		return
@@ -213,6 +216,7 @@
 			animate(O, alpha = 255, time = 5)
 
 /data/battle_data/player/remove_minion(var/data/battle_data/minion_owner)
+	. = ..()
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
 	spawn(8)
 		update_health()
@@ -224,7 +228,7 @@
 	sleep(5)
 
 /data/battle_data/player/reveal_minion(var/data/battle_data/minion_owner)
-
+	. = ..()
 	update_health()
 	if(minion_owner == src)
 		// Clear tech menu.

@@ -4,7 +4,7 @@
 	icon_state = "trainer"
 
 	var/busy
-	var/dialogue_string = "Hi! I'm entirely brainless! Can you find me thirty bear butts?"
+	var/dialogue_string = "Hi $NAME!"
 	var/interaction_delay = 25
 	var/previous_dir = 0
 
@@ -15,7 +15,7 @@
 		dir = get_dir(src, person)
 		person.dir = get_dir(person, src)
 	if(dialogue_string)
-		say(dialogue_string)
+		say(replacetext(dialogue_string, "$NAME", person.name))
 	sleep(interaction_delay)
 	do_after_interaction()
 

@@ -1,23 +1,3 @@
-/obj/grass
-	name = ""
-	icon = 'icons/terrain/grass.dmi'
-	icon_state = "grass_idle"
-	plane = TERRAIN_PLANE
-	mouse_opacity = 0
-
-/obj/grass/New()
-	..()
-	spawn(0)
-		dir = pick(NORTH, SOUTH)
-		pixel_x = rand(-16, 16)
-		var/rise_time = rand(4,6)
-		animate(src, pixel_y=rand(-8,8), time=rise_time)
-		sleep(rise_time)
-		icon_state = "grass_flicker"
-		animate(src, alpha=0, time = 15)
-		sleep(15)
-		qdel(src)
-
 /obj/terrain
 	density = 0
 	layer = TURF_LAYER+0.1
@@ -36,9 +16,15 @@
 	. = ..()
 	can_encounter = typesof(/data/minion_template)-/data/minion_template
 
-/obj/terrain/grass/Uncross(var/atom/movable/crosser)
+
+/obj/terrain/grass/proc/puff(var/turf/target, var/min=3, var/max=5)
+	if(!target)
+		target = get_turf(src)
 	for(var/i = 1 to rand(3,5))
-		new /obj/grass(get_turf(src))
+		new /obj/effect/grass(target)
+
+/obj/terrain/grass/Uncross(var/atom/movable/crosser)
+	puff(min=1,max=3)
 	if(!istype(crosser, /mob/trainer))
 		return ..()
 	if(prob(encounter_chance))
@@ -58,6 +44,7 @@
 		dirs -= spawn_dir
 		var/turf/T = get_step(get_turf(src), spawn_dir)
 		var/encounter_path = pick(can_encounter)
+		puff(T)
 		var/mob/minion/wild/encounter = new(T, new /data/minion(encounter_path))
 		encounter.dir = get_dir(encounter,trainer)
 		encounter.show_overhead_icon("shout")

@@ -22,6 +22,9 @@
 	minion = owner.get_minion()
 	wild_mob = istype(owner, /mob/minion)
 
+/data/battle_data/proc/update_minion_image(var/data/battle_data/player)
+	return
+
 /data/battle_data/proc/initialize()
 	return
 
@@ -47,9 +50,13 @@
 	return
 
 /data/battle_data/proc/remove_minion()
+	set waitfor = 0
+	set background = 1
 	return
 
 /data/battle_data/proc/reveal_minion()
+	set waitfor = 0
+	set background = 1
 	return
 
 /data/battle_data/proc/battle_ended()

@@ -61,6 +61,13 @@
 /obj/screen/battle_icon/menu/flee/clicked(var/client/clicker)
 	if(!..())
 		return
+
+	for(var/data/battle_data/enemy in battle.opponents)
+		if(!enemy.wild_mob)
+			battle.owner.notify("You cannot flee from a formal duel!")
+			color = "#FFFFFF"
+			return 0
+
 	battle.next_action = list("action" = "flee")
 	battle.end_turn()
 

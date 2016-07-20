@@ -6,7 +6,7 @@
 	icon_state = "base"
 	plane = SCREEN_PLANE
 	maptext_x = 6
-	maptext_y = 12
+	maptext_y = 22
 	maptext_width = 608
 	maptext_height = 32
 	screen_loc = "1,1"

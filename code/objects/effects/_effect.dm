@@ -15,6 +15,8 @@
 	destroy_self()
 
 /obj/effect/proc/do_effect_anim()
+	set waitfor = 0
+	set background = 1
 	return
 
 /obj/effect/proc/destroy_self()
@@ -22,6 +24,9 @@
 	set waitfor = 0
 	do_effect_anim()
 	sleep(lifetime)
+	alpha = 0
+	invisibility = 100
+	sleep(1)
 	qdel(src)
 
 /obj/effect/speech
@@ -31,9 +36,11 @@
 	var/fadeout_step = 8
 
 /obj/effect/speech/do_effect_anim()
-	animate(src, alpha = 255, pixel_z = pixel_z + fadeout_step, time = lifetime)
-	sleep(lifetime)
-	animate(src, alpha = 0, pixel_z = pixel_z + fadeout_step, time = lifetime)
+	. = ..()
+	var/ticktime = round(lifetime/2)
+	animate(src, alpha = 255, pixel_z = pixel_z + fadeout_step, time = ticktime)
+	sleep(ticktime)
+	animate(src, alpha = 0, pixel_z = pixel_z + fadeout_step, time = ticktime)
 
 /obj/effect/fadeout
 	name = ""

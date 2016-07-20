@@ -156,7 +156,8 @@
 				if("switch")
 					remove_minion(player)
 					player.minion = player.next_action["ref"]
-					player.update_minion_images(1)
+					for(var/data/battle_data/witness in players)
+						witness.update_minion_image(player)
 					sleep(20)
 					reveal_minion(player)
 					continue
@@ -252,6 +253,8 @@
 				if(!player.minion || (player.minion.status & STATUS_FAINTED))
 					player.get_next_minion()
 					if(player.minion)
+						for(var/data/battle_data/witness in players)
+							witness.update_minion_image(player)
 						reveal_minion(player)
 						sleep(20)
 
@@ -353,12 +356,14 @@
 		player.owner.say("Go! [player.minion.name]!")
 	for(var/data/battle_data/witness in players)
 		witness.reveal_minion(player)
+	sleep(10)
 
 /data/battle_controller/proc/remove_minion(var/data/battle_data/player)
 	if(!player.wild_mob)
 		player.owner.say("[player.minion.name], come back!")
 	for(var/data/battle_data/witness in players)
 		witness.remove_minion(player)
+	sleep(10)
 
 /data/battle_controller/proc/do_tech_animations(var/data/technique/tech, var/data/battle_data/user, var/data/battle_data/target)
 	for(var/data/battle_data/witness in players)
