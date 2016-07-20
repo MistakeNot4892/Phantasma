@@ -1,8 +1,8 @@
 /obj/screen/battle_icon/menu
 	icon = 'icons/screen/battle_menu.dmi'
 	alpha = 0
-	invisibility = 100
 	var/data/battle_data/player/battle
+	var/toggled = 0
 
 /obj/screen/battle_icon/menu/destroy()
 	battle = null
@@ -12,7 +12,10 @@
 	battle = _battle
 
 /obj/screen/battle_icon/menu/clicked(var/client/clicker)
-	return ((clicker == battle.client) && isnull(battle.next_action) && battle.taking_commands == 1)
+	if((clicker == battle.client) && isnull(battle.next_action) && battle.taking_commands == 1)
+		toggled = !toggled
+		color = toggled ? "#AAAAAA" : "#FFFFFF"
+		return 1
 
 /obj/screen/battle_icon/menu/fight
 	name = "\improper Fight"
@@ -24,8 +27,7 @@
 		return
 	for(var/obj/screen/battle_icon/menu/tech/O in battle.technique_objects)
 		O.update_tech(O.tech)
-		O.invisibility = 0
-		animate(O, alpha = 255, time = 3)
+		animate(O, alpha = (toggled ? 255 : 0), time = 3)
 
 /obj/screen/battle_icon/menu/use_item
 	name = "\improper Use Item"
@@ -35,7 +37,9 @@
 /obj/screen/battle_icon/menu/use_item/clicked(var/client/clicker)
 	if(!..())
 		return
-	battle.try_item()
+	if(!battle.try_item())
+		toggled = 0
+		color = "#FFFFFF"
 
 /obj/screen/battle_icon/menu/switch_out
 	name = "\improper Switch Phantasm"
@@ -45,7 +49,9 @@
 /obj/screen/battle_icon/menu/switch_out/clicked(var/client/clicker)
 	if(!..())
 		return
-	battle.try_switch()
+	if(!battle.try_switch())
+		toggled = 0
+		color = "#FFFFFF"
 
 /obj/screen/battle_icon/menu/flee
 	name = "\improper Flee"

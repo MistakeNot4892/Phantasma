@@ -15,7 +15,7 @@
 	animate(src, alpha=255,time=5)
 
 /obj/screen/notify/proc/display(var/message)
-	maptext = "<font color = '#663931'>[message]</font>"
+	maptext = "<span style = 'font-family:courier'><font color = '#663931'>[message]</font></span>"
 	var/writing = maptext
 	spawn(100)
 		if(maptext == writing)

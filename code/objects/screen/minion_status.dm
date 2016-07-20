@@ -2,10 +2,38 @@
 	name = "Minion Status"
 	icon = 'icons/screen/minion_status.dmi'
 	icon_state = "base"
+	layer = 2
 	maptext_x = 13
 	maptext_y = 18
 	maptext_width = 110
 	var/data/minion/minion
+
+/obj/screen/minion_stat/clicked(var/client/clicker)
+	if(!owner.client || clicker != owner.client)
+		return
+
+	if(!minion)
+		alpha = 0
+		return
+	alpha = 255
+
+	var/mob/trainer/T = owner
+	if(T.viewing_minion == minion)
+		T.client.screen -= minion.get_info_panel()
+		T.viewing_minion = null
+		color = "#FFFFFF"
+		return
+
+	for(var/obj/screen/minion_stat/MS in T.minion_status)
+		MS.color = "#FFFFFF"
+
+	if(T.viewing_minion)
+		T.client.screen -= T.viewing_minion.get_info_panel()
+		T.viewing_minion = null
+
+	color = "#AAAAAA"
+	T.viewing_minion = minion
+	T.client.screen += T.viewing_minion.get_info_panel()
 
 // Allow drag and drop rearranging to change the order of your minions.
 /obj/screen/minion_stat/MouseDrop(var/over_object)
@@ -54,11 +82,16 @@
 		else
 			T.client.screen -= T.minion_status
 			icon_state = "toggle_show"
+			if(T.viewing_minion)
+				T.client.screen -= T.viewing_minion.get_info_panel()
+				T.viewing_minion = null
 
 /obj/screen/minion_stat/New(var/_owner, var/data/minion/_minion)
 	..(_owner)
 	if(_minion)
 		set_minion(_minion)
+	else
+		alpha = 0
 
 /obj/screen/minion_stat/proc/set_minion(var/data/minion/_minion)
 	minion = _minion
@@ -67,10 +100,13 @@
 /obj/screen/minion_stat/proc/update_status()
 	overlays.Cut()
 	maptext = null
-	invisibility = 100
 	if(!minion)
 		return
-	invisibility = 0
+
+	if(minion)
+		alpha = 255
+	else
+		alpha = 0
 
 	var/image/bar = image(icon, "healthbar")
 	var/minion_hp = minion.data[MD_CHP]/minion.data[MD_MHP]

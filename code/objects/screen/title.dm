@@ -19,16 +19,21 @@ var/list/title_image
 
 /obj/screen/title/option/newgame/clicked(var/client/clicker)
 	var/mob/new_player/new_player = clicker.mob
-	if(istype(new_player))
-		if(!spawn_turf)
-			spawn_turf = locate(15,15,1)
-		var/mob/trainer/trainer = new(spawn_turf)
-		new_player.client.screen -= title_image
-		new_player.client.screen -= new_player.buttons
-		trainer.key = new_player.key
-
-		qdel(new_player)
+	if(new_player.joining)
 		return
+
+	new_player.joining = 1
+	color = "#AAAAAA"
+	sleep(10)
+	if(!spawn_turf)
+		spawn_turf = locate(15,15,1)
+	var/mob/trainer/trainer = new(spawn_turf)
+	new_player.client.screen -= title_image
+	new_player.client.screen -= new_player.buttons
+	trainer.key = new_player.key
+	qdel(new_player)
+	return
+	color = "#FFFFFF"
 
 /obj/screen/title/option/load
 	name = "Continue"

@@ -61,6 +61,7 @@
 #include "code\objects\screen\battle.dm"
 #include "code\objects\screen\battle_health_bar.dm"
 #include "code\objects\screen\battle_input.dm"
+#include "code\objects\screen\minion_info.dm"
 #include "code\objects\screen\minion_status.dm"
 #include "code\objects\screen\notification.dm"
 #include "code\objects\screen\title.dm"

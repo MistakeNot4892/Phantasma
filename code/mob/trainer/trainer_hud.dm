@@ -2,6 +2,7 @@
 	var/list/screen_hud
 	var/list/minion_status = list()
 	var/obj/screen/notify/notifications
+	var/data/minion/viewing_minion
 
 /mob/trainer/create_hud()
 	if(!client)
@@ -11,7 +12,6 @@
 		screen_hud = list(new /obj/screen/sprint(src))
 		overworld_barrier = new /obj/screen/barrier()
 		overworld_barrier.mouse_opacity = 0
-		overworld_barrier.invisibility = 100
 		screen_hud += overworld_barrier
 		for(var/i=1 to 6)
 			var/obj/screen/minion_stat/MS = new (src)

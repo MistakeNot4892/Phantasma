@@ -1,7 +1,8 @@
 /obj/screen
 	name = "screen element"
-	icon = 'icons/screen/screen.dmi'
-	layer = 22
+	icon = 'icons/screen/_screen.dmi'
+	plane = OVERWORLD_UI_PLANE
+
 	var/mob/owner
 
 /obj/screen/New(var/_owner)

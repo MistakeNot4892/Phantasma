@@ -8,6 +8,7 @@
 	var/list/tech_uses = list()
 	var/list/modifiers = list()
 	var/status = 0 //bitfield
+	var/obj/screen/data_panel/data_panel
 
 var/minion_count = 1
 
@@ -56,3 +57,9 @@ var/minion_count = 1
 
 /data/minion/proc/get_misc_damage_mods()
 	return 1
+
+/data/minion/proc/get_info_panel()
+	if(!data_panel)
+		data_panel = new /obj/screen/data_panel(src)
+	data_panel.update()
+	return data_panel

@@ -3,6 +3,7 @@ var/turf/spawn_turf
 /mob/new_player
 	name = "new player"
 	var/list/buttons
+	var/joining
 
 /mob/new_player/destroy()
 	for(var/obj/O in buttons)

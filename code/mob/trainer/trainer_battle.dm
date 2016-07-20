@@ -16,7 +16,6 @@
 /mob/trainer/proc/start_battle(var/data/battle_controller/battle)
 
 	if(overworld_barrier)
-		overworld_barrier.invisibility = 0
 		overworld_barrier.mouse_opacity = 2
 		spawn(8)
 			animate(overworld_barrier, alpha = 160, time = 3)
@@ -48,7 +47,6 @@
 	spawn(0)
 		animate(overworld_barrier, alpha = 0, time = 10)
 	spawn(10)
-		overworld_barrier.invisibility = 100
 		overworld_barrier.mouse_opacity = 0
 		if(following && following.return_loc)
 			src.move_to(get_turf(following))

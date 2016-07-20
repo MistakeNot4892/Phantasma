@@ -256,16 +256,17 @@
 
 /data/battle_data/player/start_turn(var/new_turn)
 	. = ..()
+	for(var/obj/screen/battle_icon/menu/M in all_objects)
+		M.toggled = 0
+		M.color = "#FFFFFF"
+
 	for(var/obj/O in menu_objects)
-		O.invisibility = 0
 		animate(O, alpha = 255, time = 3)
 
 /data/battle_data/player/end_turn()
 	. = ..()
 	for(var/obj/O in all_objects-hp_objects)
 		animate(O, alpha = 0, time = 3)
-		spawn(3)
-			O.invisibility = 100
 
 /data/battle_data/player/proc/try_item()
 	var/mob/trainer/trainer = owner
@@ -310,6 +311,7 @@
 
 		next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.template.hostile)
 		end_turn()
+	return 1
 
 /data/battle_data/player/proc/try_switch()
 	var/mob/trainer/T = owner
@@ -326,9 +328,11 @@
 		return
 
 	var/switching_to = input("Select a replacement.") as null|anything in usable_minions
-	if(switching_to)
-		next_action = list("action" = "switch", "ref" = usable_minions[switching_to])
-		end_turn()
+	if(!switching_to)
+		return
+	next_action = list("action" = "switch", "ref" = usable_minions[switching_to])
+	end_turn()
+	return 1
 
 /data/battle_data/player/update_health()
 	for(var/obj/screen/battle_icon/healthbar/HP in hp_bars)
