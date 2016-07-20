@@ -9,6 +9,7 @@
 
 	var/image/battle/backlight/minion_backlight
 	var/image/battle/backlight/opponent_backlight
+	var/obj/screen/battle_icon/statbar/xp/xp_bar
 
 	var/list/all_images =              list()
 	var/list/minion_images =           list()
@@ -38,18 +39,23 @@
 	allies_offset = round((64*allies.len)/2)
 	opponents_offset = round((64*opponents.len)/2)
 
-	// Create health bars!
+	// Create health and XP bars!
+	xp_bar = new /obj/screen/battle_icon/statbar/xp(src)
+	hp_objects += xp_bar
+	hp_objects += xp_bar.mask
+	hp_objects += xp_bar.bar
+
 	var/bar_count=0
 	for(var/data/battle_data/ally in allies)
-		var/obj/screen/battle_icon/healthbar/HP = new(ally, bar_count++)
+		var/obj/screen/battle_icon/statbar/HP = new(ally, bar_count++)
 		hp_bars += HP
 
 	bar_count=0
 	for(var/data/battle_data/opponent in opponents)
-		var/obj/screen/battle_icon/healthbar/enemy/HP = new(opponent, bar_count++)
+		var/obj/screen/battle_icon/statbar/enemy/HP = new(opponent, bar_count++)
 		hp_bars += HP
 
-	for(var/obj/screen/battle_icon/healthbar/HP in hp_bars)
+	for(var/obj/screen/battle_icon/statbar/HP in hp_bars)
 		hp_objects += HP
 		hp_objects += HP.bar
 		hp_objects += HP.mask
@@ -230,6 +236,7 @@
 /data/battle_data/player/reveal_minion(var/data/battle_data/minion_owner)
 	. = ..()
 	update_health()
+	xp_bar.update()
 	if(minion_owner == src)
 		// Clear tech menu.
 		for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
@@ -248,6 +255,8 @@
 			var/mob/trainer/T = owner
 			T.update_following_minion(minion)
 
+	minion_owner.minion.participated_in_last_fight = 1
+
 	// Update visuals.
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
 	if(minion_img.alpha == 255)
@@ -257,6 +266,17 @@
 	sleep(5)
 	animate(minion_img, color = "#FFFFFF", time = 3)
 	sleep(5)
+
+/data/battle_data/proc/reset_minions()
+	return
+/data/battle_data/player/reset_minions()
+	if(istype(owner, /mob/trainer))
+		var/mob/trainer/T = owner
+		for(var/data/minion/M in T.minions)
+			M.participated_in_last_fight = 0
+	else if(istype(owner, /mob/minion))
+		var/mob/minion/M = owner
+		M.minion_data.participated_in_last_fight = 0
 
 /data/battle_data/player/start_turn(var/new_turn)
 	. = ..()
@@ -341,7 +361,7 @@
 	return 1
 
 /data/battle_data/player/update_health()
-	for(var/obj/screen/battle_icon/healthbar/HP in hp_bars)
+	for(var/obj/screen/battle_icon/statbar/HP in hp_bars)
 		HP.update()
 
 /data/battle_data/player/do_tech_animations(var/data/technique/tech, var/data/battle_data/user, var/data/battle_data/target)
@@ -398,4 +418,7 @@
 	return
 
 /data/battle_data/player/award_experience(var/data/minion/defeated)
+	var/mob/trainer/T = owner
+	if(istype(T))
+		T.award_experience(get_xp_for(defeated), src)
 	return

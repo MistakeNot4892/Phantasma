@@ -9,9 +9,9 @@
 	var/list/modifiers = list()
 	var/status = 0 //bitfield
 	var/obj/screen/data_panel/data_panel
+	var/participated_in_last_fight
 
 var/minion_count = 1
-
 /data/minion/New(var/minion_path, var/mob/trainer/_owner)
 	if(_owner != null)
 		owner = _owner
@@ -25,7 +25,7 @@ var/minion_count = 1
 	data = template.data.Copy()
 	data[MD_CHP] = data[MD_MHP]
 	data[MD_LVL] = 1
-	data[MD_EXP] = 0
+	data[MD_EXP] = 50
 	minion_count++
 
 /data/minion/destroy()

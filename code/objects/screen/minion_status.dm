@@ -112,7 +112,8 @@
 	else
 		alpha = 0
 
-	var/image/bar = image(icon, "healthbar")
+	var/image/bar = image(icon, "statbar")
+	bar.plane = plane
 	var/minion_hp = minion.data[MD_CHP]/minion.data[MD_MHP]
 	var/matrix/M = matrix()
 	var/mob/trainer/T = owner
@@ -129,6 +130,7 @@
 	overlays += bar
 	overlays += "overlay"
 	var/image/I = image(icon, "gem")
+	I.plane = plane
 	I.color = minion.template.gem_colour
 	overlays += I
 	maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"

@@ -73,6 +73,7 @@
 	battle_state = BATTLE_IN_PROGRESS
 
 	for(var/data/battle_data/player in players)
+		player.reset_minions()
 		player.do_intro_animation()
 
 	var/data/battle_data/victor
