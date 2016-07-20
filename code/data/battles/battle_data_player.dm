@@ -7,8 +7,8 @@
 
 	var/client/client
 
-	var/image/minion_backlight
-	var/image/opponent_backlight
+	var/image/battle/backlight/minion_backlight
+	var/image/battle/backlight/opponent_backlight
 
 	var/list/all_images =              list()
 	var/list/minion_images =           list()
@@ -38,33 +38,30 @@
 	allies_offset = round((64*allies.len)/2)
 	opponents_offset = round((64*opponents.len)/2)
 
-	// Make sure all our images are in place.
-	update_minion_images(1,1)
-
 	// Create health bars!
 	var/bar_count=0
 	for(var/data/battle_data/ally in allies)
-		var/obj/battle_icon/healthbar/HP = new(ally, bar_count++)
+		var/obj/screen/battle_icon/healthbar/HP = new(ally, bar_count++)
 		hp_bars += HP
 
 	bar_count=0
 	for(var/data/battle_data/opponent in opponents)
-		var/obj/battle_icon/healthbar/enemy/HP = new(opponent, bar_count++)
+		var/obj/screen/battle_icon/healthbar/enemy/HP = new(opponent, bar_count++)
 		hp_bars += HP
 
-	for(var/obj/battle_icon/healthbar/HP in hp_bars)
+	for(var/obj/screen/battle_icon/healthbar/HP in hp_bars)
 		hp_objects += HP
 		hp_objects += HP.bar
 		hp_objects += HP.mask
 
 	// Create menus!
-	menu_objects += new /obj/battle_icon/menu/fight(src)
-	menu_objects += new /obj/battle_icon/menu/use_item(src)
-	menu_objects += new /obj/battle_icon/menu/switch_out(src)
-	menu_objects += new /obj/battle_icon/menu/flee(src)
+	menu_objects += new /obj/screen/battle_icon/menu/fight(src)
+	menu_objects += new /obj/screen/battle_icon/menu/use_item(src)
+	menu_objects += new /obj/screen/battle_icon/menu/switch_out(src)
+	menu_objects += new /obj/screen/battle_icon/menu/flee(src)
 
 	for(var/sloc in list("12,4","16,4","12,3","16,3"))
-		var/obj/battle_icon/menu/tech/T = new (src)
+		var/obj/screen/battle_icon/menu/tech/T = new (src)
 		T.screen_loc = sloc
 		technique_objects += T
 
@@ -76,29 +73,27 @@
 
 	// Create images!
 	for(var/data/battle_data/ally in allies)
-		var/image/I = new /image/battle(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(ally.owner.icon_state))
+		var/image/I = new /image/battle/entity(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(ally.owner.icon_state))
 		trainer_images["\ref[ally]"] = I
 		I.pixel_x =  420
 		I.pixel_y =  DEFAULT_ALLY_AXIS
 		I.layer += 0.3
 		all_images += I
 	for(var/data/battle_data/opponent in opponents)
-		var/image/I = new /image/battle(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = initial(opponent.owner.icon_state))
+		var/image/I = new /image/battle/entity(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = initial(opponent.owner.icon_state))
 		trainer_images["\ref[opponent]"] = I
 		I.pixel_x = -600
 		I.pixel_y = DEFAULT_OPPONENT_AXIS
 		I.layer += 0.2
 		all_images += I
 
-	minion_backlight = new /image/battle(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
-	minion_backlight.layer-=0.1
+	minion_backlight = new /image/battle/backlight(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
 	minion_backlight.pixel_x = -300
 	minion_backlight.pixel_y = DEFAULT_ALLY_AXIS-50
 	minion_backlight.alpha = 0
 	all_images += minion_backlight
 
-	opponent_backlight = new /image/battle(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
-	opponent_backlight.layer-=0.1
+	opponent_backlight = new /image/battle/backlight(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
 	opponent_backlight.pixel_x = 30
 	opponent_backlight.pixel_y = DEFAULT_OPPONENT_AXIS-50
 	opponent_backlight.alpha = 0
@@ -106,6 +101,9 @@
 	M.Scale(0.75)
 	opponent_backlight.transform = M
 	all_images += opponent_backlight
+
+	// Make sure all our images are in place.
+	update_minion_images(1,1)
 
 	// Update our client!
 	if(client)
@@ -138,7 +136,7 @@
 			last_pixel_y = I.pixel_y
 			client.images -= I
 			all_images -= I
-		var/image/I = new /image/battle(loc = owner, icon = use_icon,  icon_state = (player.minion ? player.minion.template.icon_state : ""))
+		var/image/I = new /image/battle/entity(loc = owner, icon = use_icon,  icon_state = (player.minion ? player.minion.template.icon_state : ""))
 		if(!are_opponents)
 			I.layer += 0.1
 		I.alpha = last_alpha
@@ -230,13 +228,13 @@
 	update_health()
 	if(minion_owner == src)
 		// Clear tech menu.
-		for(var/obj/battle_icon/menu/tech/t_menu in technique_objects)
+		for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
 			t_menu.update_tech()
 		// Update tech menu.
 		if(minion)
 			var/i = 1
 			for(var/data/technique/T in minion.techs)
-				var/obj/battle_icon/menu/tech/t_menu = technique_objects[i]
+				var/obj/screen/battle_icon/menu/tech/t_menu = technique_objects[i]
 				t_menu.update_tech(T)
 				i++
 		else
@@ -333,7 +331,7 @@
 		end_turn()
 
 /data/battle_data/player/update_health()
-	for(var/obj/battle_icon/healthbar/HP in hp_bars)
+	for(var/obj/screen/battle_icon/healthbar/HP in hp_bars)
 		HP.update()
 
 /data/battle_data/player/do_tech_animations(var/data/technique/tech, var/data/battle_data/user, var/data/battle_data/target)

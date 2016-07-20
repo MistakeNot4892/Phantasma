@@ -2,7 +2,8 @@
 	density = 0
 	name = ""
 	desc = ""
-	layer = 21
+	plane = EFFECTS_PLANE
+
 	var/lifetime = 5
 
 /obj/effect/New(var/newloc, var/_state, var/_lifetime)

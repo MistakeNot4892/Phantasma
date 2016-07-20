@@ -2,7 +2,7 @@
 	name = "Notifications"
 	icon = 'icons/screen/notify_bar.dmi'
 	icon_state = "base"
-	plane = 99
+	plane = SCREEN_PLANE
 	maptext_x = 12
 	maptext_y = 22
 	maptext_width = 608

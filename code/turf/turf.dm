@@ -26,4 +26,5 @@
 /turf/wall
 	name = "wall"
 	density = 1
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "wall"

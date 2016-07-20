@@ -9,7 +9,7 @@
 	sleep(1)
 	if(!screen_hud)
 		screen_hud = list(new /obj/screen/sprint(src))
-		overworld_barrier = new /obj/battle_icon/background()
+		overworld_barrier = new /obj/screen/barrier()
 		overworld_barrier.mouse_opacity = 0
 		overworld_barrier.invisibility = 100
 		screen_hud += overworld_barrier

@@ -3,7 +3,8 @@
 	density = 0
 	icon = 'icons/overworld/item.dmi'
 	icon_state = ""
-	layer = MOB_LAYER-0.1
+	plane = ITEM_PLANE
+
 	var/item_path = /data/item
 
 /obj/item/clicked(var/client/clicker)

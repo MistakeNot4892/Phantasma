@@ -4,7 +4,7 @@
 	icon = 'icons/overworld/trainer.dmi'
 	icon_state = "trainer"
 
-	var/tmp/obj/battle_icon/background/overworld_barrier
+	var/tmp/obj/screen/barrier/overworld_barrier
 	var/tmp/sleeping = 0
 	var/tmp/turf/last_loc
 

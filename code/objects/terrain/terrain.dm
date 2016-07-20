@@ -2,7 +2,7 @@
 	name = ""
 	icon = 'icons/terrain/grass.dmi'
 	icon_state = "grass_idle"
-	layer = MOB_LAYER + 1
+	plane = TERRAIN_PLANE
 	mouse_opacity = 0
 
 /obj/grass/New()

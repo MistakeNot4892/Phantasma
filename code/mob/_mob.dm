@@ -1,4 +1,6 @@
 /mob
+	plane = MOB_PLANE
+
 	var/sprinting = 0
 	var/next_move = 0
 	var/tmp/data/battle_controller/current_battle

@@ -1,0 +1,13 @@
+#define UNDERLAY_PLANE          1
+#define TURF_PLANE              2
+#define ITEM_PLANE              3
+#define TERRAIN_PLANE           4
+#define MOB_PLANE               5
+#define EFFECTS_PLANE           6
+#define OVERWORLD_UI_PLANE      7
+#define BARRIER_PLANE           8
+#define BATTLE_BACKGROUND_PLANE 9
+#define BATTLE_PLANE            10
+#define BATTLE_UI_PLANE         11
+#define SCREEN_PLANE            99
+#define SCREEN_EFFECTS_PANE    100
