@@ -36,7 +36,19 @@
 	else
 		icon_state = initial(icon_state)
 
+/mob/trainer/get_movement_delay()
+	.= ..()
+	if(following)
+		following.glide_size = glide_size
+
 /mob/trainer/Login()
+
+	if(!overworld_barrier)
+		overworld_barrier = new /obj/screen/barrier()
+		client.screen += overworld_barrier
+		animate(overworld_barrier, alpha = 0, time = 10)
+		spawn(10)
+			overworld_barrier.mouse_opacity = 0
 	. = ..()
 	if(sleeping)
 		notify_nearby("<b>\The [src] wakes up!</b>")

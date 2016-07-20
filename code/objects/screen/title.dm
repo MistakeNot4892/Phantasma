@@ -24,10 +24,12 @@ var/list/title_image
 
 	new_player.joining = 1
 	color = "#AAAAAA"
+	animate(new_player.blackout, alpha = 255, time = 10)
 	sleep(10)
 	if(!spawn_turf)
 		spawn_turf = locate(15,15,1)
 	var/mob/trainer/trainer = new(spawn_turf)
+	new_player.client.screen -= new_player.blackout
 	new_player.client.screen -= title_image
 	new_player.client.screen -= new_player.buttons
 	trainer.key = new_player.key

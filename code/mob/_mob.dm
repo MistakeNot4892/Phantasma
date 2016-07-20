@@ -4,9 +4,11 @@
 	var/sprinting = 0
 	var/next_move = 0
 	var/tmp/data/battle_controller/current_battle
+	glide_size = 4
 
 /mob/proc/get_movement_delay()
-	return sprinting ? 2	 : 3
+	glide_size = sprinting ? 8 : 4
+	return sprinting ? 1 : 2
 
 /mob/proc/update_icon()
 	return

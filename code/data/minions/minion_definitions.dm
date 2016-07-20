@@ -35,7 +35,7 @@
 	gem_colour = "#306082"
 
 /data/minion_template/firelizard
-	name = "Embermote"
+	name = "Umbermote"
 	icon_state = "firelizard"
 	techs = list(
 		/data/technique/combat,

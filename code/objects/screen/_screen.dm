@@ -24,6 +24,7 @@
 	owner.update_icon()
 	update_icon()
 	clicker.mob.notify("You are now <b>[owner.sprinting ? "running" : "walking"]</b>.")
+	owner.get_movement_delay()
 
 /obj/screen/menu
 	name = "\improper Menu"

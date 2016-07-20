@@ -9,10 +9,7 @@
 		return
 	sleep(1)
 	if(!screen_hud)
-		screen_hud = list(new /obj/screen/sprint(src))
-		overworld_barrier = new /obj/screen/barrier()
-		overworld_barrier.mouse_opacity = 0
-		screen_hud += overworld_barrier
+		screen_hud = list(new /obj/screen/sprint(src), overworld_barrier)
 		for(var/i=1 to 6)
 			var/obj/screen/minion_stat/MS = new (src)
 			MS.screen_loc = "17,[15-i]"

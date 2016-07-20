@@ -10,4 +10,4 @@
 #define BATTLE_PLANE            10
 #define BATTLE_UI_PLANE         11
 #define SCREEN_PLANE            99
-#define SCREEN_EFFECTS_PANE    100
+#define SCREEN_EFFECTS_PLANE   100
