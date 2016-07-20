@@ -12,7 +12,7 @@
 	sleep(10)
 	animate(target, color = "#FFFFFF", time = 10)
 
-/data/item/potion/apply(var/minion/target)
+/data/item/potion/apply(var/data/minion/target)
 	var/mhealth = target.data[MD_MHP]
 	target.data[MD_CHP] += heal_strength
 	if(target.data[MD_CHP] > mhealth)

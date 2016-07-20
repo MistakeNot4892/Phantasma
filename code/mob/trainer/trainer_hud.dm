@@ -1,6 +1,33 @@
 /mob/trainer
-	var/list/screen_hud = list()
+	var/list/screen_hud
+	var/list/minion_status = list()
+	var/obj/screen/notify/notifications
 
 /mob/trainer/create_hud()
+	if(!client)
+		return
 	sleep(1)
-	screen_hud = list(new /obj/screen/menu(src), new /obj/screen/sprint(src))
+	if(!screen_hud)
+		screen_hud = list(new /obj/screen/sprint(src))
+		overworld_barrier = new /obj/battle_icon/background()
+		overworld_barrier.mouse_opacity = 0
+		overworld_barrier.invisibility = 100
+		screen_hud += overworld_barrier
+		for(var/i=1 to 6)
+			var/obj/screen/minion_stat/MS = new (src)
+			MS.screen_loc = "17,[15-i]"
+			minion_status += MS
+
+	notifications = new /obj/screen/notify(src)
+	screen_hud += notifications
+	screen_hud += new /obj/screen/minion_toggle(src)
+	client.screen |= screen_hud
+
+/mob/trainer/proc/update_minion_status()
+	for(var/i=1 to minion_status.len)
+		var/obj/screen/minion_stat/MS = minion_status[i]
+		MS.set_minion(minions.len >= i ? minions[i] : null)
+
+/mob/trainer/proc/notify(var/message)
+	if(notifications)
+		notifications.display(message)

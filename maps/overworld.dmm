@@ -1,7 +1,24 @@
 "a" = (/turf/wall,/area)
 "b" = (/turf,/area)
-"c" = (/obj/terrain/grass,/turf,/area)
-"d" = (/obj/item/potion,/turf,/area)
+"c" = (/turf/brick,/area)
+"d" = (/turf/grille,/area)
+"e" = (/turf/grass/rock{tag = "icon-rock_grass (NORTHWEST)"; icon_state = "rock_grass"; dir = 9},/area)
+"f" = (/turf/grass/rock,/area)
+"g" = (/turf/grass/rock{tag = "icon-rock_grass (NORTHEAST)"; icon_state = "rock_grass"; dir = 5},/area)
+"h" = (/turf/grass/rock/corners,/area)
+"i" = (/turf/grass,/area)
+"j" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (NORTH)"; icon_state = "rock_grass_corners"; dir = 1},/area)
+"k" = (/turf/grass/rock{tag = "icon-rock_grass (WEST)"; icon_state = "rock_grass"; dir = 8},/area)
+"l" = (/obj/terrain/grass,/turf/grass,/area)
+"m" = (/turf/grass/rock{tag = "icon-rock_grass (EAST)"; icon_state = "rock_grass"; dir = 4},/area)
+"n" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHWEST)"; icon_state = "rock_grass"; dir = 10},/area)
+"o" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (EAST)"; icon_state = "rock_grass_corners"; dir = 4},/area)
+"p" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (WEST)"; icon_state = "rock_grass_corners"; dir = 8},/area)
+"q" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHEAST)"; icon_state = "rock_grass"; dir = 6},/area)
+"r" = (/obj/item/potion,/turf,/area)
+"s" = (/obj/landmark,/turf/grass,/area)
+"t" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
+"u" = (/obj/item/potion,/turf/grass,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -33,25 +50,25 @@ abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbcccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbcccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbcccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbcccccccbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbba
-abbbccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbcccccbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+acccccccccccccccccccccccccccccccbbbbbbbbbbbbbbbbba
+adddddddddddddddddddddddddddccccbbbbbbbbbbbbbbbbba
+adddddddddddddddddddddddddddccccbbbbbbbbbbbbbbbbba
+adbbbbbbbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbba
+adbbbbbbbbefffffgbbbbbbbbbbbccccbbbbbbbbbbbbbbbbba
+adeffgbbefhiiiiijfffffbbbbbbccccbbbbbbbbbbbbbbbbba
+adkiijffhiiiiiiiiiiiiijbbbbbccccbbbbbbbbbbbbbbbbba
+adkiiiiiiiiiilllllllllimbbbbccccbbbbbbbbbbbbbbbbba
+adkiiiiiiiilllllllllllimbbbbccccbbbbbbbbbbbbbbbbba
+adnoiiiiiilllllllllliipqbbbbccccbbbbbbbbbbbbbbbbba
+adehiiiilllllllliiiiiimbbbbbccccbbbbbbbbbbbbbbbbba
+adkiiiillllllliiiiiiiimbbbbbccccbbbbbbbbbbbbbbbbba
+adkiiillllllliiiiiiiiimbbbbrccccbbbbbbbbbbbbbbbbba
+adkilllllllliiiiiiisiijgbbbbccccbbbbbbbbbbbbbbbbba
+adkilllllliipttoiiiiiiimbbbbccccbbbbbbbbbbbbbbbbba
+adkillllliipqbbnoiiiuiimbbbbccccbbbbbbbbbbbbbbbbba
+adkiiiiiiipqbddbnoiiiiimbbbbccccrbbbbbbbbbbbbbbbba
+adntttttttqbbddbbntttttqbbbbccccbbbbbbbbbbbbbbbbba
+adddddddddddddddccccccccccccccccbbbbbbbbbbbbbbbbba
+adddddddddddddddccccccccccccccccbbbbbbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}

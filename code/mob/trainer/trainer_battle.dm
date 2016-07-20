@@ -2,7 +2,7 @@
 	if(following && !(following.minion_data.status & STATUS_FAINTED))
 		return following.minion_data
 	else
-		for(var/minion/minion in minions)
+		for(var/data/minion/minion in minions)
 			if(!(minion.status & STATUS_FAINTED))
 				return minion
 	return
@@ -13,15 +13,15 @@
 		return
 	. = ..()
 
-/mob/trainer/proc/start_battle(var/battle/battle)
+/mob/trainer/proc/start_battle(var/data/battle_controller/battle)
 
-	if(battle_background)
-		battle_background.invisibility = 0
-		battle_background.mouse_opacity = 2
+	if(overworld_barrier)
+		overworld_barrier.invisibility = 0
+		overworld_barrier.mouse_opacity = 2
 		spawn(8)
-			animate(battle_background, alpha = 160, time = 3)
+			animate(overworld_barrier, alpha = 160, time = 3)
 		spawn(12)
-			animate(battle_background, color = "#000000", time = 10)
+			animate(overworld_barrier, color = "#000000", time = 10)
 	current_battle = battle
 
 	if(following)
@@ -42,14 +42,14 @@
 			src.dir = get_dir(src, origin)
 			following.dir = src.dir
 
-/mob/trainer/end_battle(var/battle/battle)
+/mob/trainer/end_battle(var/data/battle_controller/battle)
 	. = ..()
 
 	spawn(0)
-		animate(battle_background, alpha = 0, time = 10)
+		animate(overworld_barrier, alpha = 0, time = 10)
 	spawn(10)
-		battle_background.invisibility = 100
-		battle_background.mouse_opacity = 0
+		overworld_barrier.invisibility = 100
+		overworld_barrier.mouse_opacity = 0
 		if(following && following.return_loc)
 			src.move_to(get_turf(following))
 			if(following.minion_data.data[MD_CHP] <= 0)
@@ -58,11 +58,12 @@
 				following.loc = null
 			else
 				following.move_to(following.return_loc)
-		battle_background.color = null
+		overworld_barrier.color = null
 	spawn(20)
 		current_battle = null
+		update_minion_status()
 		// testing purposes only
-		for(var/minion/M in minions)
+		for(var/data/minion/M in minions)
 			if(!(M.status & STATUS_FAINTED))
 				return
 		visible_message("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
@@ -70,9 +71,10 @@
 		// testing purposes only
 
 /mob/trainer/restore()
-	for(var/minion/M in minions)
+	for(var/data/minion/M in minions)
 		M.restore()
 	update_following_minion()
+	update_minion_status()
 
 /mob/trainer/clicked(var/client/clicker)
 	if(clicker.mob == src)
@@ -124,8 +126,8 @@
 	var/list/encounters = list()
 	if(wild_count)
 		for(var/i=1 to wild_count)
-			var/encounter_path = pick(typesof(/minion_template)-/minion_template)
-			encounters += new /mob/minion/wild(get_turf(src), new /minion(encounter_path))
+			var/encounter_path = pick(typesof(/data/minion_template)-/data/minion_template)
+			encounters += new /mob/minion/wild(get_turf(src), new /data/minion(encounter_path))
 
 	if(trainer_count)
 		for(var/i=1 to trainer_count)
@@ -155,8 +157,8 @@
 
 		if(wild_count)
 			for(var/i=1 to wild_count)
-				var/encounter_path = pick(typesof(/minion_template)-/minion_template)
-				allies += new /mob/minion/wild(get_turf(src), new /minion(encounter_path))
+				var/encounter_path = pick(typesof(/data/minion_template)-/data/minion_template)
+				allies += new /mob/minion/wild(get_turf(src), new /data/minion(encounter_path))
 		if(trainer_count)
 			for(var/i=1 to trainer_count)
 				allies += new /mob/trainer/temporary(get_turf(src))

@@ -19,5 +19,5 @@ var/list/items_by_path = list()
 	set background =1
 	return target
 
-/data/item/proc/apply(var/minion/target)
+/data/item/proc/apply(var/data/minion/target)
 	return

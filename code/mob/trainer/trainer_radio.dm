@@ -1,27 +1,9 @@
-var/list/radio_list = list()
-var/list/radio_frequencies = list("145.1","145.3","145.5","145.7","145.9")
-
-/radio
-	var/mob/trainer/owner
-	var/is_on = 1
-	var/freq
-
-/radio/proc/destroy()
-	owner = null
-	radio_list -= src
-	return 1
-
-/radio/New(var/mob/trainer/_owner)
-	owner = _owner
-	radio_list += src
-	freq = radio_frequencies[1]
-
 /mob/trainer
-	var/radio/radio
+	var/data/radio/radio
 
 /mob/trainer/New()
 	. = ..()
-	radio = new /radio(src)
+	radio = new /data/radio(src)
 
 /mob/trainer/verb/verb_toggle_radio()
 	set name="Toggle Radio"
@@ -77,9 +59,5 @@ var/list/radio_frequencies = list("145.1","145.3","145.5","145.7","145.9")
 		return
 
 	var/list/result = format_string_for_speech(src, message)
-	for(var/thing in radio_list)
-		var/radio/other_radio = thing
-		if(other_radio.is_on && other_radio.freq == radio.freq && other_radio.owner && other_radio.owner.client)
-			other_radio.owner << "\[[radio.freq]\] [result[1]]"
-
+	radio.transmit(result[1])
 	show_overhead_icon(result[2])

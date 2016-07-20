@@ -2,34 +2,30 @@
 	var/list/minions = list()
 	var/tmp/max_minions = 6
 	var/tmp/mob/minion/following
+	var/tmp/show_minions
 
 /mob/trainer/verb/switch_minion()
 	if(current_battle)
 		return
-	var/minion/switching = minions[1]
+	var/data/minion/switching = minions[1]
 	minions -= switching
 	minions += switching
 	update_following_minion()
 
-/mob/trainer/verb/show_minion_status()
-	if(current_battle)
-		return
-	src << "<b>Minion status for [src]:</b>"
-	var/i=0
-	for(var/minion/M in minions)
-		i++
-		src << "[i]. [M.name] - [M.data[MD_CHP]]/[M.data[MD_MHP]] [(M.status & STATUS_FAINTED) ? "FAINTED" : "Active"]"
-
-/mob/trainer/proc/update_following_minion(var/minion/new_minion)
+/mob/trainer/proc/update_following_minion(var/data/minion/new_minion)
 
 	if(following && following.minion_data == new_minion)
 		return
 
 	if(!new_minion || (new_minion.status & STATUS_FAINTED))
-		for(var/minion/temp in minions)
+		for(var/data/minion/temp in minions)
 			if(temp.status & STATUS_FAINTED)
 				continue
 			new_minion = temp
+			break
+
+	if(following && following.minion_data == new_minion)
+		return
 
 	if(!new_minion)
 		if(following)

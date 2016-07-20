@@ -4,18 +4,16 @@
 	icon = 'icons/overworld/trainer.dmi'
 	icon_state = "trainer"
 
-	var/tmp/obj/battle_icon/background/battle_background
+	var/tmp/obj/battle_icon/background/overworld_barrier
 	var/tmp/sleeping = 0
 	var/tmp/turf/last_loc
 
 /mob/trainer/New()
-	for(var/i=1 to 3)
-		minions += new /minion(pick(typesof(/minion_template)-/minion_template), src)
+	minions += new /data/minion(/data/minion_template/airbird, src)
+	minions += new /data/minion(/data/minion_template/firelizard, src)
+	minions += new /data/minion(/data/minion_template/earthbug, src)
+	minions += new /data/minion(/data/minion_template/waterfish, src)
 	update_following_minion()
-
-	battle_background = new /obj/battle_icon/background()
-	battle_background.mouse_opacity = 0
-	battle_background.invisibility = 100
 	..()
 
 /mob/trainer/Move()
@@ -40,8 +38,6 @@
 
 /mob/trainer/Login()
 	. = ..()
-	client.screen += battle_background
-	client.screen += screen_hud
 	if(sleeping)
 		visible_message("<b>\The [src] wakes up!</b>")
 	density = 1
@@ -49,6 +45,9 @@
 	icon_state = initial(icon_state)
 	update_icon()
 	create_hud()
+	update_minion_status()
+	if(show_minions)
+		client.screen += minion_status
 
 /mob/trainer/Logout()
 	. = ..()
@@ -65,17 +64,17 @@
 		qdel(radio)
 		radio = null
 	if(client)
-		if(battle_background)
-			client.screen -= battle_background
+		if(overworld_barrier)
+			client.screen -= overworld_barrier
 		client.screen -= screen_hud
 		for(var/obj/O in screen_hud)
 			qdel(O)
 		screen_hud.Cut()
-	if(battle_background)
-		qdel(battle_background)
-		battle_background = null
+	if(overworld_barrier)
+		qdel(overworld_barrier)
+		overworld_barrier = null
 	last_loc = null
-	for(var/minion/M in minions)
+	for(var/data/minion/M in minions)
 		qdel(M)
 	minions.Cut()
 	for(var/obj/O in contents)

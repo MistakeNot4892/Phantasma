@@ -4,9 +4,10 @@
 	icon = 'icons/minions/overmap.dmi'
 	density = 0
 	layer = MOB_LAYER-0.1
+	pixel_x = -16
 
 	var/wild
-	var/minion/minion_data
+	var/data/minion/minion_data
 	var/turf/return_loc
 
 /mob/minion/destroy()
@@ -25,17 +26,17 @@
 	clicker << "ATK: [minion_data.data[MD_ATK]] DEF: [minion_data.data[MD_DEF]] SPD: [minion_data.data[MD_SPEED]]"
 	clicker << "SPATK: [minion_data.data[MD_SPATK]] SPDEF: [minion_data.data[MD_SPDEF]]"
 	clicker << "<br><b>Techniques:</b>"
-	for(var/technique/T in minion_data.techs)
+	for(var/data/technique/T in minion_data.techs)
 		clicker << "[T.name] \[[minion_data.tech_uses[T.name]]/[T.max_uses]\]"
 
 /mob/minion/get_movement_delay()
 	return 0
 
-/mob/minion/New(var/newloc, var/minion/_data)
+/mob/minion/New(var/newloc, var/data/minion/_data)
 	..(newloc)
 	change_to_minion(_data)
 
-/mob/minion/proc/change_to_minion(var/minion/_data)
+/mob/minion/proc/change_to_minion(var/data/minion/_data)
 	set waitfor=0
 	set background=1
 	minion_data = _data
