@@ -18,25 +18,15 @@
 	change_radio_frequency()
 
 /mob/trainer/proc/toggle_radio()
-
-	if(!radio)
-		src << "You don't have a radio."
-		return
-
 	radio.is_on = !radio.is_on
-	src << "You switch your radio [radio.is_on ? "on" : "off"]."
+	src.notify("You switch your radio [radio.is_on ? "on" : "off"].")
 
 /mob/trainer/proc/change_radio_frequency()
-
-	if(!radio)
-		src << "You don't have a radio."
-		return
-
 	var/new_freq = input("Select a new frequency.") as null|anything in radio_frequencies
 	if(!new_freq)
 		return
 	radio.freq = new_freq
-	src << "You set your radio frequency to [radio.freq]."
+	src.notify("You set your radio frequency to [radio.freq].")
 
 /mob/trainer/verb/use_radio(var/message as text)
 
@@ -50,12 +40,8 @@
 	if(!message)
 		return
 
-	if(!radio)
-		src << "You don't have a radio."
-		return
-
 	if(!radio.is_on)
-		src << "Your radio is turned off."
+		src.notify("Your radio is turned off.")
 		return
 
 	var/list/result = format_string_for_speech(src, message)

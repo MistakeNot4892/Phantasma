@@ -308,7 +308,7 @@
 	end_battle()
 
 /data/battle_controller/proc/announce(var/message)
-	central_turf.visible_message("[message]")
+	central_turf.notify_nearby("[message]")
 
 /data/battle_controller/proc/join_battle(var/mob/player)
 	if(!player)
@@ -345,7 +345,7 @@
 /data/battle_controller/proc/dropout(var/mob/trainer/trainer)
 	set waitfor=0
 	set background=1
-	trainer.visible_message("As <b>\the [trainer]</b> has passed out, the battle has been cut short.")
+	trainer.notify_nearby("As <b>\the [trainer]</b> has passed out, the battle has been cut short.")
 	battle_state = BATTLE_ENDING
 
 /data/battle_controller/proc/reveal_minion(var/data/battle_data/player)

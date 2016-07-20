@@ -67,5 +67,6 @@
 #include "code\objects\screen\title.dm"
 #include "code\objects\terrain\terrain.dm"
 #include "code\turf\turf.dm"
+#include "interface\skin.dmf"
 #include "maps\overworld.dmm"
 // END_INCLUDE

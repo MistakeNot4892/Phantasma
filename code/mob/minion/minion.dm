@@ -20,15 +20,6 @@
 	density = 1
 	layer = MOB_LAYER
 
-/mob/minion/clicked(var/client/clicker)
-	clicker << "<b>[minion_data.owner ? "\The [minion_data.owner]'s" : "A wild"] [name].</b>"
-	clicker << "<b>Level:</b> [minion_data.data[MD_LVL]] ([minion_data.data[MD_EXP]]), [minion_data.data[MD_CHP]]/[minion_data.data[MD_MHP]]HP	"
-	clicker << "ATK: [minion_data.data[MD_ATK]] DEF: [minion_data.data[MD_DEF]] SPD: [minion_data.data[MD_SPEED]]"
-	clicker << "SPATK: [minion_data.data[MD_SPATK]] SPDEF: [minion_data.data[MD_SPDEF]]"
-	clicker << "<br><b>Techniques:</b>"
-	for(var/data/technique/T in minion_data.techs)
-		clicker << "[T.name] \[[minion_data.tech_uses[T.name]]/[T.max_uses]\]"
-
 /mob/minion/get_movement_delay()
 	return 0
 

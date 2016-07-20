@@ -69,6 +69,5 @@
 	else
 		announcement += " appears!"
 	sleep(1)
-	src.visible_message(announcement)
-
+	src.notify_nearby(announcement)
 	start_new_battle(list(trainer),encounters)

@@ -20,4 +20,4 @@ var/list/radio_frequencies = list("145.1","145.3","145.5","145.7","145.9")
 	for(var/thing in radio_list)
 		var/data/radio/other_radio = thing
 		if(other_radio.is_on && other_radio.freq == freq && other_radio.owner && other_radio.owner.client)
-			other_radio.owner << "\[[freq]\] <i>[message]</i>"
+			other_radio.owner.notify("\[[freq]\] <i>[message]</i>")

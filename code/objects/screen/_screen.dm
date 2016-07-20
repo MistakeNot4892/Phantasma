@@ -23,7 +23,7 @@
 	owner.sprinting = !owner.sprinting
 	owner.update_icon()
 	update_icon()
-	clicker << "You are now <b>[owner.sprinting ? "running" : "walking"]</b>."
+	clicker.mob.notify("You are now <b>[owner.sprinting ? "running" : "walking"]</b>.")
 
 /obj/screen/menu
 	name = "\improper Menu"

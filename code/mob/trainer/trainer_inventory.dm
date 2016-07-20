@@ -3,12 +3,6 @@
 	var/held_items = 0
 	var/tmp/max_items = 100
 
-/mob/trainer/verb/check_inventory()
-	src << "You are carrying [held_items] item\s."
-	for(var/thing in inventory)
-		var/data/inventory_item/I = inventory[thing]
-		src << "[I.count] x [I.template.name]: [I.template.desc]"
-
 /mob/trainer/proc/add_item(var/item_path, var/item_amount = 1)
 	if((held_items + item_amount) > max_items)
 		return 0

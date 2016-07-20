@@ -31,6 +31,7 @@ var/list/title_image
 	new_player.client.screen -= title_image
 	new_player.client.screen -= new_player.buttons
 	trainer.key = new_player.key
+	trainer.name = new_player.name
 	qdel(new_player)
 	return
 	color = "#FFFFFF"

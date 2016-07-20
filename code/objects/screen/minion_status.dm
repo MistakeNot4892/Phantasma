@@ -74,6 +74,10 @@
 /obj/screen/minion_toggle/clicked(var/client/clicker)
 	var/mob/trainer/T = owner
 	if(istype(T) && owner.client == T.client)
+
+		for(var/obj/screen/minion_stat/MS in T.minion_status)
+			MS.color = "#FFFFFF"
+
 		T.show_minions = !T.show_minions
 		T.update_minion_status()
 		if(T.show_minions)

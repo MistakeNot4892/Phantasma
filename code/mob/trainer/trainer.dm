@@ -39,7 +39,7 @@
 /mob/trainer/Login()
 	. = ..()
 	if(sleeping)
-		visible_message("<b>\The [src] wakes up!</b>")
+		notify_nearby("<b>\The [src] wakes up!</b>")
 	density = 1
 	sleeping = 0
 	icon_state = initial(icon_state)
@@ -54,7 +54,7 @@
 	if(current_battle)
 		current_battle.dropout(src)
 	if(!sleeping)
-		visible_message("<b>\The [src]</b> falls asleep...")
+		notify_nearby("<b>\The [src]</b> falls asleep...")
 	density = 0
 	sleeping = 1
 	update_icon()

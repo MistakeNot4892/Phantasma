@@ -64,7 +64,7 @@
 		for(var/data/minion/M in minions)
 			if(!(M.status & STATUS_FAINTED))
 				return
-		visible_message("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
+		notify_nearby("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
 		restore()
 		// testing purposes only
 
@@ -81,13 +81,13 @@
 	if(!istype(trainer))
 		return
 	if(get_dist(trainer, src) > 1)
-		clicker << "You are too far away."
+		clicker.mob.notify("You are too far away.")
 		return
 	if(current_battle || !client)
-		clicker << "\The [src] cannot battle you at the moment."
+		clicker.mob.notify("\The [src] cannot battle you at the moment.")
 		return
 	if(!minions.len)
-		clicker << "\The [src] has no minions."
+		clicker.mob.notify("\The [src] has no minions.")
 		return
 
 	dir = get_dir(src, trainer)

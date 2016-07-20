@@ -11,11 +11,11 @@
 	var/mob/trainer/T = clicker.mob
 	if(istype(T))
 		if(get_dist(T, src)>1)
-			T << "You are too far away."
+			T.notify("You are too far away.")
 			return
 		if(T.add_item(item_path))
-			visible_message("<b>\The [T]</b> picks up <b>\the [src]</b>.")
+			notify_nearby("<b>\The [T]</b> picks up <b>\the [src]</b>.")
 			qdel(src)
 		else
-			T << "You are carrying too much already!"
+			T.notify("You are carrying too much already!")
 	return

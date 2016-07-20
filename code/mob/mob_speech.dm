@@ -5,7 +5,7 @@ var/list/overhead_icon_states = icon_states('icons/overworld/dialogue_overhead_i
 		message = input("What would you like to do?") as text|null
 
 	message = format_and_capitalize("<b>\The [src]</b> [sanitize_text(message)]")
-	visible_message(message)
+	notify_nearby(message)
 
 /proc/format_string_for_speech(var/mob/speaker, var/message)
 
@@ -37,7 +37,7 @@ var/list/overhead_icon_states = icon_states('icons/overworld/dialogue_overhead_i
 
 	var/list/result = format_string_for_speech(src, message)
 
-	visible_message(result[1])
+	notify_nearby(result[1])
 	show_overhead_icon(result[2])
 
 /mob/proc/show_overhead_icon(var/message_icon)

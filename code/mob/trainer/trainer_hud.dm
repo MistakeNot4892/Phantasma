@@ -28,6 +28,9 @@
 		var/obj/screen/minion_stat/MS = minion_status[i]
 		MS.set_minion(minions.len >= i ? minions[i] : null)
 
-/mob/trainer/proc/notify(var/message)
+/mob/proc/notify(var/message)
+	src << message
+
+/mob/trainer/notify(var/message)
 	if(notifications)
 		notifications.display(message)
