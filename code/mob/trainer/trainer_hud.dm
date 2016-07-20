@@ -19,7 +19,7 @@
 			minion_status += MS
 
 	notifications = new /obj/screen/notify(src)
-	screen_hud += notifications
+	screen_hud += notifications.elements
 	screen_hud += new /obj/screen/minion_toggle(src)
 	client.screen |= screen_hud
 

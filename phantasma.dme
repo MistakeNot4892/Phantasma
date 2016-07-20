@@ -46,6 +46,7 @@
 #include "code\mob\minion\minion.dm"
 #include "code\mob\minion\minion_battle.dm"
 #include "code\mob\newplayer\new_player.dm"
+#include "code\mob\npc\npc.dm"
 #include "code\mob\trainer\trainer.dm"
 #include "code\mob\trainer\trainer_battle.dm"
 #include "code\mob\trainer\trainer_hud.dm"

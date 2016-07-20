@@ -16,9 +16,10 @@
 "p" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (WEST)"; icon_state = "rock_grass_corners"; dir = 8},/area)
 "q" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHEAST)"; icon_state = "rock_grass"; dir = 6},/area)
 "r" = (/obj/item/potion,/turf,/area)
-"s" = (/obj/landmark,/turf/grass,/area)
-"t" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
-"u" = (/obj/item/potion,/turf/grass,/area)
+"s" = (/mob/npc,/turf/grass,/area)
+"t" = (/obj/landmark,/turf/grass,/area)
+"u" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
+"v" = (/obj/item/potion,/turf/grass,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -63,11 +64,11 @@ adnoiiiiiilllllllllliipqbbbbccccbbbbbbbbbbbbbbbbba
 adehiiiilllllllliiiiiimbbbbbccccbbbbbbbbbbbbbbbbba
 adkiiiillllllliiiiiiiimbbbbbccccbbbbbbbbbbbbbbbbba
 adkiiillllllliiiiiiiiimbbbbrccccbbbbbbbbbbbbbbbbba
-adkilllllllliiiiiiisiijgbbbbccccbbbbbbbbbbbbbbbbba
-adkilllllliipttoiiiiiiimbbbbccccbbbbbbbbbbbbbbbbba
-adkillllliipqbbnoiiiuiimbbbbccccbbbbbbbbbbbbbbbbba
+adkilllllllliiisiiitiijgbbbbccccbbbbbbbbbbbbbbbbba
+adkilllllliipuuoiiiiiiimbbbbccccbbbbbbbbbbbbbbbbba
+adkillllliipqbbnoiiiviimbbbbccccbbbbbbbbbbbbbbbbba
 adkiiiiiiipqbddbnoiiiiimbbbbccccrbbbbbbbbbbbbbbbba
-adntttttttqbbddbbntttttqbbbbccccbbbbbbbbbbbbbbbbba
+adnuuuuuuuqbbddbbnuuuuuqbbbbccccbbbbbbbbbbbbbbbbba
 adddddddddddddddccccccccccccccccbbbbbbbbbbbbbbbbba
 adddddddddddddddccccccccccccccccbbbbbbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

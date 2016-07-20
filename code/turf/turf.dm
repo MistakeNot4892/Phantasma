@@ -26,5 +26,6 @@
 /turf/wall
 	name = "wall"
 	density = 1
+	plane = MOB_PLANE
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "wall"

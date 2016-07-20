@@ -1,5 +1,5 @@
 /data/minion_template/earthbug
-	name = "Earthbug"
+	name = "Earthsprite"
 	icon_state = "earthbug"
 	techs = list(
 		/data/technique/healing,
@@ -17,7 +17,7 @@
 	gem_colour = "#8F563B"
 
 /data/minion_template/waterfish
-	name = "Waterfish"
+	name = "Kelpice"
 	icon_state = "waterfish"
 	techs = list(
 		/data/technique/healing,
@@ -35,7 +35,7 @@
 	gem_colour = "#306082"
 
 /data/minion_template/firelizard
-	name = "Firelizard"
+	name = "Embermote"
 	icon_state = "firelizard"
 	techs = list(
 		/data/technique/combat,
@@ -53,7 +53,7 @@
 	gem_colour = "#DF7126"
 
 /data/minion_template/airbird
-	name = "Airbird"
+	name = "Skywhit"
 	icon_state = "airbird"
 	techs = list(
 		/data/technique/combat,
