@@ -114,6 +114,8 @@
 		if(targets.len>1)
 			var/choice = input("Select a target.") as null|anything in targets
 			if(!choice)
+				toggled = 0
+				color = "#FFFFFF"
 				return
 			target = targets[choice]
 		else

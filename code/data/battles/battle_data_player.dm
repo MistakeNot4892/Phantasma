@@ -69,19 +69,16 @@
 /data/battle_data/player/remove_minion(var/data/battle_data/minion_owner)
 	. = ..()
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
-	spawn(8)
-		update_health()
 	if(minion_img.alpha == 0)
 		return
 	animate(minion_img, color = "#FF0000", time = 3)
 	sleep(3)
 	animate(minion_img, alpha=0, time = 5)
 	sleep(5)
+	update_health()
 
 /data/battle_data/player/reveal_minion(var/data/battle_data/minion_owner)
 	. = ..()
-	update_health()
-	xp_bar.update()
 	if(minion_owner == src)
 		// Clear tech menu.
 		for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
@@ -111,6 +108,8 @@
 	sleep(5)
 	animate(minion_img, color = "#FFFFFF", time = 3)
 	sleep(5)
+	update_health()
+	xp_bar.update()
 
 /data/battle_data/player/reset_minions()
 	if(istype(owner, /mob/trainer))
@@ -129,6 +128,8 @@
 
 	for(var/obj/O in menu_objects)
 		animate(O, alpha = 255, time = 3)
+
+	owner.notify("Select an action.")
 
 /data/battle_data/player/end_turn()
 	. = ..()

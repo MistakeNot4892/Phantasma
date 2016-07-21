@@ -36,6 +36,10 @@ macro "macro"
 		command = ".south"
 		is-disabled = false
 	elem 
+		name = "="
+		command = "test_battle"
+		is-disabled = false
+	elem 
 		name = "`"
 		command = "say"
 		is-disabled = false

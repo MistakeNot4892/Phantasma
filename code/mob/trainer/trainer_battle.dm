@@ -23,6 +23,11 @@
 			animate(overworld_barrier, color = "#000000", time = 10)
 	current_battle = battle
 
+	for(var/obj/screen/minion_stat/MS in minion_status)
+		MS.color = "#FFFFFF"
+	if(client && viewing_minion)
+		client.screen -= viewing_minion.get_info_panel()
+
 	if(following)
 
 		var/turf/origin = get_turf(src)
@@ -44,11 +49,12 @@
 /mob/trainer/end_battle(var/data/battle_controller/battle)
 	. = ..()
 
-	spawn(0)
-		animate(overworld_barrier, alpha = 0, time = 10)
-	spawn(10)
-		overworld_barrier.mouse_opacity = 0
-		if(following && following.return_loc)
+	animate(overworld_barrier, alpha = 0, time = 10)
+	sleep(10)
+	overworld_barrier.mouse_opacity = 0
+	if(following)
+		update_following_minion()
+		if(following.return_loc)
 			src.move_to(get_turf(following))
 			if(following.minion_data.data[MD_CHP] <= 0)
 				animate(following, alpha=0, time=3)
@@ -56,17 +62,17 @@
 				following.loc = null
 			else
 				following.move_to(following.return_loc)
-		overworld_barrier.color = null
-	spawn(20)
-		current_battle = null
-		update_minion_status()
-		// testing purposes only
-		for(var/data/minion/M in minions)
-			if(!(M.status & STATUS_FAINTED))
-				return
-		notify_nearby("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
-		restore()
-		// testing purposes only
+	overworld_barrier.color = null
+	sleep(20)
+	current_battle = null
+	update_minion_status()
+	// testing purposes only
+	for(var/data/minion/M in minions)
+		if(!(M.status & STATUS_FAINTED))
+			return
+	notify_nearby("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
+	restore()
+	// testing purposes only
 
 /mob/trainer/restore()
 	for(var/data/minion/M in minions)
@@ -94,17 +100,19 @@
 	trainer.dir = get_dir(trainer, src)
 	start_new_battle(list(trainer), list(src))
 
-/mob/trainer/verb/test_battle()
+/mob/trainer/verb/test_battle_verb()
 	set name = "Test Battle"
 	set desc = "Start an immediate battle."
+	test_battle_proc()
 
+/mob/trainer/proc/test_battle_proc()
 	var/num = input("How many opponents?") as num
 	if(!num)
 		return
 	if(num < 1)
 		num = 1
-	else if(num > 5)
-		num = 5
+	else if(num > 3)
+		num = 3
 
 	var/trainer_count = 0
 	var/wild_count = 0
@@ -135,8 +143,8 @@
 	var/ally_count = input("How many allies?") as num
 	if(ally_count < 0)
 		ally_count = 0
-	else if(ally_count > 4)
-		ally_count = 4
+	else if(ally_count > 2)
+		ally_count = 2
 	if(ally_count)
 		trainer_count = 0
 		wild_count = 0

@@ -13,6 +13,7 @@
 	var/tmp/list/players =  list()
 	var/tmp/list/team_one = list()
 	var/tmp/list/team_two = list()
+	var/tmp/turn_count = 0
 
 /data/battle_controller/New(var/list/_participants_one, var/list/_participants_two)
 
@@ -109,6 +110,7 @@
 					if(spd > sorted_player_speed[i])
 						sorted_players.Insert(i,player)
 						sorted_player_speed.Insert(i,spd)
+						break
 					else if(i == sorted_players.len)
 						sorted_players += player
 						sorted_player_speed += spd
@@ -180,7 +182,7 @@
 						if(player.wild_mob)
 							announce("The wild [player.minion.name] used <b>[tech.name]</b>!")
 						else
-							announce("\The [player.owner]'s [player.minion.name] used <b>[tech.name]</b>!")
+							announce("\The [player.minion.name] used <b>[tech.name]</b>!")
 						sleep(24)
 						announce("...but it failed!")
 						sleep(16)
@@ -194,12 +196,12 @@
 							if(target in player.allies)
 								target_descriptor = "\the allied [target.minion.name]"
 							else
-								target_descriptor = "\the [target.owner]'s [target.minion.name]"
+								target_descriptor = "\the enemy [target.minion.name]"
 
 					if(player.wild_mob)
 						announce("The wild [player.minion.name] used <b>[tech.name]</b> on <b>[target_descriptor]</b>!")
 					else
-						announce("\The [player.owner]'s [player.minion.name] used <b>[tech.name]</b> on <b>[target_descriptor]</b>!")
+						announce("\The [player.minion.name] used <b>[tech.name]</b> on <b>[target_descriptor]</b>!")
 
 					// Apply the technique and announce the result appropriately.
 					var/tech_result = tech.apply_to(player.minion, target.minion)
@@ -240,8 +242,12 @@
 						target.minion.status |= STATUS_FAINTED
 						remove_minion(target)
 						sleep(8)
+						for(var/data/battle_data/witness in players)
+							witness.update_health()
 						award_experience(target.opponents, target.minion)
 						target.minion = null
+						sleep(20)
+
 				else
 					announce("\The [player.owner] performed action '[player.next_action["action"]]'.")
 

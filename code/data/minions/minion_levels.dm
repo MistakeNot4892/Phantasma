@@ -32,14 +32,14 @@
 
 	var/per_minion = max(1,round(amt/minions_who_fought.len))
 	for(var/data/minion/M in minions_who_fought)
+		M.gain_exp(per_minion)
 		if(M == battle_data.minion)
 			battle_data.xp_bar.update()
-		M.gain_exp(per_minion)
 
 /data/minion/proc/gain_exp(var/amt)
 	data[MD_EXP] += amt
 	owner.notify("<b>\The [name]</b> recieved [amt] experience points!")
-	if(data[MD_EXP] > get_amount_to_next_level(data[MD_LVL]))
+	if(data[MD_EXP] >= get_amount_to_next_level(data[MD_LVL]))
 		data[MD_LVL]++
 		sleep(25)
 		owner.notify("Ding! <b>\The [name]</b> reached level <b>[data[MD_LVL]]</b>!")

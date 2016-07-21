@@ -7,7 +7,7 @@
 	layer = 3
 
 /obj/screen/battle_icon/statbar_mask/xp
-	maptext_x = 190
+	maptext_x = 210
 	maptext_y = 36
 	maptext_width = 50
 
@@ -130,7 +130,7 @@
 
 /obj/screen/battle_icon/statbar/xp/update_maptext(var/data/minion/tracking)
 	if(tracking)
-		mask.maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>LV[tracking.data[MD_LVL]]</b></font></span>"
+		mask.maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>LV.[tracking.data[MD_LVL]]</b></font></span>"
 	else
 		mask.maptext = null
 

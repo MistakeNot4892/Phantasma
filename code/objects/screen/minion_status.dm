@@ -14,8 +14,10 @@
 
 	if(!minion)
 		alpha = 0
+		invisibility = 100
 		return
 	alpha = 255
+	invisibility = 0
 
 	var/mob/trainer/T = owner
 	if(T.viewing_minion == minion)
@@ -41,7 +43,8 @@
 	var/obj/screen/minion_stat/MS = over_object
 	var/mob/trainer/T = owner
 	if(istype(MS) && istype(T))
-
+		if(MS.alpha == 0)
+			return
 		// Update screen loc.
 		var/last_screen_loc = screen_loc
 		screen_loc = MS.screen_loc
@@ -74,10 +77,6 @@
 /obj/screen/minion_toggle/clicked(var/client/clicker)
 	var/mob/trainer/T = owner
 	if(istype(T) && owner.client == T.client)
-
-		for(var/obj/screen/minion_stat/MS in T.minion_status)
-			MS.color = "#FFFFFF"
-
 		T.show_minions = !T.show_minions
 		T.update_minion_status()
 		if(T.show_minions)
@@ -96,6 +95,7 @@
 		set_minion(_minion)
 	else
 		alpha = 0
+		invisibility = 100
 
 /obj/screen/minion_stat/proc/set_minion(var/data/minion/_minion)
 	minion = _minion
@@ -109,8 +109,10 @@
 
 	if(minion)
 		alpha = 255
+		invisibility = 0
 	else
 		alpha = 0
+		invisibility = 100
 
 	var/image/bar = image(icon, "statbar")
 	bar.plane = plane

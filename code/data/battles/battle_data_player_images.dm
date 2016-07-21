@@ -1,5 +1,5 @@
 #define DEFAULT_ALLY_AXIS -150
-#define DEFAULT_OPPONENT_AXIS -32
+#define DEFAULT_OPPONENT_AXIS 16
 
 /data/battle_data/player
 	var/image/battle/backlight/minion_backlight
@@ -17,29 +17,29 @@
 	for(var/data/battle_data/ally in allies)
 		var/image/I = new /image/battle/entity(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(ally.owner.icon_state))
 		trainer_images["\ref[ally]"] = I
+		I.layer = 20 + ally.team_position
 		I.alpha = 0
-		I.pixel_x =  (-340-((allies_offset*(allies.len)))/2)+(allies_offset*ally.team_position)
+		I.pixel_x =  (-300-((allies_offset*(allies.len)))/2)+(allies_offset*ally.team_position)
 		I.pixel_y =  DEFAULT_ALLY_AXIS
-		I.layer += 0.3
 		all_images += I
 	for(var/data/battle_data/opponent in opponents)
 		var/image/I = new /image/battle/entity(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = initial(opponent.owner.icon_state))
+		I.layer = 10 + opponent.team_position
 		trainer_images["\ref[opponent]"] = I
 		I.alpha = 0
 		I.pixel_x = (50-((opponents_offset*(opponents.len)))/2)+(opponents_offset*opponent.team_position)
 		I.pixel_y = DEFAULT_OPPONENT_AXIS
-		I.layer += 0.2
 		all_images += I
 
 	minion_backlight = new /image/battle/backlight(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
 	minion_backlight.pixel_x = -300
-	minion_backlight.pixel_y = DEFAULT_ALLY_AXIS-25
+	minion_backlight.pixel_y = DEFAULT_ALLY_AXIS-35
 	minion_backlight.alpha = 0
 	all_images += minion_backlight
 
 	opponent_backlight = new /image/battle/backlight(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
-	opponent_backlight.pixel_x = 30
-	opponent_backlight.pixel_y = DEFAULT_OPPONENT_AXIS-50
+	opponent_backlight.pixel_x = 20
+	opponent_backlight.pixel_y = DEFAULT_OPPONENT_AXIS-35
 	opponent_backlight.alpha = 0
 	var/matrix/M = matrix()
 	M.Scale(0.75)
@@ -51,7 +51,7 @@
 
 /data/battle_data/player/proc/update_images_with(var/list/update_data, var/are_opponents)
 
-	var/default_x = -280
+	var/default_x = -220
 	var/default_y = DEFAULT_ALLY_AXIS
 	var/use_icon = 'icons/battle/icons_rear.dmi'
 	var/use_offset = allies_offset

@@ -28,3 +28,13 @@
 	if(busy || !clicker.mob || get_dist(src, clicker.mob) > 1)
 		return
 	interact(clicker.mob)
+
+/mob/npc/fightmaster
+	name = "fightmaster"
+	dialogue_string = "FIGHT NOW."
+
+/mob/npc/fightmaster/interact(var/mob/person)
+	. = ..()
+	var/mob/trainer/T = person
+	if(istype(T))
+		T.test_battle_proc()

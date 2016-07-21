@@ -36,7 +36,7 @@
 			buffer.Cut(BUFFER_SIZE+1)
 			if(index > buffer.len)
 				index = buffer.len
-	maptext = "<span style = 'font-family:courier'><font color = '#663931'>[index!=1 ? "<b>[index-1].</b> " : ""][buffer[index]]</font></span>"
+	maptext = "<span style = 'font-family:courier'><font color = '#663931' align='center'>[index!=1 ? "<b>[index-1].</b> " : ""][buffer[index]]</font></span>"
 
 /obj/screen/notify_scroll
 	icon = 'icons/screen/notify_arrows.dmi'
