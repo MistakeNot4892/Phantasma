@@ -61,4 +61,4 @@ var/list/overhead_icon_states = icon_states('icons/overworld/dialogue_overhead_i
 /mob/proc/show_overhead_icon(var/message_icon)
 	if(!(message_icon in overhead_icon_states))
 		return
-	new /obj/effect/speech(get_turf(src), message_icon, 10)
+	new /obj/effect/speech(get_turf(src), _state = message_icon)

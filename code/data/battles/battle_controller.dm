@@ -81,7 +81,7 @@
 
 		var/delay
 		for(var/data/battle_data/player in players)
-			if(player.suspend_battle || (!player.dummy && isnull(player.next_action)))
+			if(!player.dummy && isnull(player.next_action))
 				delay = 1
 				break
 

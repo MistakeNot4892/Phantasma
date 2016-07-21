@@ -11,7 +11,6 @@
 
 	var/dummy = 1
 	var/wild_mob
-	var/suspend_battle = 1
 	var/taking_commands = 0
 	var/list/next_action = null
 	var/team_position
@@ -41,12 +40,7 @@
 /data/battle_data/proc/do_intro_animation()
 	set waitfor=0
 	set background=1
-
-	spawn(40)
-
-		suspend_battle = 0
-		start_turn()
-
+	start_turn()
 	return
 
 /data/battle_data/proc/remove_minion()
@@ -110,4 +104,7 @@
 	return ..()
 
 /data/battle_data/proc/do_item_animation(var/data/item/template, var/data/battle_data/target)
+	return
+
+/data/battle_data/proc/reset_minions()
 	return

@@ -1,8 +1,8 @@
 /mob/trainer
 
-	name = "placeholder trainer"
-	icon = 'icons/overworld/trainer.dmi'
-	icon_state = "trainer"
+	name = "placeholder human"
+	icon = 'icons/overworld/human.dmi'
+	icon_state = "base"
 
 	var/tmp/obj/screen/barrier/overworld_barrier
 	var/tmp/sleeping = 0

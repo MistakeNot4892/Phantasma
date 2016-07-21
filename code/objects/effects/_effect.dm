@@ -4,7 +4,7 @@
 	desc = ""
 	plane = EFFECTS_PLANE
 
-	var/lifetime = 5
+	var/lifetime = 15
 
 /obj/effect/New(var/newloc, var/_state, var/_lifetime)
 	..(newloc)
@@ -31,7 +31,7 @@
 
 /obj/effect/speech
 	icon = 'icons/overworld/dialogue_overhead_icons.dmi'
-	pixel_z = 28
+	pixel_z = 42
 	alpha = 0
 	var/fadeout_step = 8
 

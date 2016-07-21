@@ -1,7 +1,7 @@
 /mob/npc
 	name = "placeholder villager"
-	icon = 'icons/overworld/trainer.dmi'
-	icon_state = "trainer"
+	icon = 'icons/overworld/npcs.dmi'
+	icon_state = "generic"
 
 	var/busy
 	var/dialogue_string = "Hi $NAME!"

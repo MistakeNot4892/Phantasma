@@ -45,3 +45,6 @@ var/list/techniques_by_path = list()
 	if(!istype(target))
 		return
 	return 1
+
+/data/technique/proc/do_battlefield_animation(var/data/battle_data/target)
+	return

@@ -29,6 +29,8 @@
 #include "code\data\battles\battle_controller.dm"
 #include "code\data\battles\battle_data.dm"
 #include "code\data\battles\battle_data_player.dm"
+#include "code\data\battles\battle_data_player_animations.dm"
+#include "code\data\battles\battle_data_player_images.dm"
 #include "code\data\battles\battle_input.dm"
 #include "code\data\inventory\_item.dm"
 #include "code\data\inventory\inventory_item.dm"
@@ -71,6 +73,5 @@
 #include "code\objects\screen\title.dm"
 #include "code\objects\terrain\terrain.dm"
 #include "code\turf\turf.dm"
-#include "interface\skin.dmf"
 #include "maps\overworld.dmm"
 // END_INCLUDE
