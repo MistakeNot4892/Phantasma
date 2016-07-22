@@ -18,14 +18,14 @@
 	if(overworld_barrier)
 		overworld_barrier.mouse_opacity = 2
 		spawn(8)
-			overworld_barrier.color = "#FFFFFF"
+			overworld_barrier.color = WHITE
 			animate(overworld_barrier, alpha = 255, time = 3)
 		spawn(12)
-			animate(overworld_barrier, alpha = 160, color = "#000000", time = 10)
+			animate(overworld_barrier, alpha = 160, color = BLACK, time = 10)
 	current_battle = battle
 
 	for(var/obj/screen/minion_stat/MS in minion_status)
-		MS.color = "#FFFFFF"
+		MS.color = WHITE
 	if(client && viewing_minion)
 		client.screen -= viewing_minion.get_info_panel()
 

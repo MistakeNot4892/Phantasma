@@ -18,4 +18,7 @@
 /obj/screen/battle_icon
 	screen_loc = "CENTER"
 	layer = BATTLE_LAYER
-	icon = 'icons/screen/battle_hp_underlay.dmi'
+	var/data/battle_data/player/battle
+
+/obj/screen/battle_icon/New(var/data/battle_data/_battle)
+	battle = _battle

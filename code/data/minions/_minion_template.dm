@@ -17,7 +17,7 @@
 		MD_SPEED_VAR_MIN = 1,
 		MD_SPEED_VAR_MAX = 3
 		)
-	var/gem_colour = "#FFFFFF"
+	var/gem_colour = WHITE
 
 /data/minion_template/proc/get_type_weakness(var/damtype)
 	return 1

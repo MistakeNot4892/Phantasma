@@ -5,7 +5,7 @@
 	icon = 'icons/screen/barrier.dmi'
 	icon_state = ""
 	alpha = 255
-	color = "#000000"
+	color = BLACK
 	mouse_opacity = 2
 
 /obj/screen/barrier/New()

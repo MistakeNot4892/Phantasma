@@ -10,10 +10,12 @@
 	50000
 	)
 
-/proc/get_amount_to_next_level(var/current_level=1)
+/proc/get_xp_threshold_for(var/current_level=1)
 	if(!current_level)
 		current_level = 1
-	else if(current_level > level_totals.len)
+	else
+		current_level++
+	if(current_level > level_totals.len)
 		current_level = level_totals.len
 	return level_totals[current_level]
 
@@ -34,12 +36,12 @@
 	for(var/data/minion/M in minions_who_fought)
 		M.gain_exp(per_minion)
 		if(M == battle_data.minion)
-			battle_data.xp_bar.update()
+			battle_data.update_health_images()
 
 /data/minion/proc/gain_exp(var/amt)
 	data[MD_EXP] += amt
 	owner.notify("<b>\The [name]</b> recieved [amt] experience points!")
-	if(data[MD_EXP] >= get_amount_to_next_level(data[MD_LVL]))
+	if(data[MD_EXP] >= get_xp_threshold_for(data[MD_LVL]))
 		data[MD_LVL]++
 		sleep(25)
 		owner.notify("Ding! <b>\The [name]</b> reached level <b>[data[MD_LVL]]</b>!")

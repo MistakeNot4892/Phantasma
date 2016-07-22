@@ -8,9 +8,9 @@
 /data/item/potion/do_battle_animation(var/image/target)
 	if(!..())
 		return
-	animate(target, color = "#00FF00", time = 10)
+	animate(target, color = PALE_GREEN, time = 10)
 	sleep(10)
-	animate(target, color = "#FFFFFF", time = 10)
+	animate(target, color = WHITE, time = 10)
 
 /data/item/potion/apply(var/data/minion/target)
 	var/mhealth = target.data[MD_MHP]

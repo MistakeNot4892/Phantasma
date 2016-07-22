@@ -1,14 +1,13 @@
 /data/battle_data/player
 	dummy = 0
 	var/client/client
-	var/obj/screen/battle_icon/statbar/xp/xp_bar
-	var/list/all_objects =             list()
-	var/list/menu_objects =            list()
-	var/list/technique_objects =       list()
-	var/list/item_objects =            list()
-	var/list/switch_objects =          list()
-	var/list/hp_bars =                 list()
-	var/list/hp_objects =              list()
+	var/list/all_objects =       list()
+	var/list/menu_objects =      list()
+	var/list/item_objects =      list()
+	var/list/switch_objects =    list()
+	var/list/technique_objects = list()
+	var/list/hp_objects =        list()
+	var/list/hp_images =         list()
 
 /data/battle_data/player/New(var/data/battle_controller/_battle, var/mob/_owner)
 	. = ..()
@@ -19,27 +18,6 @@
 	// Update our team offsets.
 	allies_offset = round((64*allies.len)/2)
 	opponents_offset = round((64*opponents.len)/2)
-
-	// Create health and XP bars!
-	xp_bar = new /obj/screen/battle_icon/statbar/xp(src)
-	hp_objects += xp_bar
-	hp_objects += xp_bar.mask
-	hp_objects += xp_bar.bar
-
-	var/bar_count=0
-	for(var/data/battle_data/ally in allies)
-		var/obj/screen/battle_icon/statbar/HP = new(ally, bar_count++)
-		hp_bars += HP
-
-	bar_count=0
-	for(var/data/battle_data/opponent in opponents)
-		var/obj/screen/battle_icon/statbar/enemy/HP = new(opponent, bar_count++)
-		hp_bars += HP
-
-	for(var/obj/screen/battle_icon/statbar/HP in hp_bars)
-		hp_objects += HP
-		hp_objects += HP.bar
-		hp_objects += HP.mask
 
 	// Create menus!
 	menu_objects += new /obj/screen/battle_icon/menu/fight(src)
@@ -52,11 +30,21 @@
 		T.screen_loc = sloc
 		technique_objects += T
 
+	hp_objects += new /obj/screen/battle_icon/health/ally/self(src, src, 40, -32)
+
+	var/i = 0
+	for(var/data/battle_data/ally in (allies-src))
+		hp_objects += new /obj/screen/battle_icon/health/ally(src, ally, 40, -68 + (i*32))
+		i++
+	i=0
+	for(var/data/battle_data/opponent in opponents)
+		hp_objects += new /obj/screen/battle_icon/health/enemy(src, opponent, -280, 210 - (i*32))
+		i++
+
 	all_objects += menu_objects
 	all_objects += technique_objects
 	all_objects += item_objects
 	all_objects += switch_objects
-	all_objects += hp_objects
 
 	initialize_images()
 
@@ -68,30 +56,31 @@
 
 /data/battle_data/player/remove_minion(var/data/battle_data/minion_owner)
 	. = ..()
+
+	for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
+		t_menu.set_tech()
+
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
 	if(minion_img.alpha == 0)
 		return
-	animate(minion_img, color = "#FF0000", time = 3)
+	animate(minion_img, color = DARK_RED, time = 3)
 	sleep(3)
 	animate(minion_img, alpha=0, time = 5)
 	sleep(5)
-	update_health()
+	update_health_images()
 
 /data/battle_data/player/reveal_minion(var/data/battle_data/minion_owner)
 	. = ..()
+
 	if(minion_owner == src)
-		// Clear tech menu.
-		for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
-			t_menu.update_tech()
-		// Update tech menu.
-		if(minion)
-			var/i = 1
-			for(var/data/technique/T in minion.techs)
-				var/obj/screen/battle_icon/menu/tech/t_menu = technique_objects[i]
-				t_menu.update_tech(T)
-				i++
-		else
+		if(!minion)
 			return
+
+		var/i=1
+		for(var/obj/screen/technique/tech in minion.technique_panels)
+			var/obj/screen/battle_icon/menu/tech/t_menu = technique_objects[i]
+			t_menu.set_tech(tech)
+			i++
 
 		if(istype(owner, /mob/trainer))
 			var/mob/trainer/T = owner
@@ -103,13 +92,12 @@
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
 	if(minion_img.alpha == 255)
 		return
-	minion_img.color = "#FF0000"
+	minion_img.color = DARK_RED
 	animate(minion_img, alpha=255, time = 5)
 	sleep(5)
-	animate(minion_img, color = "#FFFFFF", time = 3)
+	animate(minion_img, color = WHITE, time = 3)
 	sleep(5)
-	update_health()
-	xp_bar.update()
+	update_health_images()
 
 /data/battle_data/player/reset_minions()
 	if(istype(owner, /mob/trainer))
@@ -122,9 +110,13 @@
 
 /data/battle_data/player/start_turn(var/new_turn)
 	. = ..()
+
 	for(var/obj/screen/battle_icon/menu/M in all_objects)
 		M.toggled = 0
-		M.color = "#FFFFFF"
+		M.color = WHITE
+
+	for(var/obj/screen/battle_icon/menu/tech/tech in technique_objects)
+		tech.set_tech(tech.technique)
 
 	for(var/obj/O in menu_objects)
 		animate(O, alpha = 255, time = 3)
@@ -133,7 +125,7 @@
 
 /data/battle_data/player/end_turn()
 	. = ..()
-	for(var/obj/O in all_objects-hp_objects)
+	for(var/obj/O in all_objects)
 		animate(O, alpha = 0, time = 3)
 
 /data/battle_data/player/proc/try_item()
@@ -204,22 +196,22 @@
 	end_turn()
 	return 1
 
-/data/battle_data/player/update_health()
-	for(var/obj/screen/battle_icon/statbar/HP in hp_bars)
-		HP.update()
-
 /data/battle_data/player/battle_ended()
 	taking_commands = 0
 	for(var/obj/O in all_objects)
 		animate(O, alpha = 0, time = 5)
 	for(var/image/I in all_images)
 		animate(I, alpha = 0, time = 5)
+	for(var/iref in hp_images)
+		animate(hp_images[iref], alpha = 0, time = 5)
 	sleep(5)
 
 	if(owner && client && owner.client)
 		owner.client.screen -= all_objects
 		for(var/image/I in all_images)
 			owner.client.images -= I
+		for(var/iref in hp_images)
+			owner.client.images -= hp_images[iref]
 	..()
 
 /data/battle_data/player/destroy()
@@ -230,17 +222,17 @@
 	minion_images.Cut()
 	opponent_images.Cut()
 	trainer_images.Cut()
+	hp_images.Cut()
 	opponent_trainer_images.Cut()
 
-	for(var/obj/O in all_objects)
+	for(var/obj/O in (all_objects+hp_objects))
 		qdel(O)
+
+	hp_objects.Cut()
 	all_objects.Cut()
 	menu_objects.Cut()
-	technique_objects.Cut()
 	item_objects.Cut()
 	switch_objects.Cut()
-	hp_objects.Cut()
-	hp_bars.Cut()
 	return ..()
 
 /data/battle_data/player/award_experience(var/data/minion/defeated)

@@ -58,7 +58,7 @@
 
 	spawn(0)
 		overworld_barrier.mouse_opacity = 2
-		overworld_barrier.color = "#000000"
+		overworld_barrier.color = BLACK
 		overworld_barrier.alpha = 255
 		animate(overworld_barrier, alpha = 0, time = 10)
 		sleep(10)

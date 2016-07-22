@@ -4,7 +4,7 @@
 	name = "Notifications"
 	icon = 'icons/screen/notify_bar.dmi'
 	icon_state = "base"
-	layer = SCREEN_LAYER
+	layer = SCREEN_EFFECTS_LAYER+0.1
 	plane = SCREEN_PLANE+1
 	maptext_x = 6
 	maptext_y = 22
@@ -36,21 +36,21 @@
 			buffer.Cut(BUFFER_SIZE+1)
 			if(index > buffer.len)
 				index = buffer.len
-	maptext = "<span style = 'font-family:courier'><font color = '[BROWN_DARK]' align='center'>[index!=1 ? "<b>[index-1].</b> " : ""][buffer[index]]</font></span>"
+	maptext = "<span style = 'font-family:courier'><font color = '[DARK_BROWN]' align='center'>[index!=1 ? "<b>[index-1].</b> " : ""][buffer[index]]</font></span>"
 
 /obj/screen/notify_scroll
 	icon = 'icons/screen/notify_arrows.dmi'
 	screen_loc = "20,1"
-	layer = SCREEN_LAYER+0.1
+	layer = SCREEN_EFFECTS_LAYER+0.2
 	plane = SCREEN_PLANE+1
 	var/obj/screen/notify/attached
 
 /obj/screen/notify_scroll/clicked(var/client/clicker)
-	color = "#AAAAAA"
+	color = PALE_GREY
 	do_clicked()
 	attached.display()
 	sleep(3)
-	color = "#FFFFFF"
+	color = WHITE
 
 /obj/screen/notify_scroll/New(var/mob/_owner, var/obj/screen/notify/_attached)
 	..(_owner)
@@ -90,8 +90,10 @@
 
 /obj/screen/notify_scroll/text/clicked(var/client/clicker)
 	if(winget(owner.client, "inputwindow", "is-visible") == "true")
-		owner.text_show.icon_state = "text"
+		if(owner.text_show)
+			owner.text_show.icon_state = "text"
 		winshow(clicker, "inputwindow", 0)
 	else
-		owner.text_show.icon_state = "text_showing"
+		if(owner.text_show)
+			owner.text_show.icon_state = "text_showing"
 		winshow(clicker, "inputwindow", 1)

@@ -21,29 +21,29 @@
 /data/technique/healing/do_user_front_anim(var/image/target)
 	if(!..())
 		return
-	animate(target, color = "#00FF00", time = 10)
+	animate(target, color = PALE_GREEN, time = 10)
 	sleep(10)
-	animate(target, color = "#FFFFFF", time = 10)
+	animate(target, color = WHITE, time = 10)
 
 /data/technique/healing/do_user_rear_anim(var/image/target)
 	if(!..())
 		return
-	animate(target, color = "#00FF00", time = 10)
+	animate(target, color = PALE_GREEN, time = 10)
 	sleep(10)
-	animate(target, color = "#FFFFFF", time = 10)
+	animate(target, color = WHITE, time = 10)
 
 /data/technique/healing/do_target_front_anim(var/image/target)
 	if(!..())
 		return
 	sleep(10)
-	animate(target, color = "#00FF00", time = 10)
+	animate(target, color = PALE_GREEN, time = 10)
 	sleep(10)
-	animate(target, color = "#FFFFFF", time = 10)
+	animate(target, color = WHITE, time = 10)
 
 /data/technique/healing/do_target_rear_anim(var/image/target)
 	if(!..())
 		return
 	sleep(10)
-	animate(target, color = "#00FF00", time = 10)
+	animate(target, color = PALE_GREEN, time = 10)
 	sleep(10)
-	animate(target, color = "#FFFFFF", time = 10)
+	animate(target, color = WHITE, time = 10)

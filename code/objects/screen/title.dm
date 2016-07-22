@@ -23,7 +23,7 @@ var/list/title_image
 		return
 
 	new_player.joining = 1
-	color = "#AAAAAA"
+	color = PALE_GREY
 	animate(new_player.blackout, alpha = 255, time = 10)
 	sleep(10)
 	if(!spawn_turf)
@@ -36,7 +36,7 @@ var/list/title_image
 	trainer.name = new_player.name
 	qdel(new_player)
 	return
-	color = "#FFFFFF"
+	color = WHITE
 
 /obj/screen/title/option/load
 	name = "Continue"

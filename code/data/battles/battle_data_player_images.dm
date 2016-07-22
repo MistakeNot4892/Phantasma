@@ -102,3 +102,16 @@
 	if(istype(I))
 		template.do_battle_animation(I)
 	return
+
+/data/battle_data/player/update_health_images()
+	for(var/obj/screen/battle_icon/health/H in hp_objects)
+		var/iref = "\ref[H]"
+		var/first=0
+		if(hp_images[iref])
+			owner.client.images -= hp_images[iref]
+		else
+			first=1
+		hp_images[iref] = H.get_image()
+		owner.client.images += hp_images[iref]
+		if(first)
+			animate(hp_images[iref], alpha = 255, time = 5)

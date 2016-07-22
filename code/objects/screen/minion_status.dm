@@ -22,17 +22,17 @@
 	if(T.viewing_minion == minion)
 		T.client.screen -= minion.get_info_panel()
 		T.viewing_minion = null
-		color = "#FFFFFF"
+		color = WHITE
 		return
 
 	for(var/obj/screen/minion_stat/MS in T.minion_status)
-		MS.color = "#FFFFFF"
+		MS.color = WHITE
 
 	if(T.viewing_minion)
 		T.client.screen -= T.viewing_minion.get_info_panel()
 		T.viewing_minion = null
 
-	color = "#AAAAAA"
+	color = PALE_GREY
 	T.viewing_minion = minion
 	T.client.screen += T.viewing_minion.get_info_panel()
 
@@ -69,9 +69,9 @@
 
 /obj/screen/minion_toggle
 	name = "Toggle Minion Display"
-	icon = 'icons/screen/minion_status.dmi'
+	icon = 'icons/screen/minion_toggle.dmi'
 	icon_state = "toggle_show"
-	screen_loc = "17,8"
+	screen_loc = "20,14"
 
 /obj/screen/minion_toggle/clicked(var/client/clicker)
 	var/mob/trainer/T = owner
@@ -81,9 +81,13 @@
 		if(T.show_minions)
 			T.client.screen += T.minion_status
 			icon_state = "toggle_hide"
+			screen_loc = "16,14"
 		else
+			for(var/obj/screen/minion_stat/MS in T.minion_status)
+				MS.color = WHITE
 			T.client.screen -= T.minion_status
 			icon_state = "toggle_show"
+			screen_loc = "20,14"
 			if(T.viewing_minion)
 				T.client.screen -= T.viewing_minion.get_info_panel()
 				T.viewing_minion = null
@@ -124,11 +128,11 @@
 	M.Translate(-(round((64-(64 * minion_hp))/2)),0)
 	I.transform = M
 	if(minion_hp < 0.2)
-		I.color = "#AC3232"
+		I.color = DARK_RED
 	else if(minion_hp < 0.7)
-		I.color = "#FBF236"
+		I.color = BRIGHT_YELLOW
 	else
-		I.color = "#99E550"
+		I.color = PALE_GREEN
 	add_overlays += I
 	I = image(icon, "overlay")
 	I.layer = layer+0.2
@@ -138,4 +142,4 @@
 	I.color = minion.template.gem_colour
 	add_overlays += I
 	overlays += add_overlays
-	maptext = "<span style = 'font-family:courier'><font color = '[OFF_WHITE]'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"
+	maptext = "<span style = 'font-family:courier'><font color = '[PALE_BLUE]'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"

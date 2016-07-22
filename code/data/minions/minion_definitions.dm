@@ -14,7 +14,7 @@
 		MD_SPDEF = 65,
 		MD_SPEED = 45
 		)
-	gem_colour = "#8F563B"
+	gem_colour = PALE_BROWN
 
 /data/minion_template/waterfish
 	name = "Kelpice"
@@ -32,7 +32,7 @@
 		MD_SPDEF = 64,
 		MD_SPEED = 43
 		)
-	gem_colour = "#306082"
+	gem_colour = DARK_BLUE
 
 /data/minion_template/firelizard
 	name = "Umbermote"
@@ -50,7 +50,7 @@
 		MD_SPDEF = 50,
 		MD_SPEED = 65
 		)
-	gem_colour = "#DF7126"
+	gem_colour = BRIGHT_ORANGE
 
 /data/minion_template/airbird
 	name = "Skywhit"
@@ -68,4 +68,4 @@
 		MD_SPDEF = 40,
 		MD_SPEED = 90
 		)
-	gem_colour = BROWN_DARK
+	gem_colour = DARK_BROWN

@@ -66,7 +66,7 @@
 	if(crit)
 		techflags += TECHNIQUE_CRITICAL
 
-	var/damage_total = ((2*(user.level + 10))/250)
+	var/damage_total = ((2*(user.data[MD_LVL] + 10))/250)
 	damage_total *= (user_atk/target_def)
 	damage_total *= (tech.damage_value+2)
 

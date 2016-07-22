@@ -1,20 +1,16 @@
 /obj/screen/battle_icon/menu
 	icon = 'icons/screen/battle_menu.dmi'
 	alpha = 0
-	var/data/battle_data/player/battle
 	var/toggled = 0
 
 /obj/screen/battle_icon/menu/destroy()
 	battle = null
 	return ..()
 
-/obj/screen/battle_icon/menu/New(var/data/battle_data/_battle)
-	battle = _battle
-
 /obj/screen/battle_icon/menu/clicked(var/client/clicker)
 	if((clicker == battle.client) && isnull(battle.next_action) && battle.taking_commands == 1)
 		toggled = !toggled
-		color = toggled ? "#AAAAAA" : "#FFFFFF"
+		color = toggled ? PALE_GREY : WHITE
 		return 1
 
 /obj/screen/battle_icon/menu/fight
@@ -26,7 +22,6 @@
 	if(!..())
 		return
 	for(var/obj/screen/battle_icon/menu/tech/O in battle.technique_objects)
-		O.update_tech(O.tech)
 		animate(O, alpha = (toggled ? 255 : 0), time = 3)
 
 /obj/screen/battle_icon/menu/use_item
@@ -39,7 +34,7 @@
 		return
 	if(!battle.try_item())
 		toggled = 0
-		color = "#FFFFFF"
+		color = WHITE
 
 /obj/screen/battle_icon/menu/switch_out
 	name = "\improper Switch Phantasm"
@@ -51,7 +46,7 @@
 		return
 	if(!battle.try_switch())
 		toggled = 0
-		color = "#FFFFFF"
+		color = WHITE
 
 /obj/screen/battle_icon/menu/flee
 	name = "\improper Flee"
@@ -65,35 +60,47 @@
 	for(var/data/battle_data/enemy in battle.opponents)
 		if(!enemy.wild_mob)
 			battle.owner.notify("You cannot flee from a formal duel!")
-			color = "#FFFFFF"
+			color = WHITE
 			return 0
 
 	battle.next_action = list("action" = "flee")
 	battle.end_turn()
 
 /obj/screen/battle_icon/menu/tech
-	name = "\improper Technique"
-	icon = 'icons/screen/technique_menu.dmi'
-	maptext_width = 112
-	maptext_x = 8
-	maptext_y = 6
-	var/data/technique/tech
+	name = "Technique"
+	var/obj/screen/technique/technique
 
-/obj/screen/battle_icon/menu/tech/proc/update_tech(var/data/technique/_tech)
-	maptext = null
-	tech = _tech
-	if(!tech || !battle.minion)
+/obj/screen/battle_icon/menu/tech/New()
+	. = ..()
+	set_tech()
+
+/obj/screen/battle_icon/menu/tech/proc/set_tech(var/obj/screen/technique/_tech)
+	if(!_tech)
+		technique = null
+		invisibility = 100
 		return
-	name = "[tech.name]"
-	maptext = "<span style='font-family:courier; font-size:-3pt'><font color = '[OFF_WHITE]'>[tech.name] <b>[battle.minion.tech_uses[tech.name]]</b></font></span>"
+
+	technique = _tech
+	technique.update_tech()
+	var/last_x = pixel_x
+	var/last_y = pixel_y
+	appearance = technique
+	invisibility = 0
+	alpha = 0
+	color = WHITE
+	layer = initial(layer)
+	plane = initial(plane)
+	pixel_x = last_x
+	pixel_y = last_y
 
 /obj/screen/battle_icon/menu/tech/clicked(var/client/clicker)
-	if(!..() || !tech)
+
+	if(!..() || !technique)
 		return
 
 	var/list/possible_targets
 	var/data/battle_data/target
-	if(tech.target_self)
+	if(technique.tech.target_self)
 		if(battle.allies.len > 1)
 			possible_targets = battle.allies
 		else
@@ -115,11 +122,11 @@
 			var/choice = input("Select a target.") as null|anything in targets
 			if(!choice)
 				toggled = 0
-				color = "#FFFFFF"
+				color = WHITE
 				return
 			target = targets[choice]
 		else
 			target = targets[targets[1]]
 
-	battle.next_action = list("action" = "tech", "ref" = tech, "tar" = target, "hostile_action" = tech.is_hostile)
+	battle.next_action = list("action" = "tech", "ref" = technique.tech, "tar" = target, "hostile_action" = technique.tech.is_hostile)
 	battle.end_turn()

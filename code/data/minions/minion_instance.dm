@@ -1,17 +1,21 @@
 /data/minion
 	var/name
-	var/level = 1
-	var/list/data = list()
-	var/data/minion_template/template
 	var/mob/trainer/owner
-	var/list/techs = list()
-	var/list/tech_uses = list()
-	var/list/modifiers = list()
-	var/status = 0 //bitfield
-	var/obj/screen/data_panel/data_panel
+	var/data/minion_template/template
 	var/participated_in_last_fight
 
-var/minion_count = 1
+	var/list/techs = list()
+	var/list/tech_uses = list()
+	var/list/data = list()
+	var/list/modifiers = list()
+
+	var/status = 0
+
+	var/obj/screen/data_panel/data_panel
+	var/obj/screen/statbar/health_bar
+	var/obj/screen/statbar/experience/xp_bar
+	var/list/technique_panels = list()
+
 /data/minion/New(var/minion_path, var/mob/trainer/_owner)
 	if(_owner != null)
 		owner = _owner
@@ -24,9 +28,15 @@ var/minion_count = 1
 
 	data = template.data.Copy()
 	data[MD_CHP] = data[MD_MHP]
-	data[MD_LVL] = 1
-	data[MD_EXP] = 50
-	minion_count++
+	data[MD_EXP] = get_xp_threshold_for(4)
+	data[MD_LVL] = 5
+
+	health_bar = new(src)
+	xp_bar = new(src)
+
+	for(var/data/technique/T in techs)
+		var/obj/screen/technique/tech = new /obj/screen/technique(src, T)
+		technique_panels += tech
 
 /data/minion/destroy()
 	techs.Cut()

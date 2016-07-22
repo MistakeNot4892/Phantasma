@@ -81,7 +81,7 @@
 	update_minion_images(update_minon=1)
 	return
 
-/data/battle_data/proc/update_health()
+/data/battle_data/proc/update_health_images()
 	return
 
 /data/battle_data/proc/do_tech_animations(var/data/technique/tech, var/data/battle_data/user, var/data/battle_data/target)

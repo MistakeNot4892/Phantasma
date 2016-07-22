@@ -50,12 +50,4 @@
 		encounter.set_dir(get_dir(encounter,trainer))
 		encounter.show_overhead_icon("shout")
 		encounters += encounter
-
-	var/announcement = capitalize(concat_list(encounters, "a wild "))
-	if(encounters.len>1)
-		announcement += " appear!"
-	else
-		announcement += " appears!"
-	sleep(1)
-	src.notify_nearby(announcement)
 	start_new_battle(list(trainer),encounters)

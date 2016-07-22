@@ -81,7 +81,6 @@
 		player.reset_minions()
 		player.do_intro_animation()
 
-	sleep(50)
 	bc.battles |= src
 	battle_state = BATTLE_IN_PROGRESS
 
@@ -151,7 +150,7 @@
 					do_item_animation(I.template, target)
 					sleep(I.template.battle_use_delay)
 					for(var/data/battle_data/witness in players)
-						witness.update_health()
+						witness.update_health_images()
 				else
 					sleep(10)
 					announce("...but it failed!")
@@ -224,7 +223,7 @@
 				sleep(tech.delay)
 
 				for(var/data/battle_data/witness in players)
-					witness.update_health()
+					witness.update_health_images()
 
 				sleep(16)
 
@@ -245,7 +244,7 @@
 					remove_minion(target)
 					sleep(8)
 					for(var/data/battle_data/witness in players)
-						witness.update_health()
+						witness.update_health_images()
 					award_experience(target.opponents, target.minion)
 					target.minion = null
 					sleep(20)
