@@ -3,7 +3,6 @@
 	icon = 'icons/screen/infopanel.dmi'
 	icon_state = "base"
 	screen_loc = "7,4"
-	layer = 1
 	maptext_x = 16
 	maptext_y = 320
 	maptext_width = 272

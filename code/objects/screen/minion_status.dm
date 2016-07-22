@@ -2,7 +2,6 @@
 	name = "Minion Status"
 	icon = 'icons/screen/minion_status.dmi'
 	icon_state = "base"
-	layer = 2
 	maptext_x = 13
 	maptext_y = 18
 	maptext_width = 110
@@ -114,25 +113,29 @@
 		alpha = 0
 		invisibility = 100
 
-	var/image/bar = image(icon, "statbar")
-	bar.plane = plane
+	var/list/add_overlays = list()
+	var/image/I = image(icon, "statbar")
+	I.layer = layer+0.1
 	var/minion_hp = minion.data[MD_CHP]/minion.data[MD_MHP]
 	var/matrix/M = matrix()
 	var/mob/trainer/T = owner
 
 	M.Scale(minion_hp,1)
 	M.Translate(-(round((64-(64 * minion_hp))/2)),0)
-	bar.transform = M
+	I.transform = M
 	if(minion_hp < 0.2)
-		bar.color = "#AC3232"
+		I.color = "#AC3232"
 	else if(minion_hp < 0.7)
-		bar.color = "#FBF236"
+		I.color = "#FBF236"
 	else
-		bar.color = "#99E550"
-	overlays += bar
-	overlays += "overlay"
-	var/image/I = image(icon, "gem")
-	I.plane = plane
+		I.color = "#99E550"
+	add_overlays += I
+	I = image(icon, "overlay")
+	I.layer = layer+0.2
+	add_overlays += I
+	I = image(icon, "gem")
+	I.layer = layer+0.3
 	I.color = minion.template.gem_colour
-	overlays += I
+	add_overlays += I
+	overlays += add_overlays
 	maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"

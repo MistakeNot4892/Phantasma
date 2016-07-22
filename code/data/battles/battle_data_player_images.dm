@@ -15,16 +15,17 @@
 /data/battle_data/player/proc/initialize_images()
 	// Create images!
 	for(var/data/battle_data/ally in allies)
-		var/image/I = new /image/battle/entity(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(ally.owner.icon_state))
+		var/image/I = new /image/battle/entity/trainer(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(ally.owner.icon_state))
 		trainer_images["\ref[ally]"] = I
-		I.layer = 20 + ally.team_position
+		I.layer += (ally.team_position/10)
 		I.alpha = 0
 		I.pixel_x =  (-300-((allies_offset*(allies.len)))/2)+(allies_offset*ally.team_position)
 		I.pixel_y =  DEFAULT_ALLY_AXIS
 		all_images += I
+
 	for(var/data/battle_data/opponent in opponents)
-		var/image/I = new /image/battle/entity(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = initial(opponent.owner.icon_state))
-		I.layer = 10 + opponent.team_position
+		var/image/I = new /image/battle/entity/trainer/opponent(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = initial(opponent.owner.icon_state))
+		I.layer += (opponent.team_position/10)
 		trainer_images["\ref[opponent]"] = I
 		I.alpha = 0
 		I.pixel_x = (50-((opponents_offset*(opponents.len)))/2)+(opponents_offset*opponent.team_position)
@@ -77,6 +78,7 @@
 		var/image/I = new /image/battle/entity(loc = owner, icon = use_icon,  icon_state = (player.minion ? player.minion.template.icon_state : ""))
 		if(!are_opponents)
 			I.layer += 0.1
+		I.layer += (player.team_position/10)
 		I.alpha = last_alpha
 		I.pixel_x = last_pixel_x
 		I.pixel_y = last_pixel_y

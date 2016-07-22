@@ -1,34 +1,8 @@
-/obj/screen/battle_icon/statbar_mask
-	icon_state = "hp_over"
-	maptext_width = 230
-	alpha = 0
-	maptext_x = 12
-	maptext_y = 36
-	layer = 3
-
-/obj/screen/battle_icon/statbar_mask/xp
-	maptext_x = 210
-	maptext_y = 36
-	maptext_width = 50
-
-/obj/screen/battle_icon/statbar_bar
-	icon_state = "hp_bar"
-	alpha = 0
-	layer = 2
-
-/obj/screen/battle_icon/statbar_bar/New()
-	. = ..()
-	var/matrix/M = matrix()
-	M.Scale(0,1)
-	M.Translate(-120,0)
-	transform = M
-
 /obj/screen/battle_icon/statbar
 	name = "HP"
 	screen_loc = "12,4"
 	icon_state = "hp_base"
 	alpha = 0
-	layer = 1
 
 	var/icon_prefix = "hp"
 	var/last_raw = 0
@@ -69,7 +43,6 @@
 /obj/screen/battle_icon/statbar/New(var/data/battle_data/_battle, var/count=0)
 
 	battle = _battle
-	layer += 0.1
 
 	icon_state = "[icon_prefix]_base"
 	if(friendly)
@@ -78,12 +51,14 @@
 		screen_loc = "[screen_loc_x],[screen_loc_y-count]"
 
 	bar = new(src)
+	bar.layer = layer+0.1
 	bar.screen_loc = screen_loc
 	bar.icon_state = "[icon_prefix]_bar"
 	bar.name = name
 	bar.color = default_color
 
 	mask = new mask_type(src)
+	mask.layer = layer+0.2
 	mask.screen_loc = screen_loc
 	mask.icon_state = "[icon_prefix]_over"
 	mask.name = name
@@ -136,3 +111,26 @@
 
 /obj/screen/battle_icon/statbar/xp/get_bar_color(var/raw_left)
 	return default_color
+
+/obj/screen/battle_icon/statbar_mask
+	icon_state = "hp_over"
+	maptext_width = 230
+	alpha = 0
+	maptext_x = 12
+	maptext_y = 36
+
+/obj/screen/battle_icon/statbar_mask/xp
+	maptext_x = 210
+	maptext_y = 36
+	maptext_width = 50
+
+/obj/screen/battle_icon/statbar_bar
+	icon_state = "hp_bar"
+	alpha = 0
+
+/obj/screen/battle_icon/statbar_bar/New()
+	. = ..()
+	var/matrix/M = matrix()
+	M.Scale(0,1)
+	M.Translate(-120,0)
+	transform = M

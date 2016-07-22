@@ -1,6 +1,7 @@
 /obj/terrain
 	density = 0
-	layer = TURF_LAYER+0.1
+	plane = MASTER_PLANE
+	layer = TURF_LAYER
 
 /obj/terrain/grass
 	name = "long grass"
@@ -46,7 +47,7 @@
 		var/encounter_path = pick(can_encounter)
 		puff(T)
 		var/mob/minion/wild/encounter = new(T, new /data/minion(encounter_path))
-		encounter.dir = get_dir(encounter,trainer)
+		encounter.set_dir(get_dir(encounter,trainer))
 		encounter.show_overhead_icon("shout")
 		encounters += encounter
 

@@ -4,14 +4,14 @@
 	name = "Notifications"
 	icon = 'icons/screen/notify_bar.dmi'
 	icon_state = "base"
-	plane = SCREEN_PLANE
+	layer = SCREEN_LAYER
+	plane = SCREEN_PLANE+1
 	maptext_x = 6
 	maptext_y = 22
 	maptext_width = 608
 	maptext_height = 32
 	screen_loc = "1,1"
 	alpha = 0
-	layer = 1
 
 	var/index = 1
 	var/list/buffer = list()
@@ -41,8 +41,7 @@
 /obj/screen/notify_scroll
 	icon = 'icons/screen/notify_arrows.dmi'
 	screen_loc = "20,1"
-	plane = SCREEN_PLANE
-	layer = 2
+	layer = SCREEN_LAYER+0.1
 	var/obj/screen/notify/attached
 
 /obj/screen/notify_scroll/clicked(var/client/clicker)

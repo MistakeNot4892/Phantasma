@@ -2,7 +2,7 @@
 	density = 0
 	name = ""
 	desc = ""
-	plane = EFFECTS_PLANE
+	layer = EFFECTS_LAYER
 
 	var/lifetime = 15
 

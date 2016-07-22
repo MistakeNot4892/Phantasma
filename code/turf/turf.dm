@@ -2,6 +2,7 @@
 	name = "rock"
 	icon = 'icons/turf/turf.dmi'
 	icon_state = "rock"
+	layer = TURF_LAYER
 	var/battle_environment
 
 /turf/grass
@@ -26,6 +27,6 @@
 /turf/wall
 	name = "wall"
 	density = 1
-	plane = MOB_PLANE
+	layer = MOB_LAYER
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "wall"

@@ -18,9 +18,10 @@
 	if(overworld_barrier)
 		overworld_barrier.mouse_opacity = 2
 		spawn(8)
-			animate(overworld_barrier, alpha = 160, time = 3)
+			overworld_barrier.color = "#FFFFFF"
+			animate(overworld_barrier, alpha = 255, time = 3)
 		spawn(12)
-			animate(overworld_barrier, color = "#000000", time = 10)
+			animate(overworld_barrier, alpha = 160, color = "#000000", time = 10)
 	current_battle = battle
 
 	for(var/obj/screen/minion_stat/MS in minion_status)
@@ -40,11 +41,11 @@
 
 		following.Move(get_turf(src))
 		// Hacking around to get the glide animation to look good.
-		src.dir = get_dir(src, following.return_loc)
+		src.set_dir(get_dir(src, following.return_loc))
 		src.move_to(following.return_loc)
 		spawn(5)
-			src.dir = get_dir(src, origin)
-			following.dir = src.dir
+			src.set_dir(get_dir(src, origin))
+			following.set_dir(src.dir)
 
 /mob/trainer/end_battle(var/data/battle_controller/battle)
 	. = ..()
@@ -63,7 +64,7 @@
 			else
 				following.move_to(following.return_loc)
 	overworld_barrier.color = null
-	sleep(20)
+	sleep(12)
 	current_battle = null
 	update_minion_status()
 	// testing purposes only
@@ -96,8 +97,8 @@
 		clicker.mob.notify("\The [src] has no minions.")
 		return
 
-	dir = get_dir(src, trainer)
-	trainer.dir = get_dir(trainer, src)
+	set_dir(get_dir(src, trainer))
+	trainer.set_dir(get_dir(trainer, src))
 	start_new_battle(list(trainer), list(src))
 
 /mob/trainer/verb/test_battle_verb()

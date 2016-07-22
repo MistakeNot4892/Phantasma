@@ -12,8 +12,8 @@
 	busy = 1
 	if(person)
 		previous_dir = dir
-		dir = get_dir(src, person)
-		person.dir = get_dir(person, src)
+		set_dir(get_dir(src, person))
+		person.set_dir(get_dir(person, src))
 	if(dialogue_string)
 		say(replacetext(dialogue_string, "$NAME", person.name))
 	sleep(interaction_delay)
@@ -21,7 +21,7 @@
 
 /mob/npc/proc/do_after_interaction()
 	busy = 0
-	dir = previous_dir
+	set_dir(previous_dir)
 	return
 
 /mob/npc/clicked(var/client/clicker)

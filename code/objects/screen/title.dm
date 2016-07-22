@@ -5,12 +5,12 @@ var/list/title_image
 	icon = 'icons/screen/title.dmi'
 	icon_state = "title"
 	screen_loc = "1,1"
+	layer = SCREEN_EFFECTS_LAYER+0.1
 	plane = SCREEN_PLANE
-	layer = 1
 
 /obj/screen/title/option
 	icon = 'icons/screen/title_options.dmi'
-	layer = 2
+	layer = SCREEN_EFFECTS_LAYER+0.2
 	screen_loc = "9,4"
 
 /obj/screen/title/option/newgame

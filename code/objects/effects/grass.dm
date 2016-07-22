@@ -7,7 +7,7 @@
 /obj/effect/grass/New()
 	rise_time = rand(4,6)
 	lifetime += rise_time
-	dir = pick(NORTH, SOUTH)
+	set_dir(pick(NORTH, SOUTH))
 	pixel_x = rand(-16, 16)
 	. = ..()
 

@@ -1,13 +1,19 @@
-#define UNDERLAY_PLANE          1
-#define TURF_PLANE              2
-#define ITEM_PLANE              3
-#define TERRAIN_PLANE           4
-#define MOB_PLANE               5
-#define EFFECTS_PLANE           6
-#define OVERWORLD_UI_PLANE      7
-#define BARRIER_PLANE           8
-#define BATTLE_BACKGROUND_PLANE 9
-#define BATTLE_PLANE            10
-#define BATTLE_UI_PLANE         11
-#define SCREEN_PLANE            99
-#define SCREEN_EFFECTS_PLANE   100
+#define LIGHTING_PLANE -10
+#define MASTER_PLANE    0
+#define SCREEN_PLANE    10
+
+#define UNDERLAY_LAYER           1
+#define TURF_LAYER               2
+#define ITEM_LAYER               3
+#define TERRAIN_LAYER            4
+#define MOB_LAYER                5
+#define EFFECTS_LAYER            6
+#define OVERWORLD_UI_LAYER       7
+#define BARRIER_LAYER            8
+
+#define BATTLE_BACKGROUND_LAYER  9
+#define BATTLE_LAYER            10
+#define SCREEN_LAYER            12
+#define SCREEN_EFFECTS_LAYER    13
+
+#define SCREEN_BARRIER_SIZE     25

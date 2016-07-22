@@ -3,7 +3,7 @@
 	density = 0
 	icon = 'icons/overworld/item.dmi'
 	icon_state = ""
-	plane = ITEM_PLANE
+	layer = ITEM_LAYER
 
 	var/item_path = /data/item
 
