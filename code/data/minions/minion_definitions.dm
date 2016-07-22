@@ -68,4 +68,4 @@
 		MD_SPDEF = 40,
 		MD_SPEED = 90
 		)
-	gem_colour = "#CBDBFC"
+	gem_colour = BROWN_DARK

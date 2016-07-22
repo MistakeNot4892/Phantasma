@@ -6,6 +6,11 @@
 	var/tmp/data/battle_controller/current_battle
 	glide_size = 4
 
+/mob/New()
+	. = ..()
+	create_hud()
+	mob_list += src
+
 /mob/proc/get_movement_delay()
 	glide_size = sprinting ? 8 : 4
 	return sprinting ? 1 : 2
@@ -23,9 +28,17 @@
 		light_obj.follow_holder()
 
 /mob/destroy()
+	mob_list -= src
 	current_battle = null
 	master_plane = null
 	lighting_plane = null
+	text_show = null
+	if(screen_hud)
+		if(client)
+			client.screen -= screen_hud
+		for(var/obj/O in screen_hud)
+			qdel(O)
+		screen_hud.Cut()
 	return ..()
 
 /mob/proc/remove_item(var/data/inventory_item/item, var/amt=1)
@@ -59,5 +72,6 @@
 	lighting_plane = new(loc=src)
 	client.images += master_plane
 	client.images += lighting_plane
-
+	client.screen += screen_hud
+	text_show.icon_state = winget(src.client, "inputwindow", "is-visible") == "false" ? "text" : "text_showing"
 	verbs += /mob/proc/debug_controller

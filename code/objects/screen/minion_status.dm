@@ -138,4 +138,4 @@
 	I.color = minion.template.gem_colour
 	add_overlays += I
 	overlays += add_overlays
-	maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"
+	maptext = "<span style = 'font-family:courier'><font color = '[OFF_WHITE]'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"

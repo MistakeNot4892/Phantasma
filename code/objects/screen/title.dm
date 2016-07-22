@@ -31,7 +31,7 @@ var/list/title_image
 	var/mob/trainer/trainer = new(spawn_turf)
 	new_player.client.screen -= new_player.blackout
 	new_player.client.screen -= title_image
-	new_player.client.screen -= new_player.buttons
+	new_player.client.screen -= new_player.screen_hud
 	trainer.key = new_player.key
 	trainer.name = new_player.name
 	qdel(new_player)

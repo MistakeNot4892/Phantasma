@@ -16,7 +16,7 @@
 	maptext = null
 	if(!minion)
 		return
-	maptext = "<b><span style = 'font-family:courier'><font align='center' color = '#663931'>[minion.name] <b>LV.[minion.data[MD_LVL]]</b></font></span></b>"
+	maptext = "<b><span style = 'font-family:courier'><font align='center' color = '[BROWN_DARK]'>[minion.name] <b>LV.[minion.data[MD_LVL]]</b></font></span></b>"
 	overlays.Cut()
 	var/image/I = image('icons/battle/icons_front.dmi', minion.template.icon_state)
 	I.pixel_x = 16

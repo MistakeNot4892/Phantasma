@@ -36,12 +36,13 @@
 			buffer.Cut(BUFFER_SIZE+1)
 			if(index > buffer.len)
 				index = buffer.len
-	maptext = "<span style = 'font-family:courier'><font color = '#663931' align='center'>[index!=1 ? "<b>[index-1].</b> " : ""][buffer[index]]</font></span>"
+	maptext = "<span style = 'font-family:courier'><font color = '[BROWN_DARK]' align='center'>[index!=1 ? "<b>[index-1].</b> " : ""][buffer[index]]</font></span>"
 
 /obj/screen/notify_scroll
 	icon = 'icons/screen/notify_arrows.dmi'
 	screen_loc = "20,1"
 	layer = SCREEN_LAYER+0.1
+	plane = SCREEN_PLANE+1
 	var/obj/screen/notify/attached
 
 /obj/screen/notify_scroll/clicked(var/client/clicker)
@@ -82,3 +83,15 @@
 	attached.index--
 	if(attached.index < 1)
 		attached.index = 1
+
+/obj/screen/notify_scroll/text
+	name = "Open Text Window"
+	icon_state = "text"
+
+/obj/screen/notify_scroll/text/clicked(var/client/clicker)
+	if(winget(owner.client, "inputwindow", "is-visible") == "true")
+		owner.text_show.icon_state = "text"
+		winshow(clicker, "inputwindow", 0)
+	else
+		owner.text_show.icon_state = "text_showing"
+		winshow(clicker, "inputwindow", 1)

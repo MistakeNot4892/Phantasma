@@ -20,9 +20,9 @@
 	mask.maptext = null
 	if(tracking)
 		if(friendly)
-			mask.maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>[tracking.name] \[[tracking.data[MD_CHP]]/[tracking.data[MD_MHP]]\]</b></font></span>"
+			mask.maptext = "<span style = 'font-family:courier'><font color = '[OFF_WHITE]'><b>[tracking.name] \[[tracking.data[MD_CHP]]/[tracking.data[MD_MHP]]\]</b></font></span>"
 		else
-			mask.maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>[tracking.name]</b></font></span>"
+			mask.maptext = "<span style = 'font-family:courier'><font color = '[OFF_WHITE]'><b>[tracking.name]</b></font></span>"
 
 /obj/screen/battle_icon/statbar/proc/get_remaining(var/data/minion/tracking)
 	return (tracking ? (tracking.data[MD_CHP]/tracking.data[MD_MHP]) : 0)
@@ -105,7 +105,7 @@
 
 /obj/screen/battle_icon/statbar/xp/update_maptext(var/data/minion/tracking)
 	if(tracking)
-		mask.maptext = "<span style = 'font-family:courier'><font color = '#cbdbfc'><b>LV.[tracking.data[MD_LVL]]</b></font></span>"
+		mask.maptext = "<span style = 'font-family:courier'><font color = '[OFF_WHITE]'><b>LV.[tracking.data[MD_LVL]]</b></font></span>"
 	else
 		mask.maptext = null
 

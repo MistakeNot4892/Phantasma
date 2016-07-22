@@ -1,13 +1,13 @@
 /mob/trainer
-	var/list/screen_hud
 	var/list/minion_status = list()
 	var/obj/screen/notify/notifications
 	var/data/minion/viewing_minion
 
 /mob/trainer/create_hud()
-	if(!client)
-		return
-	sleep(1)
+
+	if(!overworld_barrier)
+		overworld_barrier = new /obj/screen/barrier()
+
 	if(!screen_hud)
 		screen_hud = list(new /obj/screen/sprint(src), overworld_barrier)
 		for(var/i=1 to 6)
@@ -18,7 +18,7 @@
 	notifications = new /obj/screen/notify(src)
 	screen_hud += notifications.elements
 	screen_hud += new /obj/screen/minion_toggle(src)
-	client.screen |= screen_hud
+	..()
 
 /mob/trainer/proc/update_minion_status()
 	for(var/i=1 to minion_status.len)
@@ -29,5 +29,6 @@
 	src << message
 
 /mob/trainer/notify(var/message)
+	..()
 	if(notifications)
 		notifications.display(message)

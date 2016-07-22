@@ -43,12 +43,6 @@
 
 /mob/trainer/Login()
 
-	if(!overworld_barrier)
-		overworld_barrier = new /obj/screen/barrier()
-		client.screen += overworld_barrier
-		animate(overworld_barrier, alpha = 0, time = 10)
-		spawn(10)
-			overworld_barrier.mouse_opacity = 0
 	. = ..()
 	if(sleeping)
 		notify_nearby("<b>\The [src] wakes up!</b>")
@@ -56,10 +50,20 @@
 	sleeping = 0
 	icon_state = initial(icon_state)
 	update_icon()
-	create_hud()
 	update_minion_status()
+
 	if(show_minions)
 		client.screen += minion_status
+	client.screen += overworld_barrier
+
+	spawn(0)
+		overworld_barrier.mouse_opacity = 2
+		overworld_barrier.color = "#000000"
+		overworld_barrier.alpha = 255
+		animate(overworld_barrier, alpha = 0, time = 10)
+		sleep(10)
+		overworld_barrier.mouse_opacity = 0
+
 
 /mob/trainer/Logout()
 	. = ..()
@@ -75,16 +79,7 @@
 	if(radio)
 		qdel(radio)
 		radio = null
-	if(client)
-		if(overworld_barrier)
-			client.screen -= overworld_barrier
-		client.screen -= screen_hud
-		for(var/obj/O in screen_hud)
-			qdel(O)
-		screen_hud.Cut()
-	if(overworld_barrier)
-		qdel(overworld_barrier)
-		overworld_barrier = null
+	overworld_barrier = null
 	last_loc = null
 	for(var/data/minion/M in minions)
 		qdel(M)

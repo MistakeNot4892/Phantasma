@@ -85,7 +85,7 @@
 	if(!tech || !battle.minion)
 		return
 	name = "[tech.name]"
-	maptext = "<span style='font-family:courier; font-size:-3pt'><font color = '#cbdbfc'>[tech.name] <b>[battle.minion.tech_uses[tech.name]]</b></font></span>"
+	maptext = "<span style='font-family:courier; font-size:-3pt'><font color = '[OFF_WHITE]'>[tech.name] <b>[battle.minion.tech_uses[tech.name]]</b></font></span>"
 
 /obj/screen/battle_icon/menu/tech/clicked(var/client/clicker)
 	if(!..() || !tech)
