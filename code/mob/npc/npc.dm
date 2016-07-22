@@ -34,7 +34,9 @@
 	dialogue_string = "FIGHT NOW."
 
 /mob/npc/fightmaster/interact(var/mob/person)
+	if(!busy)
+		var/mob/trainer/T = person
+		if(istype(T))
+			spawn(0)
+				T.test_battle_proc()
 	. = ..()
-	var/mob/trainer/T = person
-	if(istype(T))
-		T.test_battle_proc()

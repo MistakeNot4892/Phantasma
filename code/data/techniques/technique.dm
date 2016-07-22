@@ -1,9 +1,3 @@
-var/list/techniques_by_path = list()
-/proc/get_tech_by_path(var/techpath)
-	if(!techniques_by_path[techpath])
-		techniques_by_path[techpath] = new techpath()
-	return techniques_by_path[techpath]
-
 /data/technique
 	var/name = "Filler Tech"
 	var/max_uses = 0

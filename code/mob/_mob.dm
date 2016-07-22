@@ -49,3 +49,5 @@
 	. = ..()
 	client.eye = src
 	client.perspective = MOB_PERSPECTIVE
+
+	verbs += /mob/proc/debug_controller

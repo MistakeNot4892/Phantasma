@@ -5,3 +5,7 @@
 	view = "20x15"
 	mob = /mob/new_player
 	map_format = SIDE_MAP
+
+/world/New()
+	mc = new()
+	. = ..()

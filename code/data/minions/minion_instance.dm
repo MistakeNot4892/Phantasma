@@ -15,10 +15,10 @@ var/minion_count = 1
 /data/minion/New(var/minion_path, var/mob/trainer/_owner)
 	if(_owner != null)
 		owner = _owner
-	template = get_minion_data_by_path(minion_path)
+	template = get_unique_data_by_path(minion_path)
 	name = template.name
 	for(var/tech in template.techs)
-		var/data/technique/T = get_tech_by_path(tech)
+		var/data/technique/T = get_unique_data_by_path(tech)
 		techs += T
 		tech_uses[T.name] = T.max_uses
 

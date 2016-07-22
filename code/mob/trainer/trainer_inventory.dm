@@ -6,7 +6,7 @@
 /mob/trainer/proc/add_item(var/item_path, var/item_amount = 1)
 	if((held_items + item_amount) > max_items)
 		return 0
-	var/data/item/item_data = get_item_by_path(item_path)
+	var/data/item/item_data = get_unique_data_by_path(item_path)
 	if(!inventory[item_data.name])
 		inventory[item_data.name] = new /data/inventory_item(src, item_data)
 	var/data/inventory_item/inv = inventory[item_data.name]

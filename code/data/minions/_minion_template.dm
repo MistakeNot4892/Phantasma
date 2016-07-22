@@ -1,9 +1,3 @@
-var/list/minion_data_templates = list()
-/proc/get_minion_data_by_path(var/minion_path)
-	if(!minion_data_templates[minion_path])
-		minion_data_templates[minion_path] = new minion_path
-	return minion_data_templates[minion_path]
-
 /data/minion_template
 	var/name = "Minion"
 	var/description = "A minion."

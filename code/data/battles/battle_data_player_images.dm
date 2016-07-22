@@ -1,5 +1,5 @@
 #define DEFAULT_ALLY_AXIS -150
-#define DEFAULT_OPPONENT_AXIS 16
+#define DEFAULT_OPPONENT_AXIS 50
 
 /data/battle_data/player
 	var/image/battle/backlight/minion_backlight
@@ -32,13 +32,13 @@
 		all_images += I
 
 	minion_backlight = new /image/battle/backlight(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
-	minion_backlight.pixel_x = -300
+	minion_backlight.pixel_x = -315
 	minion_backlight.pixel_y = DEFAULT_ALLY_AXIS-35
 	minion_backlight.alpha = 0
 	all_images += minion_backlight
 
 	opponent_backlight = new /image/battle/backlight(loc = owner, icon = 'icons/screen/battle_environments.dmi',  icon_state = battle.environment_type)
-	opponent_backlight.pixel_x = 20
+	opponent_backlight.pixel_x = -55
 	opponent_backlight.pixel_y = DEFAULT_OPPONENT_AXIS-35
 	opponent_backlight.alpha = 0
 	var/matrix/M = matrix()

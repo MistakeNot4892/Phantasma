@@ -129,7 +129,7 @@
 	for(var/obj/O in menu_objects)
 		animate(O, alpha = 255, time = 3)
 
-	owner.notify("Select an action.")
+	owner.notify("<b>Select an action.</b>")
 
 /data/battle_data/player/end_turn()
 	. = ..()
