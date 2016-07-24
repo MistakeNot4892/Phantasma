@@ -163,7 +163,7 @@
 
 			if("item")
 				var/data/inventory_item/I = player.next_action["ref"]
-				announce("<b>\The [player.owner]</b> used \the <b>[I.item_template.name]</b>!")
+				announce("<b>\The [player.owner]</b> used \the <b>[I.item_template.name]</b>[target.minion ? " on \the [target.minion.name]" : ""]!")
 				sleep(10)
 				if(target.minion)
 					I.item_template.apply(target.minion)
@@ -267,6 +267,8 @@
 						witness.update_health_images()
 					award_experience(target.opponents, target.minion)
 					target.minion = null
+					for(var/data/battle_data/witness in players)
+						witness.update_health_images()
 					sleep(20)
 
 			else

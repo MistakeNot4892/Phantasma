@@ -10,14 +10,14 @@
 			var/obj/screen/minion_panel/MS = new (src)
 			MS.screen_loc = "16,[15-i]"
 			minion_status_panels += MS
-			var/obj/screen/inventory_panel/I = new (src)
+			var/obj/screen/item_panel/I = new (src)
 			I.screen_loc = "1,[15-i]"
 			inventory_panels += I
 
 		minion_toggle = new /obj/screen/minion_toggle(src)
 		screen_hud += minion_toggle
-		inventory_panels += new /obj/screen/inventory_panel_arrow(src)
-		inventory_panels += new /obj/screen/inventory_panel_arrow/down(src)
+		inventory_panels += new /obj/screen/item_status_arrow(src)
+		inventory_panels += new /obj/screen/item_status_arrow/down(src)
 		inventory_toggle = new /obj/screen/inventory_toggle(src)
 		screen_hud += inventory_toggle
 

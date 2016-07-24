@@ -41,6 +41,8 @@
 /mob/trainer/New()
 	if(isnull(starting_minions))
 		starting_minions = list(pick(typesof(/data/minion_template)-/data/minion_template))
+		starting_minions += pick(typesof(/data/minion_template)-/data/minion_template)
+		starting_minions += pick(typesof(/data/minion_template)-/data/minion_template)
 	for(var/mtype in starting_minions)
 		minions += new /data/minion(mtype, src)
 	update_following_minion()
@@ -146,10 +148,23 @@ var/temporary_trainer_count = 100
 				inv_index = inventory.len
 
 	var/i = 0
-	for(var/obj/screen/inventory_panel/IP in inventory_panels)
+	for(var/obj/screen/item_panel/IP in inventory_panels)
 		var/effective_index = inv_index+i
+		IP.overlays.Cut()
 		if(inventory.len && effective_index <= inventory.len)
-			IP.update_with(effective_index, inventory[inventory[effective_index]])
+			var/data/inventory_item/item = inventory[inventory[effective_index]]
+			item.item_status.update(item)
+			IP.held_item = item
+			var/image/I = image(null)
+			I.appearance = item.item_status
+			I.plane = IP.plane
+			I.layer = IP.layer
+			IP.overlays += I
+			IP.invisibility = 0
+			if(!item.item_template.can_use_overmap)
+				color = PALE_GREY
+			else
+				color = WHITE
 		else
-			IP.clear()
+			IP.invisibility = 100
 		i++

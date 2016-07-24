@@ -63,6 +63,6 @@
 
 /obj/screen/battle_icon/health/enemy/update()
 	if(..())
-		maptext = "[tracking.minion.name]"
+		maptext = "[tracking.minion.name]       LV.[tracking.minion.data[MD_LVL]]"
 		return 1
 	return 0

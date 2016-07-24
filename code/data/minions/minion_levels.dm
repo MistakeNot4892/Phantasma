@@ -35,8 +35,6 @@
 	var/per_minion = max(1,round(amt/minions_who_fought.len))
 	for(var/data/minion/M in minions_who_fought)
 		M.gain_exp(per_minion)
-		if(M == battle_data.minion)
-			battle_data.update_health_images()
 
 /data/minion/proc/gain_exp(var/amt)
 	data[MD_EXP] += amt

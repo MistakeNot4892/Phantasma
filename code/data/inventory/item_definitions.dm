@@ -1,6 +1,6 @@
 /data/item/potion
 	name = "potion"
-	desc = "A herbal potion that restores 20 hit points when used."
+	desc = "Restores 20HP."
 	can_use_battle =    1
 	can_use_overmap =   1
 	var/heal_strength = 20

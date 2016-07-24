@@ -40,15 +40,12 @@
 	if(!client)
 		return pick(options)
 
-	if(options.len == 1)
-		return options[1]
-
+	var/data/selected/choice = new()
 	var/list/selection_panel = list()
-	var/data/selected_minion/choice = new()
-
 	var/i = 0
 	for(var/data/minion/M in options)
-		var/obj/screen/minion_select/MS = new(M, choice)
+		M.status_bar.update()
+		var/obj/screen/select/MS = new(choice, M, M.status_bar)
 		MS.screen_loc = "9,[13-i]"
 		selection_panel += MS
 		if(select_plane)
@@ -57,28 +54,56 @@
 			MS.layer = select_layer
 		i++
 
+	return select_from_visual_list(selection_panel, choice, select_plane, select_layer, can_cancel)
+
+/mob/trainer/select_item_from_list(var/list/options = list(), var/select_plane = 99, var/select_layer = 99, var/can_cancel=1)
+
+	if(!client)
+		return pick(options)
+
+	var/data/selected/choice = new()
+	var/list/selection_panel = list()
+	var/i = 0
+	for(var/item_name in options)
+		var/data/inventory_item/I = inventory[item_name]
+		I.item_status.update(I)
+		var/obj/screen/select/IS = new(choice, I, I.item_status)
+		IS.screen_loc = "9,[13-i]"
+		selection_panel += IS
+		if(select_plane)
+			IS.plane = select_plane
+		if(select_layer)
+			IS.layer = select_layer
+		i++
+
+	return select_from_visual_list(selection_panel, choice, select_plane, select_layer, can_cancel)
+
+/mob/trainer/proc/select_from_visual_list(var/list/elements = list(), var/data/selected/choice, var/select_plane = 99, var/select_layer = 99, var/can_cancel = 1)
+
+	if(!choice) choice = new()
+
 	if(can_cancel)
-		var/obj/screen/cancel_minion_select/CMS = new(choice)
-		CMS.screen_loc = "9,[13-i]"
+		var/obj/screen/cancel_select/CMS = new(choice)
+		CMS.screen_loc = "9,[13-elements.len]"
 		if(select_plane)
 			CMS.plane = select_plane
 		if(select_layer)
 			CMS.layer = select_layer
-		selection_panel += CMS
+		elements += CMS
 
 	if(client)
-		client.screen += selection_panel
+		client.screen += elements
 
 	while(choice && client && !(choice.cancelled || choice.selection))
 		sleep(1)
 
 	if(client)
-		client.screen -= selection_panel
+		client.screen -= elements
 
-	for(var/thing in selection_panel)
+	for(var/thing in elements)
 		qdel(thing)
-	selection_panel.Cut()
+	elements.Cut()
 
-	var/data/minion/selection = choice.selection
+	var/selection = choice.selection
 	qdel(choice)
-	return (choice ? selection : null)
+	return (selection ? selection : null)

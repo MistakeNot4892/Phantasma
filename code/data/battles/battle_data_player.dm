@@ -135,11 +135,11 @@
 		owner.notify("You don't have any items.")
 		return
 
-	var/chosen_item = input("Which item do you wish to use?") as null|anything in trainer.inventory
-	if(!chosen_item)
+	owner.notify("Select an item.")
+	var/data/inventory_item/use_item = owner.select_item_from_list(trainer.inventory)
+	if(!use_item)
 		return
 
-	var/data/inventory_item/use_item = trainer.inventory[chosen_item]
 	if(!use_item.item_template.can_use_battle)
 		owner.notify("You can't use \the [use_item.item_template.name] in battle!")
 		return
