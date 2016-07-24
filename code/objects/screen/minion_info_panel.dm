@@ -108,6 +108,7 @@
 /obj/screen/minion_toggle/proc/reset()
 	var/mob/trainer/T = owner
 	if(istype(T))
+		T.show_minions = 0
 		for(var/obj/screen/minion_panel_button/MS in T.minion_status)
 			MS.color = WHITE
 		if(T.client)

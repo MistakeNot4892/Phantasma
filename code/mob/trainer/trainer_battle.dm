@@ -1,3 +1,7 @@
+/mob/trainer/verb/test_levelling()
+	var/data/minion/M = minions[1]
+	M.gain_exp((get_xp_threshold_for(M.data[MD_LVL])-M.data[MD_EXP])+1)
+
 /mob/trainer/get_minion()
 	if(following && !(following.minion_data.status & STATUS_FAINTED))
 		return following.minion_data
@@ -79,10 +83,12 @@
 /mob/trainer/proc/return_to_save_point()
 	frozen = 1
 
-	var/spawning_at = locate(last_save_x, last_save_y, last_save_z)
+	var/turf/spawning_at = locate(last_save_x, last_save_y, last_save_z)
 	if(!spawning_at)
 		if(!initial_spawn_turf)
 			initial_spawn_turf = locate(15,15,1)
+		spawning_at = initial_spawn_turf
+
 	overworld_barrier.mouse_opacity = 2
 	overworld_barrier.color = WHITE
 	overworld_barrier.alpha = 0

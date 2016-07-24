@@ -19,6 +19,7 @@
 #include "code\_defines\battle.dm"
 #include "code\_defines\colours.dm"
 #include "code\_defines\globals.dm"
+#include "code\_defines\math.dm"
 #include "code\_defines\minions.dm"
 #include "code\_defines\planes.dm"
 #include "code\_defines\turf.dm"

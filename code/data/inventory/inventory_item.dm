@@ -13,7 +13,6 @@
 	owner = _owner
 	item_template_path = _item_template_path
 	item_template = get_unique_data_by_path(item_template_path)
-	world << "grabbed [item_template.name] for \the [owner] using [item_template]."
 
 /data/inventory_item/destroy()
 	owner = null

@@ -3,6 +3,7 @@
 	icon_state = "blank"
 	mouse_opacity = 0
 	layer = BARRIER_LAYER-0.1
+	maptext_width = 1000
 
 /obj/screen/text/New(var/message, var/_x = 0, var/_y =0, var/_height = 150, var/_width = 1100, var/_colour = WHITE)
 	. = ..(null)

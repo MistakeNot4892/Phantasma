@@ -42,7 +42,18 @@
 	data[MD_EXP] += amt
 	owner.notify("<b>\The [name]</b> recieved [amt] experience points!")
 	if(data[MD_EXP] >= get_xp_threshold_for(data[MD_LVL]))
-		data[MD_LVL]++
-		sleep(25)
-		owner.notify("Ding! <b>\The [name]</b> reached level <b>[data[MD_LVL]]</b>!")
-		sleep(25)
+		increase_level()
+
+/data/minion/proc/increase_level()
+
+	for(var/val in MD_COMBAT_STATISTICS)
+		data[val] += ceil(max(0,(template.data[val]/50.0)))
+
+	data[MD_CHP] = data[MD_MHP]
+	data[MD_LVL]++
+	sleep(25)
+	owner.notify("Ding! <b>\The [name]</b> reached level <b>[data[MD_LVL]]</b>!")
+	var/mob/trainer/T = owner
+	if(istype(T))
+		T.reset_ui()
+	sleep(25)

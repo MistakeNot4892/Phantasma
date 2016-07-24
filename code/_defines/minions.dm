@@ -9,8 +9,7 @@
 #define MD_EXP   "experience"
 #define MD_FLEE  "fleechance"
 
-#define MD_SPEED_VAR_MIN "speedvarmin"
-#define MD_SPEED_VAR_MAX "speedvarmax"
+#define MD_COMBAT_STATISTICS list(MD_MHP, MD_ATK, MD_DEF, MD_SPATK, MD_SPDEF, MD_SPEED)
 
 #define DAM_NEUTRAL "neutral"
 #define DAM_EARTH   "earth"

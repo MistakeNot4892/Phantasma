@@ -115,7 +115,7 @@
 		if(isnull(player.next_action["priority"]))
 			player.next_action["priority"] = 0
 
-		speed_by_ref["\ref[player]"] = player.minion.get_turn_speed() + player.minion.get_turn_speed_variance()
+		speed_by_ref["\ref[player]"] = player.minion.get_turn_speed()
 		var/spd = speed_by_ref["\ref[player]"]
 
 		// Sort by raw speed.

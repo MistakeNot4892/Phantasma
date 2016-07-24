@@ -3,6 +3,8 @@
 	var/list/techs = list()
 	var/list/tech_uses = list()
 	var/list/data = list()
+	var/list/genetics = list()
+
 	var/status = 0
 	var/template_path
 
@@ -76,9 +78,6 @@
 
 /data/minion/proc/get_turn_speed()
 	return data[MD_SPEED]
-
-/data/minion/proc/get_turn_speed_variance()
-	return rand(data[MD_SPEED_VAR_MIN],data[MD_SPEED_VAR_MAX])
 
 /data/minion/proc/restore()
 	data[MD_CHP] = data[MD_MHP]

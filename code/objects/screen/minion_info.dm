@@ -5,16 +5,15 @@
 	screen_loc = "7,4"
 
 	var/data/minion/minion
-
 	var/obj/screen/text/header_text
 	var/obj/screen/text/hp_text
 	var/obj/screen/text/xp_text
 
 /obj/screen/data_panel/New(var/data/minion/_minion)
 	minion = _minion
-	header_text = new("[minion.name]", _x=66, _y=323, _width=272, _colour = DARK_BROWN)
-	hp_text = new("HP", _x=66, _y=307, _width=272, _colour = DARK_RED)
-	xp_text = new("XP", _x=66, _y=263, _width=272, _colour = DARK_RED)
+	header_text = new("[minion.name]", _x=66, _y=323, _colour = DARK_BROWN)
+	hp_text = new("HP", _x=66, _y=307, _colour = DARK_RED)
+	xp_text = new("XP", _x=66, _y=263, _colour = DARK_RED)
 	update()
 
 /obj/screen/data_panel/proc/update()
