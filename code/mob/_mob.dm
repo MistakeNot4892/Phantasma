@@ -3,6 +3,7 @@
 
 	var/sprinting = 0
 	var/next_move = 0
+	var/icon_body
 	var/tmp/data/battle_controller/current_battle
 	glide_size = 4
 
@@ -75,3 +76,12 @@
 	client.screen += screen_hud
 	text_show.icon_state = winget(src.client, "inputwindow", "is-visible") == "false" ? "text" : "text_showing"
 	verbs += /mob/proc/debug_controller
+
+/mob/proc/get_battle_image(var/mob/holder, var/frontal)
+	return new /image/battle/entity(loc=holder)
+
+/mob/proc/select_minion_from_list(var/list/options = list(), var/select_plane = 99, var/select_layer = 99, var/can_cancel=1)
+	return pick(options)
+
+/mob/proc/select_item_from_list(var/list/options)
+	return pick(options)

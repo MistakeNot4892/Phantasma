@@ -12,13 +12,9 @@
 
 /obj/screen/data_panel/New(var/data/minion/_minion)
 	minion = _minion
-
-	header_text = new("[minion.name]", _x=66, _y=320, _width=272, _colour = DARK_BROWN)
-	hp_text = new("HP", _x=66, _y=297, _width=272, _colour = DARK_RED)
+	header_text = new("[minion.name]", _x=66, _y=323, _width=272, _colour = DARK_BROWN)
+	hp_text = new("HP", _x=66, _y=307, _width=272, _colour = DARK_RED)
 	xp_text = new("XP", _x=66, _y=263, _width=272, _colour = DARK_RED)
-
-
-
 	update()
 
 /obj/screen/data_panel/proc/update()
@@ -45,7 +41,7 @@
 
 	I = image(null)
 	I.appearance = minion.xp_bar
-	I.pixel_x = 30
+	I.pixel_x = 35
 	I.pixel_y = 278
 	images_to_add += I
 
@@ -55,7 +51,7 @@
 		I = image(null)
 		I.appearance = T
 		I.pixel_x = 13
-		I.pixel_y = 13
+		I.pixel_y = 8
 		if(i>2)
 			I.pixel_y += 30
 		if(stagger)

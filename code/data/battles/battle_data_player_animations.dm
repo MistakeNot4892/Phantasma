@@ -35,10 +35,11 @@
 
 	animate(target_img, pixel_x = target_x, easing = SINE_EASING|EASE_OUT, time = 15)
 	sleep(20)
-	animate(target_img, pixel_x = end_x, easing = SINE_EASING|EASE_OUT, time = 15)
 	if(target != src)
 		owner.notify("\The [target.owner] sent out \the [target.minion.name]!")
 	reveal_minion(target)
+	sleep(10)
+	animate(target_img, pixel_x = end_x, easing = SINE_EASING|EASE_OUT, time = 15)
 
 /data/battle_data/player/proc/animate_minion_intro(var/data/battle_data/target)
 	set waitfor=0

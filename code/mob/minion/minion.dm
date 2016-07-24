@@ -35,4 +35,6 @@
 	animate(src, alpha=0, time = 3)
 	sleep(3)
 	icon_state = minion_data.template.icon_state
+	icon_body = icon_state
+
 	animate(src, alpha=255, time = 3)

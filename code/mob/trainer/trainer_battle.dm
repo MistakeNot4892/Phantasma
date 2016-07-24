@@ -24,7 +24,7 @@
 			animate(overworld_barrier, alpha = 160, color = BLACK, time = 10)
 	current_battle = battle
 
-	for(var/obj/screen/minion_stat/MS in minion_status)
+	for(var/obj/screen/minion_panel_button/MS in minion_status)
 		MS.color = WHITE
 	if(client && viewing_minion)
 		client.screen -= viewing_minion.get_info_panel()
@@ -90,7 +90,7 @@
 	if(get_dist(trainer, src) > 1)
 		clicker.mob.notify("You are too far away.")
 		return
-	if(current_battle || !client)
+	if(current_battle || ((key || ckey) && !client))
 		clicker.mob.notify("\The [src] cannot battle you at the moment.")
 		return
 	if(!minions.len)

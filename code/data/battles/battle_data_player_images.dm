@@ -15,7 +15,7 @@
 /data/battle_data/player/proc/initialize_images()
 	// Create images!
 	for(var/data/battle_data/ally in allies)
-		var/image/I = new /image/battle/entity/trainer(loc = owner, icon = 'icons/battle/icons_rear.dmi',  icon_state = initial(ally.owner.icon_state))
+		var/image/I = ally.owner.get_battle_image(owner)
 		trainer_images["\ref[ally]"] = I
 		I.layer += (ally.team_position/10)
 		I.alpha = 0
@@ -24,7 +24,7 @@
 		all_images += I
 
 	for(var/data/battle_data/opponent in opponents)
-		var/image/I = new /image/battle/entity/trainer/opponent(loc = owner, icon = 'icons/battle/icons_front.dmi',  icon_state = initial(opponent.owner.icon_state))
+		var/image/I = opponent.owner.get_battle_image(owner,1)
 		I.layer += (opponent.team_position/10)
 		trainer_images["\ref[opponent]"] = I
 		I.alpha = 0

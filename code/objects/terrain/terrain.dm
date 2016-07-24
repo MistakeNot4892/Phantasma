@@ -1,17 +1,17 @@
 /obj/terrain
 	density = 0
 	plane = MASTER_PLANE
-	layer = TURF_LAYER
+	layer = MOB_LAYER-0.2
 
 /obj/terrain/grass
 	name = "long grass"
 	icon_state = "grass"
 	icon = 'icons/terrain/grass.dmi'
-	pixel_x = -1
-	pixel_y = -1
-
 	var/encounter_chance = 5
 	var/list/can_encounter = list()
+
+/obj/terrain/grass/clicked(var/client/clicker)
+	world << "x [layer] [plane] [clicker.mob.layer] [clicker.mob.plane]"
 
 /obj/terrain/grass/New()
 	. = ..()

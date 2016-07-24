@@ -63,7 +63,7 @@
 			color = WHITE
 			return 0
 
-	battle.next_action = list("action" = "flee")
+	battle.next_action = list("action" = "flee", "priority" = 3)
 	battle.end_turn()
 
 /obj/screen/battle_icon/menu/tech
@@ -113,13 +113,14 @@
 
 	if(!target)
 		var/list/targets = list()
-		var/i = 1
+
 		for(var/data/battle_data/possible_target in possible_targets)
 			if(possible_target.minion)
-				targets["[i]. [possible_target.minion.name]"] = possible_target
-			i++
+				targets[possible_target.minion] = possible_target
+
 		if(targets.len>1)
-			var/choice = input("Select a target.") as null|anything in targets
+			battle.owner.notify("Select a target.")
+			var/data/minion/choice = battle.owner.select_minion_from_list(targets)
 			if(!choice)
 				toggled = 0
 				color = WHITE
@@ -128,5 +129,5 @@
 		else
 			target = targets[targets[1]]
 
-	battle.next_action = list("action" = "tech", "ref" = technique.tech, "tar" = target, "hostile_action" = technique.tech.is_hostile)
+	battle.next_action = list("action" = "tech", "ref" = technique.tech, "tar" = target, "hostile_action" = technique.tech.is_hostile, "priority" = technique.tech.priority)
 	battle.end_turn()

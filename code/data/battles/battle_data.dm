@@ -61,10 +61,10 @@
 
 /data/battle_data/proc/do_ai_action()
 	if(!minion)
-		next_action = list("action"="flee")
+		next_action = list("action"="flee", "priority" = 3)
 		return
 	var/data/technique/T = pick(minion.techs)
-	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? pick(allies) : pick(opponents)), "hostile_action" = T.is_hostile)
+	next_action = list("action"="tech","ref" = T,"tar" = (T.target_self ? pick(allies) : pick(opponents)), "hostile_action" = T.is_hostile, "priority" = T.priority)
 
 /data/battle_data/proc/get_next_minion()
 	if(wild_mob)

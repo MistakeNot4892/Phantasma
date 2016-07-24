@@ -97,12 +97,25 @@
 	// Sort players by speed. Roll for init!
 	var/list/sorted_players = list()
 	var/list/sorted_player_speed = list()
+
 	for(var/data/battle_data/player in players)
 
 		if(!player.minion)
 			continue
 
+		// Let the AI make a decision about which skill to use.
+		if(player.dummy)
+			player.do_ai_action()
+
+		if(isnull(player.next_action))
+			continue
+
+		var/priority = player.next_action["priority"]
+		if(isnull(priority))
+			priority = 0
+
 		var/spd = player.minion.get_turn_speed() + player.minion.get_turn_speed_variance()
+
 		if(!sorted_players.len)
 			sorted_players += player
 			sorted_player_speed += spd
@@ -122,10 +135,6 @@
 		// Is there any point giving this schmuck a turn?
 		if(!player.minion || (player.minion.status & STATUS_FAINTED))
 			continue
-
-		// Let the AI make a decision about which skill to use.
-		if(player.dummy)
-			player.do_ai_action()
 
 		// This may be null, since actions like switch/flee don't need it.
 		var/data/battle_data/target = player.next_action["tar"]
@@ -238,7 +247,7 @@
 					announce("It's super effective!")
 					sleep(16)
 
-				if(target.minion.data[MD_CHP] <= 0)
+				if(target.minion && target.minion.data[MD_CHP] <= 0)
 					announce("\The [!target.wild_mob ? "[target.owner]'s" : "wild"] [target.minion] fainted!")
 					target.minion.status |= STATUS_FAINTED
 					remove_minion(target)

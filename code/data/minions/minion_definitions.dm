@@ -1,6 +1,6 @@
-/data/minion_template/earthbug
+/data/minion_template/earthsprite
 	name = "Earthsprite"
-	icon_state = "earthbug"
+	icon_state = "earthsprite"
 	techs = list(
 		/data/technique/healing,
 		/data/technique/combat/earth
@@ -16,9 +16,9 @@
 		)
 	gem_colour = PALE_BROWN
 
-/data/minion_template/waterfish
+/data/minion_template/kelpice
 	name = "Kelpice"
-	icon_state = "waterfish"
+	icon_state = "kelpice"
 	techs = list(
 		/data/technique/healing,
 		/data/technique/combat/water
@@ -34,9 +34,9 @@
 		)
 	gem_colour = DARK_BLUE
 
-/data/minion_template/firelizard
+/data/minion_template/umbermote
 	name = "Umbermote"
-	icon_state = "firelizard"
+	icon_state = "umbermote"
 	techs = list(
 		/data/technique/combat,
 		/data/technique/combat/fire
@@ -52,12 +52,12 @@
 		)
 	gem_colour = BRIGHT_ORANGE
 
-/data/minion_template/airbird
+/data/minion_template/skywhit
 	name = "Skywhit"
-	icon_state = "airbird"
+	icon_state = "skywhit"
 	techs = list(
-		/data/technique/combat,
-		/data/technique/combat/air
+		/data/technique/combat/air,
+		/data/technique/combat/quickhit
 	)
 	elemental_types = list(DAM_AIR)
 	data = list(

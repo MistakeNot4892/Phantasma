@@ -18,4 +18,6 @@
 #define DAM_AIR     "wind"
 #define DAM_WATER   "water"
 
-#define STATUS_FAINTED 1
+#define STATUS_FAINTED   1
+#define STATUS_PARALYZED 2
+#define STATUS_POISONED  4

@@ -1,19 +1,29 @@
 /mob/trainer
 
 	name = "placeholder human"
-	icon = 'icons/overworld/human.dmi'
+	icon = 'icons/overworld/humans/human.dmi'
 	icon_state = "base"
+
+	icon_body = "base"
+	var/icon_eyes = "green"
+	var/icon_clothes
+	var/icon_hair
+	var/icon_beard
+	var/icon_hat
 
 	var/tmp/obj/screen/barrier/overworld_barrier
 	var/tmp/sleeping = 0
 	var/tmp/turf/last_loc
+	var/tmp/list/starting_minions
 
 /mob/trainer/New()
-	minions += new /data/minion(/data/minion_template/airbird, src)
-	minions += new /data/minion(/data/minion_template/firelizard, src)
-	minions += new /data/minion(/data/minion_template/earthbug, src)
-	minions += new /data/minion(/data/minion_template/waterfish, src)
+
+	if(isnull(starting_minions))
+		starting_minions = shuffle_list(typesof(/data/minion_template)-/data/minion_template)
+	for(var/mtype in starting_minions)
+		minions += new /data/minion(mtype, src)
 	update_following_minion()
+	update_icon()
 	..()
 
 /mob/trainer/Move()
@@ -25,16 +35,6 @@
 	. = ..()
 	if(following && loc != last_loc)
 		following.Move(last_loc)
-
-/mob/trainer/update_icon()
-	overlays = null
-	if(sleeping)
-		icon_state = "[initial(icon_state)]_sleeping"
-		overlays |= "sleeping"
-	else if(sprinting)
-		icon_state = "[initial(icon_state)]_sprinting"
-	else
-		icon_state = initial(icon_state)
 
 /mob/trainer/get_movement_delay()
 	.= ..()

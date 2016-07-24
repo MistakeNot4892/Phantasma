@@ -176,3 +176,10 @@
 	damage_type = DAM_WATER
 	max_uses = 25
 	damage_value = 40
+
+/data/technique/combat/quickhit
+	name = "Quick Hit"
+	max_uses = 25
+	accuracy = 90
+	priority = 1
+	damage_value = 40

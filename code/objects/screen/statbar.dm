@@ -1,16 +1,12 @@
 /obj/screen/statbar
 	name = "HP"
-	icon = 'icons/screen/statbar.dmi'
+	icon = 'icons/screen/statbar_big.dmi'
 	icon_state = "base"
-
-	maptext_x = 5
-	maptext_y = 12
-	maptext_width = 200
 
 	var/image/bar
 	var/data/minion/tracking
 	var/last_raw
-	var/bar_size = 220
+	var/bar_size = 240
 	var/default_color = PALE_GREEN
 
 /obj/screen/statbar/proc/get_remaining()
@@ -55,9 +51,10 @@
 /obj/screen/statbar/experience
 	name = "XP"
 	default_color = PALE_BLUE
+	icon = 'icons/screen/statbar.dmi'
+	bar_size = 220
 
 /obj/screen/statbar/experience/get_remaining()
-
 	var/last_xp = get_xp_threshold_for(tracking.data[MD_LVL]-1)
 	return ((tracking.data[MD_EXP]-last_xp)/(get_xp_threshold_for(tracking.data[MD_LVL])-last_xp))
 

@@ -5,6 +5,7 @@
 	var/accuracy = 0
 	var/target_self
 	var/is_hostile
+	var/priority
 
 /data/technique/proc/apply_to(var/data/minion/user, var/data/minion/target)
 	if(user.tech_uses[name] <= 0)

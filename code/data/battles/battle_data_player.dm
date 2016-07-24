@@ -30,15 +30,15 @@
 		T.screen_loc = sloc
 		technique_objects += T
 
-	hp_objects += new /obj/screen/battle_icon/health/ally/self(src, src, 40, -32)
+	hp_objects += new /obj/screen/battle_icon/health/ally/self(src, src, 40, -65)
 
 	var/i = 0
 	for(var/data/battle_data/ally in (allies-src))
-		hp_objects += new /obj/screen/battle_icon/health/ally(src, ally, 40, -68 + (i*32))
+		hp_objects += new /obj/screen/battle_icon/health/ally(src, ally, 40, -27 + (i*38))
 		i++
 	i=0
 	for(var/data/battle_data/opponent in opponents)
-		hp_objects += new /obj/screen/battle_icon/health/enemy(src, opponent, -280, 210 - (i*32))
+		hp_objects += new /obj/screen/battle_icon/health/enemy(src, opponent, -290, 210 - (i*38))
 		i++
 
 	all_objects += menu_objects
@@ -153,11 +153,9 @@
 	else
 		check_targets = allies
 
-	var/i=1
 	for(var/data/battle_data/possible_target in check_targets)
 		if(possible_target.minion && !(possible_target.minion.status & STATUS_FAINTED))
-			possible_targets["[i]. [possible_target.minion.name]"] = possible_target
-		i++
+			possible_targets[possible_target.minion] = possible_target
 
 	if(!possible_targets.len)
 		owner.notify("There are no suitable targets for \the [use_item.template.name].")
@@ -166,33 +164,32 @@
 	if(possible_targets.len == 1)
 		target = possible_targets[possible_targets[1]]
 	else
-		var/chosen_target = input("Who do you wish to use this item on?") as null|anything in possible_targets
+		owner.notify("Who do you wish to use this item on?")
+		var/chosen_target = owner.select_minion_from_list(possible_targets)
 		if(!chosen_target)
 			return
 		target = possible_targets[chosen_target]
 
-	next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.template.hostile)
+	next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.template.hostile, "priority" = 2)
 	end_turn()
 	return 1
 
 /data/battle_data/player/proc/try_switch()
 	var/mob/trainer/T = owner
 	var/list/usable_minions = list()
-	var/i=0
 	for(var/data/minion/M in T.minions)
-		i++
-		if(M == minion || (M.status & STATUS_FAINTED))
-			continue
-		usable_minions["[i]. [M.name]"] = M
+		if(M != minion && !(M.status & STATUS_FAINTED))
+			usable_minions += M
 
 	if(!usable_minions.len)
 		owner.notify("You have no other fit minions!")
 		return
 
-	var/switching_to = input("Select a replacement.") as null|anything in usable_minions
+	owner.notify("Select a replacement.")
+	var/switching_to = owner.select_minion_from_list(usable_minions)
 	if(!switching_to)
 		return
-	next_action = list("action" = "switch", "ref" = usable_minions[switching_to])
+	next_action = list("action" = "switch", "ref" = switching_to, "priority" = 3)
 	end_turn()
 	return 1
 
@@ -240,3 +237,17 @@
 	if(istype(T))
 		T.award_experience(get_xp_for(defeated), src)
 	return
+
+/data/battle_data/player/get_next_minion()
+	var/mob/trainer/T = owner
+	if(!istype(T))
+		return
+	minion = null
+	var/list/usable_minions = list()
+	for(var/data/minion/M in T.minions)
+		if(!(M.status & STATUS_FAINTED))
+			usable_minions  += M
+	update_minion_images(update_minon=1)
+	owner.notify("Select a replacement.")
+	minion = owner.select_minion_from_list(usable_minions, can_cancel=0)
+	return minion
