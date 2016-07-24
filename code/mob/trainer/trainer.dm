@@ -3,23 +3,37 @@
 	name = "placeholder human"
 	icon = 'icons/overworld/humans/human.dmi'
 	icon_state = "base"
-
 	icon_body = "base"
+
 	var/icon_eyes = "green"
 	var/icon_clothes
 	var/icon_hair
 	var/icon_beard
 	var/icon_hat
+	var/list/minions = list()
+	var/list/inventory = list()
 
+	var/tmp/last_save_x
+	var/tmp/last_save_y
+	var/tmp/last_save_z
 	var/tmp/obj/screen/barrier/overworld_barrier
+	var/tmp/obj/screen/minion_toggle/minion_toggle
 	var/tmp/sleeping = 0
 	var/tmp/turf/last_loc
 	var/tmp/list/starting_minions
+	var/tmp/list/minion_status = list()
+	var/tmp/obj/screen/notify/notifications
+	var/tmp/data/minion/viewing_minion
+	var/tmp/data/radio/radio
+	var/tmp/max_minions = 6
+	var/tmp/mob/minion/following
+	var/tmp/show_minions
+	var/tmp/held_items = 0
+	var/tmp/max_items = 100
 
 /mob/trainer/New()
-
 	if(isnull(starting_minions))
-		starting_minions = shuffle_list(typesof(/data/minion_template)-/data/minion_template)
+		starting_minions = list(pick(typesof(/data/minion_template)-/data/minion_template))
 	for(var/mtype in starting_minions)
 		minions += new /data/minion(mtype, src)
 	update_following_minion()
@@ -28,8 +42,8 @@
 
 /mob/trainer/Move()
 
-	if(current_battle)
-		return // No moving during fights!
+	if(frozen)
+		return
 
 	last_loc = get_turf(src)
 	. = ..()

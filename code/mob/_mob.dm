@@ -5,6 +5,7 @@
 	var/next_move = 0
 	var/icon_body
 	var/tmp/data/battle_controller/current_battle
+	var/frozen
 	glide_size = 4
 
 /mob/New()

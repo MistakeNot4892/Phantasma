@@ -140,15 +140,15 @@
 		return
 
 	var/data/inventory_item/use_item = trainer.inventory[chosen_item]
-	if(!use_item.template.can_use_battle)
-		owner.notify("You can't use \the [use_item.template.name] in battle!")
+	if(!use_item.item_template.can_use_battle)
+		owner.notify("You can't use \the [use_item.item_template.name] in battle!")
 		return
 
 	var/data/battle_data/target
 	var/list/check_targets = list()
 	var/list/possible_targets = list()
 
-	if(use_item.template.hostile)
+	if(use_item.item_template.hostile)
 		check_targets = opponents
 	else
 		check_targets = allies
@@ -158,7 +158,7 @@
 			possible_targets[possible_target.minion] = possible_target
 
 	if(!possible_targets.len)
-		owner.notify("There are no suitable targets for \the [use_item.template.name].")
+		owner.notify("There are no suitable targets for \the [use_item.item_template.name].")
 		return
 
 	if(possible_targets.len == 1)
@@ -170,7 +170,7 @@
 			return
 		target = possible_targets[chosen_target]
 
-	next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.template.hostile, "priority" = 2)
+	next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.item_template.hostile, "priority" = MAX_ACTION_PRIORITY)
 	end_turn()
 	return 1
 
@@ -182,14 +182,14 @@
 			usable_minions += M
 
 	if(!usable_minions.len)
-		owner.notify("You have no other fit minions!")
+		owner.notify("You have no other fit combatants!")
 		return
 
 	owner.notify("Select a replacement.")
 	var/switching_to = owner.select_minion_from_list(usable_minions)
 	if(!switching_to)
 		return
-	next_action = list("action" = "switch", "ref" = switching_to, "priority" = 3)
+	next_action = list("action" = "switch", "ref" = switching_to, "priority" = MAX_ACTION_PRIORITY)
 	end_turn()
 	return 1
 
@@ -248,6 +248,7 @@
 		if(!(M.status & STATUS_FAINTED))
 			usable_minions  += M
 	update_minion_images(update_minon=1)
-	owner.notify("Select a replacement.")
-	minion = owner.select_minion_from_list(usable_minions, can_cancel=0)
+	if(usable_minions.len)
+		owner.notify("Select a replacement.")
+		minion = owner.select_minion_from_list(usable_minions, can_cancel=0)
 	return minion

@@ -29,6 +29,6 @@
 	overlays += images_to_use
 	var/mob/trainer/T = minion.owner
 	if(istype(T))
-		maptext = "<span style = 'font-family:courier'><font color = '[use_colour]'><b>[T.minions.Find(owner)].</b>[minion.name]</span></font>"
+		maptext = "<span style = 'font-family:courier'><font color = '[use_colour]'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"
 	else
 		maptext = "<span style = 'font-family:courier'><font color = '[use_colour]'>wild [minion.name]</span></font>"

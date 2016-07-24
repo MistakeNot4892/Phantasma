@@ -95,8 +95,9 @@
 	battle_state = BATTLE_TURN_PROGRESSING
 
 	// Sort players by speed. Roll for init!
-	var/list/sorted_players = list()
+	var/list/speed_sorted = list()
 	var/list/sorted_player_speed = list()
+	var/list/speed_by_ref = list()
 
 	for(var/data/battle_data/player in players)
 
@@ -110,27 +111,37 @@
 		if(isnull(player.next_action))
 			continue
 
-		var/priority = player.next_action["priority"]
-		if(isnull(priority))
-			priority = 0
+		// Do this now rather than repeatedly later.
+		if(isnull(player.next_action["priority"]))
+			player.next_action["priority"] = 0
 
-		var/spd = player.minion.get_turn_speed() + player.minion.get_turn_speed_variance()
+		speed_by_ref["\ref[player]"] = player.minion.get_turn_speed() + player.minion.get_turn_speed_variance()
+		var/spd = speed_by_ref["\ref[player]"]
 
-		if(!sorted_players.len)
-			sorted_players += player
+		// Sort by raw speed.
+		if(!speed_sorted.len)
+			speed_sorted += player
 			sorted_player_speed += spd
 		else
-			for(var/i=1 to sorted_players.len)
+			for(var/i=1 to speed_sorted.len)
 				if(spd > sorted_player_speed[i])
-					sorted_players.Insert(i,player)
+					speed_sorted.Insert(i,player)
 					sorted_player_speed.Insert(i,spd)
 					break
-				else if(i == sorted_players.len)
-					sorted_players += player
+				else if(i == speed_sorted.len)
+					speed_sorted += player
 					sorted_player_speed += spd
 
+	// Refine sort by move priority.
+	var/list/priority_sorted = list()
+	for(var/current_priority = MAX_ACTION_PRIORITY; current_priority>=0; current_priority--)
+		for(var/data/battle_data/player in speed_sorted)
+			if(player.next_action["priority"] == current_priority)
+				speed_sorted -= player
+				priority_sorted += player
+
 	// Proceed with the turn order.
-	for(var/data/battle_data/player in sorted_players)
+	for(var/data/battle_data/player in priority_sorted)
 
 		// Is there any point giving this schmuck a turn?
 		if(!player.minion || (player.minion.status & STATUS_FAINTED))
@@ -152,12 +163,12 @@
 
 			if("item")
 				var/data/inventory_item/I = player.next_action["ref"]
-				announce("<b>\The [player.owner]</b> uses \the <b>[I.template.name]</b>!")
+				announce("<b>\The [player.owner]</b> used \the <b>[I.item_template.name]</b>!")
 				sleep(10)
 				if(target.minion)
-					I.template.apply(target.minion)
-					do_item_animation(I.template, target)
-					sleep(I.template.battle_use_delay)
+					I.item_template.apply(target.minion)
+					do_item_animation(I.item_template, target)
+					sleep(I.item_template.battle_use_delay)
 					for(var/data/battle_data/witness in players)
 						witness.update_health_images()
 				else

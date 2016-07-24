@@ -4,3 +4,6 @@ var/list/unique_data_by_path = list()
 	if(!unique_data_by_path[upath])
 		unique_data_by_path[upath] = new upath()
 	return unique_data_by_path[upath]
+
+/data/proc/initialize()
+	return

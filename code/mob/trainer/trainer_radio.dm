@@ -1,6 +1,3 @@
-/mob/trainer
-	var/data/radio/radio
-
 /mob/trainer/New()
 	. = ..()
 	radio = new /data/radio(src)

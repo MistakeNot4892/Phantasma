@@ -1,13 +1,21 @@
 /data/inventory_item
 	var/count = 0
-	var/mob/trainer/owner
-	var/data/item/template
+	var/item_template_path
+	var/tmp/mob/trainer/owner
+	var/tmp/data/item/item_template
 
-/data/inventory_item/New(var/mob/trainer/_owner, var/data/item/_item)
+/data/inventory_item/New(var/_item_template_path, var/mob/trainer/_owner)
+	. = ..()
+	if(_item_template_path && _owner)
+		initialize(_item_template_path, _owner)
+
+/data/inventory_item/initialize(var/_item_template_path, var/mob/trainer/_owner)
 	owner = _owner
-	template = _item
+	item_template_path = _item_template_path
+	item_template = get_unique_data_by_path(item_template_path)
+	world << "grabbed [item_template.name] for \the [owner] using [item_template]."
 
 /data/inventory_item/destroy()
 	owner = null
-	template = null
+	item_template = null
 	return ..()

@@ -25,7 +25,8 @@
 
 /mob/minion/New(var/newloc, var/data/minion/_data)
 	..(newloc)
-	change_to_minion(_data)
+	if(_data)
+		change_to_minion(_data)
 
 /mob/minion/proc/change_to_minion(var/data/minion/_data)
 	set waitfor=0

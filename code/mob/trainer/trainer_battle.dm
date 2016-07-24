@@ -23,6 +23,7 @@
 		spawn(12)
 			animate(overworld_barrier, alpha = 160, color = BLACK, time = 10)
 	current_battle = battle
+	frozen = 1
 
 	for(var/obj/screen/minion_panel_button/MS in minion_status)
 		MS.color = WHITE
@@ -66,14 +67,34 @@
 	overworld_barrier.color = null
 	sleep(12)
 	current_battle = null
+	frozen = 0
 	update_minion_status()
-	// testing purposes only
+
 	for(var/data/minion/M in minions)
 		if(!(M.status & STATUS_FAINTED))
 			return
-	notify_nearby("Having been defeated, <b>\the [src]</b> cheats and has their minions restored.")
-	restore()
-	// testing purposes only
+	notify_nearby("Having been defeated, <b>\the [src]</b> retreats!")
+	return_to_save_point()
+
+/mob/trainer/proc/return_to_save_point()
+	frozen = 1
+
+	var/spawning_at = locate(last_save_x, last_save_y, last_save_z)
+	if(!spawning_at)
+		if(!initial_spawn_turf)
+			initial_spawn_turf = locate(15,15,1)
+	overworld_barrier.mouse_opacity = 2
+	overworld_barrier.color = WHITE
+	overworld_barrier.alpha = 0
+	animate(src, alpha = 0, time = 5)
+	animate(overworld_barrier, alpha = 255, time = 5)
+	sleep(5)
+	move_to(spawning_at)
+	animate(src, alpha=255, time = 5)
+	animate(overworld_barrier, alpha = 0, time = 5)
+	sleep(5)
+	overworld_barrier.mouse_opacity = 0
+	frozen = 0
 
 /mob/trainer/restore()
 	for(var/data/minion/M in minions)
@@ -90,7 +111,7 @@
 	if(get_dist(trainer, src) > 1)
 		clicker.mob.notify("You are too far away.")
 		return
-	if(current_battle || ((key || ckey) && !client))
+	if(frozen || ((key || ckey) && !client))
 		clicker.mob.notify("\The [src] cannot battle you at the moment.")
 		return
 	if(!minions.len)
@@ -133,8 +154,7 @@
 	var/list/encounters = list()
 	if(wild_count)
 		for(var/i=1 to wild_count)
-			var/encounter_path = pick(typesof(/data/minion_template)-/data/minion_template)
-			encounters += new /mob/minion/wild(get_turf(src), new /data/minion(encounter_path))
+			encounters += new /mob/minion/wild(get_turf(src))
 
 	if(trainer_count)
 		for(var/i=1 to trainer_count)
@@ -164,12 +184,15 @@
 
 		if(wild_count)
 			for(var/i=1 to wild_count)
-				var/encounter_path = pick(typesof(/data/minion_template)-/data/minion_template)
-				allies += new /mob/minion/wild(get_turf(src), new /data/minion(encounter_path))
+				allies += new /mob/minion/wild(get_turf(src))
+
 		if(trainer_count)
 			for(var/i=1 to trainer_count)
 				allies += new /mob/trainer/temporary(get_turf(src))
 
+	for(var/mob/minion/wild/W in (encounters+allies))
+		var/encounter_path = pick(typesof(/data/minion_template)-/data/minion_template)
+		W.change_to_minion(new /data/minion(encounter_path, W))
 
 	if(encounters.len)
 		start_new_battle(allies, encounters)

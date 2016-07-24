@@ -1,8 +1,3 @@
-/mob/trainer
-	var/list/minion_status = list()
-	var/obj/screen/notify/notifications
-	var/data/minion/viewing_minion
-
 /mob/trainer/create_hud()
 
 	if(!overworld_barrier)
@@ -14,10 +9,10 @@
 			var/obj/screen/minion_panel_button/MS = new (src)
 			MS.screen_loc = "16,[15-i]"
 			minion_status += MS
-
-	notifications = new /obj/screen/notify(src)
-	screen_hud += notifications.elements
-	screen_hud += new /obj/screen/minion_toggle(src)
+		notifications = new /obj/screen/notify(src)
+		screen_hud += notifications.elements
+		minion_toggle = new /obj/screen/minion_toggle(src)
+		screen_hud += minion_toggle
 	..()
 
 /mob/trainer/proc/update_minion_status()
@@ -32,3 +27,8 @@
 	..()
 	if(notifications)
 		notifications.display(message)
+
+/mob/trainer/proc/reset_ui()
+	if(!client)
+		return
+	minion_toggle.reset()

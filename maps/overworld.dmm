@@ -1,26 +1,28 @@
 "a" = (/turf/wall,/area)
 "b" = (/turf,/area)
 "c" = (/turf/brick,/area)
-"d" = (/turf/grille,/area)
-"e" = (/turf/grass/rock{tag = "icon-rock_grass (NORTHWEST)"; icon_state = "rock_grass"; dir = 9},/area)
-"f" = (/turf/grass/rock,/area)
-"g" = (/turf/grass/rock{tag = "icon-rock_grass (NORTHEAST)"; icon_state = "rock_grass"; dir = 5},/area)
-"h" = (/turf/grass/rock/corners,/area)
-"i" = (/turf/grass,/area)
-"j" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (NORTH)"; icon_state = "rock_grass_corners"; dir = 1},/area)
-"k" = (/turf/grass/rock{tag = "icon-rock_grass (WEST)"; icon_state = "rock_grass"; dir = 8},/area)
-"l" = (/mob/trainer/npc,/turf/grass,/area)
-"m" = (/obj/terrain/grass,/turf/grass,/area)
-"n" = (/turf/grass/rock{tag = "icon-rock_grass (EAST)"; icon_state = "rock_grass"; dir = 4},/area)
-"o" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHWEST)"; icon_state = "rock_grass"; dir = 10},/area)
-"p" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (EAST)"; icon_state = "rock_grass_corners"; dir = 4},/area)
-"q" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (WEST)"; icon_state = "rock_grass_corners"; dir = 8},/area)
-"r" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHEAST)"; icon_state = "rock_grass"; dir = 6},/area)
-"s" = (/obj/item/potion,/turf,/area)
-"t" = (/mob/npc,/turf/grass,/area)
-"u" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
-"v" = (/obj/item/potion,/turf/grass,/area)
-"w" = (/mob/npc/fightmaster,/turf/brick,/area)
+"d" = (/obj/savepoint,/turf/brick,/area)
+"e" = (/turf/grille,/area)
+"f" = (/obj/savepoint,/turf,/area)
+"g" = (/turf/grass/rock{tag = "icon-rock_grass (NORTHWEST)"; icon_state = "rock_grass"; dir = 9},/area)
+"h" = (/turf/grass/rock,/area)
+"i" = (/turf/grass/rock{tag = "icon-rock_grass (NORTHEAST)"; icon_state = "rock_grass"; dir = 5},/area)
+"j" = (/turf/grass/rock/corners,/area)
+"k" = (/turf/grass,/area)
+"l" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (NORTH)"; icon_state = "rock_grass_corners"; dir = 1},/area)
+"m" = (/turf/grass/rock{tag = "icon-rock_grass (WEST)"; icon_state = "rock_grass"; dir = 8},/area)
+"n" = (/mob/trainer/npc,/turf/grass,/area)
+"o" = (/obj/terrain/grass,/turf/grass,/area)
+"p" = (/turf/grass/rock{tag = "icon-rock_grass (EAST)"; icon_state = "rock_grass"; dir = 4},/area)
+"q" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHWEST)"; icon_state = "rock_grass"; dir = 10},/area)
+"r" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (EAST)"; icon_state = "rock_grass_corners"; dir = 4},/area)
+"s" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (WEST)"; icon_state = "rock_grass_corners"; dir = 8},/area)
+"t" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHEAST)"; icon_state = "rock_grass"; dir = 6},/area)
+"u" = (/obj/item/potion,/turf,/area)
+"v" = (/mob/npc,/turf/grass,/area)
+"w" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
+"x" = (/obj/item/potion,/turf/grass,/area)
+"y" = (/mob/npc/fightmaster,/turf/brick,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -52,25 +54,25 @@ abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-acccccccccccccccccccccccccccccccbbbbbbbbbbbbbbbbba
-adddddddddddddddddddddddddddccccbbbbbbbbbbbbbbbbba
-adddddddddddddddddddddddddddccccbbbbbbbbbbbbbbbbba
-adbbbbbbbbbbbbbbbbaabaabaabbccccbbbbbbbbbbbbbbbbba
-adbbbbbbbbefffffgbaabaabaabbccccbbbbbbbbbbbbbbbbba
-adeffgbbefhiiiiijfffffbbbbbbccccbbbbbbbbbbbbbbbbba
-adkiijffhiliiiiiiiiiiijbbbbbccccbbbbbbbbbbbbbbbbba
-adkiiiiiiiiiimmmmmmmmminbbbbccccbbbbbbbbbbbbbbbbba
-adkiiiiiiiimmmmmmmmmmminbbbbccccbbbbbbbbbbbbbbbbba
-adopiiiiiimmmmmmmmmmiiqrbbbbccccbbbbbbbbbbbbbbbbba
-adehiiiimmmmmmmmiiiiiinbbbbbccccbbbbbbbbbbbbbbbbba
-adkiiiimmmmmmmiiiiiiiinbbbbbccccbbbbbbbbbbbbbbbbba
-adkiiimmmmmmmiiiiiiiiinbbbbsccccbbbbbbbbbbbbbbbbba
-adkimmmmmmmmiiitiiiiiijgbbbbccccbbbbbbbbbbbbbbbbba
-adkimmmmmmiiquupiiiiiiinbbbbccccbbbbbbbbbbbbbbbbba
-adkimmmmmiiqrbbopiiiviinbbbbccccbbbbbbbbbbbbbbbbba
-adkiiiiiiiqrbddbopiiiiinbbbbccwcsbbbbbbbbbbbbbbbba
-adouuuuuuurbbddbbouuuuurbbbbccccbbbbbbbbbbbbbbbbba
-adddddddddddddddccccccccccccccccbbbbbbbbbbbbbbbbba
-adddddddddddddddccccccccccccccccbbbbbbbbbbbbbbbbba
+accccccccccccccccccccccccccccccdbbbbbbbbbbbbbbbbba
+aeeeeeeeeeeeeeeeeeeeeeeeeeeeccccbbbbbbbbbbbbbbbbba
+aeeeeeeeeeeeeeeeeeeeeeeeeeeeccccbbbbbbbbbbbbbbbbba
+aebbbbbbbbbbbbbbbbaabaabaabbccccbbbbbbbbbbbbbbbbba
+aebbfbbbbbghhhhhibaabaabaabbccccbbbbbbbbbbbbbbbbba
+aeghhibbghjkkkkklhhhhhbbbbbbccccbbbbbbbbbbbbbbbbba
+aemkklhhjknkkkkkkkkkkklbbbbbccccbbbbbbbbbbbbbbbbba
+aemkkkkkkkkkkoooooooookpbbbbccccbbbbbbbbbbbbbbbbba
+aemkkkkkkkkoooooooooookpbbbbccccbbbbbbbbbbbbbbbbba
+aeqrkkkkkkooooooooookkstbbbbccccbbbbbbbbbbbbbbbbba
+aegjkkkkooooooookkkkkkpbbbbbccccbbbbbbbbbbbbbbbbba
+aemkkkkoooooookkkkkkkkpbbbbbccccbbbbbbbbbbbbbbbbba
+aemkkkoooooookkkkkkkkkpbbbbuccccbbbbbbbbbbbbbbbbba
+aemkooooooookkkvkkkkkklibbbbccccbbbbbbbbbbbbbbbbba
+aemkooooookkswwrkkkkkkkpbbbbccccbbbbbbbbbbbbbbbbba
+aemkoooookkstbbqrkkkxkkpbbbbccccbbbbbbbbbbbbbbbbba
+aemkkkkkkkstbeebqrkkkkkpbbfbccycubbbbbbbbbbbbbbbba
+aeqwwwwwwwtbbeebbqwwwwwtbbbbccccbbbbbbbbbbbbbbbbba
+aeeeeeeeeeeeeeeeccccccccccccccccbbbbbbbbbbbbbbbbba
+aeeeeeeeeeeeeeeeccccccccccccccccbbbbbbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}

@@ -1,11 +1,5 @@
-/mob/trainer
-	var/list/minions = list()
-	var/tmp/max_minions = 6
-	var/tmp/mob/minion/following
-	var/tmp/show_minions
-
 /mob/trainer/verb/switch_minion()
-	if(current_battle)
+	if(frozen)
 		return
 	var/data/minion/switching = minions[1]
 	minions -= switching
@@ -43,9 +37,7 @@
 
 /mob/trainer/select_minion_from_list(var/list/options = list(), var/select_plane = 99, var/select_layer = 99, var/can_cancel=1)
 
-	world << "called"
 	if(!client)
-		world << "no client"
 		return pick(options)
 
 	var/list/selection_panel = list()

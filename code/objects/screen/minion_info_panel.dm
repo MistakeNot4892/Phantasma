@@ -1,6 +1,6 @@
 /obj/screen/minion_panel_button
 	name = "Minion Status"
-	icon = 'icons/screen/minion_status.dmi'
+	icon = 'icons/screen/selection.dmi'
 	icon_state = "base"
 	var/data/minion/minion
 
@@ -93,9 +93,7 @@
 
 /obj/screen/minion_toggle/clicked(var/client/clicker)
 	var/mob/trainer/T = owner
-
 	if(istype(T) && owner.client == T.client)
-
 		T.show_minions = !T.show_minions
 		T.update_minion_status()
 		if(T.show_minions)
@@ -105,11 +103,18 @@
 			icon_state = "toggle_hide"
 			screen_loc = "15,14"
 		else
-			for(var/obj/screen/minion_panel_button/MS in T.minion_status)
-				MS.color = WHITE
+			reset()
+
+/obj/screen/minion_toggle/proc/reset()
+	var/mob/trainer/T = owner
+	if(istype(T))
+		for(var/obj/screen/minion_panel_button/MS in T.minion_status)
+			MS.color = WHITE
+		if(T.client)
 			T.client.screen -= T.minion_status
-			icon_state = "toggle_show"
-			screen_loc = "20,14"
-			if(T.viewing_minion)
+		icon_state = "toggle_show"
+		screen_loc = "20,14"
+		if(T.viewing_minion)
+			if(T.client)
 				T.client.screen -= T.viewing_minion.get_info_panel()
-				T.viewing_minion = null
+			T.viewing_minion = null

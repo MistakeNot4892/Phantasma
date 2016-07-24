@@ -22,6 +22,7 @@
 	if(!..())
 		return
 	for(var/obj/screen/battle_icon/menu/tech/O in battle.technique_objects)
+		O.invisibility = 0
 		animate(O, alpha = (toggled ? 255 : 0), time = 3)
 
 /obj/screen/battle_icon/menu/use_item
@@ -37,7 +38,7 @@
 		color = WHITE
 
 /obj/screen/battle_icon/menu/switch_out
-	name = "\improper Switch Phantasm"
+	name = "\improper Switch"
 	icon_state = "switch"
 	screen_loc = "16,5"
 
@@ -63,7 +64,7 @@
 			color = WHITE
 			return 0
 
-	battle.next_action = list("action" = "flee", "priority" = 3)
+	battle.next_action = list("action" = "flee", "priority" = MAX_ACTION_PRIORITY)
 	battle.end_turn()
 
 /obj/screen/battle_icon/menu/tech

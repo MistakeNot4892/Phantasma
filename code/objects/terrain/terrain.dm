@@ -10,13 +10,9 @@
 	var/encounter_chance = 5
 	var/list/can_encounter = list()
 
-/obj/terrain/grass/clicked(var/client/clicker)
-	world << "x [layer] [plane] [clicker.mob.layer] [clicker.mob.plane]"
-
 /obj/terrain/grass/New()
 	. = ..()
 	can_encounter = typesof(/data/minion_template)-/data/minion_template
-
 
 /obj/terrain/grass/proc/puff(var/turf/target, var/min=3, var/max=5)
 	if(!target)
@@ -44,10 +40,14 @@
 		var/spawn_dir = (trainer.dir in dirs) ? trainer.dir : pick(dirs)
 		dirs -= spawn_dir
 		var/turf/T = get_step(get_turf(src), spawn_dir)
-		var/encounter_path = pick(can_encounter)
 		puff(T)
-		var/mob/minion/wild/encounter = new(T, new /data/minion(encounter_path))
+		var/mob/minion/wild/encounter = new(T)
 		encounter.set_dir(get_dir(encounter,trainer))
 		encounter.show_overhead_icon("shout")
 		encounters += encounter
+
+	for(var/mob/minion/wild/W in encounters)
+		var/encounter_path = pick(can_encounter)
+		W.change_to_minion(new /data/minion(encounter_path, W))
+
 	start_new_battle(list(trainer),encounters)

@@ -1,37 +1,45 @@
 /data/minion
 	var/name
-	var/mob/trainer/owner
-	var/data/minion_template/template
-	var/participated_in_last_fight
-
 	var/list/techs = list()
 	var/list/tech_uses = list()
 	var/list/data = list()
-	var/list/modifiers = list()
-
 	var/status = 0
+	var/template_path
 
-	var/obj/screen/minion_status/status_bar
-	var/obj/screen/data_panel/data_panel
-	var/obj/screen/statbar/health_bar
-	var/obj/screen/statbar/experience/xp_bar
-	var/list/technique_panels = list()
+	var/tmp/mob/trainer/owner
+	var/tmp/data/minion_template/template
+	var/tmp/participated_in_last_fight
+	var/tmp/list/modifiers = list()
+	var/tmp/obj/screen/minion_status/status_bar
+	var/tmp/obj/screen/data_panel/data_panel
+	var/tmp/obj/screen/statbar/health_bar
+	var/tmp/obj/screen/statbar/experience/xp_bar
+	var/tmp/list/technique_panels = list()
 
-/data/minion/New(var/minion_path, var/mob/trainer/_owner)
+/data/minion/New(var/_minion_path, var/mob/trainer/_owner)
+	. = ..()
+	// Freshly instantiated critter. Generate all appropriate
+	// data now rather than relying on it being loaded.
+	if(_minion_path && _owner)
+		template = get_unique_data_by_path(_minion_path)
+		name = template.name
+		for(var/tech in template.techs)
+			var/data/technique/T = get_unique_data_by_path(tech)
+			techs += T
+			tech_uses[T.name] = T.max_uses
+		data = template.data.Copy()
+		data[MD_CHP] = data[MD_MHP]
+		data[MD_EXP] = get_xp_threshold_for(4)
+		data[MD_LVL] = 5
+		initialize(_minion_path, _owner)
+
+/data/minion/initialize(var/_minion_path, var/mob/trainer/_owner)
+
 	if(_owner != null)
 		owner = _owner
 
-	template = get_unique_data_by_path(minion_path)
-	name = template.name
-	for(var/tech in template.techs)
-		var/data/technique/T = get_unique_data_by_path(tech)
-		techs += T
-		tech_uses[T.name] = T.max_uses
-
-	data = template.data.Copy()
-	data[MD_CHP] = data[MD_MHP]
-	data[MD_EXP] = get_xp_threshold_for(4)
-	data[MD_LVL] = 5
+	template_path = _minion_path
+	template = get_unique_data_by_path(template_path)
 
 	health_bar = new(src)
 	xp_bar = new(src)
