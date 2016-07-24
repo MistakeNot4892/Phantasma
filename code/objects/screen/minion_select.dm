@@ -30,7 +30,7 @@
 
 /obj/screen/cancel_minion_select
 	name = "Cancel"
-	icon = 'icons/screen/minion_status.dmi'
+	icon = 'icons/screen/selection.dmi'
 	icon_state = "cancel"
 	var/data/selected_minion/reporting_to
 

@@ -32,3 +32,12 @@
 		else
 			return 1.5
 	return 1
+
+/data/minion_template/proc/create_genetics()
+	var/list/genetics = list()
+	var/list/values = list(1,0.5,0.5,0,-0.5,-1)
+	for(var/val in MD_COMBAT_STATISTICS)
+		var/uval = pick(values)
+		values -= uval
+		genetics[val] = uval
+	return genetics

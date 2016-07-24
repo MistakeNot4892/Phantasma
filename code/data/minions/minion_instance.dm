@@ -51,6 +51,9 @@
 		var/obj/screen/technique/tech = new /obj/screen/technique(src, T)
 		technique_panels += tech
 
+	if(!genetics)
+		genetics = template.create_genetics()
+
 /data/minion/destroy()
 	techs.Cut()
 	if(owner)

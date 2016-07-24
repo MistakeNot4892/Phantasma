@@ -1,10 +1,10 @@
-/obj/screen/minion_panel_button
+/obj/screen/minion_panel
 	name = "Minion Status"
 	icon = 'icons/screen/selection.dmi'
 	icon_state = "base"
 	var/data/minion/minion
 
-/obj/screen/minion_panel_button/New(var/_owner, var/data/minion/_minion)
+/obj/screen/minion_panel/New(var/_owner, var/data/minion/_minion)
 	..(_owner)
 	if(_minion)
 		set_minion(_minion)
@@ -12,11 +12,11 @@
 		alpha = 0
 		invisibility = 100
 
-/obj/screen/minion_panel_button/proc/set_minion(var/data/minion/_minion)
+/obj/screen/minion_panel/proc/set_minion(var/data/minion/_minion)
 	minion = _minion
 	update()
 
-/obj/screen/minion_panel_button/proc/update()
+/obj/screen/minion_panel/proc/update()
 
 	if(minion)
 		alpha = 255
@@ -29,7 +29,7 @@
 	minion.status_bar.update()
 	appearance = minion.status_bar
 
-/obj/screen/minion_panel_button/clicked(var/client/clicker)
+/obj/screen/minion_panel/clicked(var/client/clicker)
 
 	if(!owner.client || clicker != owner.client)
 		return
@@ -43,7 +43,7 @@
 		color = WHITE
 		return
 
-	for(var/obj/screen/minion_panel_button/MS in T.minion_status)
+	for(var/obj/screen/minion_panel/MS in T.minion_status_panels)
 		MS.color = WHITE
 
 	if(T.viewing_minion)
@@ -55,9 +55,9 @@
 	T.client.screen += T.viewing_minion.get_info_panel()
 
 // Allow drag and drop rearranging to change the order of your minions.
-/obj/screen/minion_panel_button/MouseDrop(var/over_object)
+/obj/screen/minion_panel/MouseDrop(var/over_object)
 
-	var/obj/screen/minion_panel_button/MS = over_object
+	var/obj/screen/minion_panel/MS = over_object
 	var/mob/trainer/T = owner
 	if(istype(MS) && istype(T))
 		if(MS.alpha == 0)
@@ -68,16 +68,16 @@
 		MS.screen_loc = last_screen_loc
 
 		// Update status object order.
-		var/theirpos = T.minion_status.Find(MS)
-		var/mypos = T.minion_status.Find(src)
-		T.minion_status -= src
-		T.minion_status.Insert(theirpos,src)
-		T.minion_status -= MS
-		T.minion_status.Insert(mypos,MS)
+		var/theirpos = T.minion_status_panels.Find(MS)
+		var/mypos = T.minion_status_panels.Find(src)
+		T.minion_status_panels -= src
+		T.minion_status_panels.Insert(theirpos,src)
+		T.minion_status_panels -= MS
+		T.minion_status_panels.Insert(mypos,MS)
 
 		// Update minion order.
 		T.minions.Cut()
-		for(var/obj/screen/minion_panel_button/status in T.minion_status)
+		for(var/obj/screen/minion_panel/status in T.minion_status_panels)
 			if(status.minion)
 				T.minions += status.minion
 		T.update_following_minion()
@@ -87,9 +87,9 @@
 
 /obj/screen/minion_toggle
 	name = "Toggle Minion Display"
-	icon = 'icons/screen/minion_toggle.dmi'
-	icon_state = "toggle_show"
-	screen_loc = "20,14"
+	icon = 'icons/screen/selection_bkg.dmi'
+	icon_state = "min_retracted"
+	screen_loc = "16,8"
 
 /obj/screen/minion_toggle/clicked(var/client/clicker)
 	var/mob/trainer/T = owner
@@ -97,11 +97,8 @@
 		T.show_minions = !T.show_minions
 		T.update_minion_status()
 		if(T.show_minions)
-			for(var/obj/screen/minion_panel_button/MS in T.minion_status)
-				MS.update()
-			T.client.screen += T.minion_status
-			icon_state = "toggle_hide"
-			screen_loc = "15,14"
+			T.client.screen += T.minion_status_panels
+			icon_state = "min"
 		else
 			reset()
 
@@ -109,12 +106,11 @@
 	var/mob/trainer/T = owner
 	if(istype(T))
 		T.show_minions = 0
-		for(var/obj/screen/minion_panel_button/MS in T.minion_status)
+		for(var/obj/screen/minion_panel/MS in T.minion_status_panels)
 			MS.color = WHITE
 		if(T.client)
-			T.client.screen -= T.minion_status
-		icon_state = "toggle_show"
-		screen_loc = "20,14"
+			T.client.screen -= T.minion_status_panels
+		icon_state = "min_retracted"
 		if(T.viewing_minion)
 			if(T.client)
 				T.client.screen -= T.viewing_minion.get_info_panel()

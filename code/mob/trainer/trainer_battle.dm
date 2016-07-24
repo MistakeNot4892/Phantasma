@@ -19,6 +19,7 @@
 
 /mob/trainer/proc/start_battle(var/data/battle_controller/battle)
 
+	reset_ui()
 	if(overworld_barrier)
 		overworld_barrier.mouse_opacity = 2
 		spawn(8)
@@ -29,7 +30,7 @@
 	current_battle = battle
 	frozen = 1
 
-	for(var/obj/screen/minion_panel_button/MS in minion_status)
+	for(var/obj/screen/minion_panel/MS in minion_status_panels)
 		MS.color = WHITE
 	if(client && viewing_minion)
 		client.screen -= viewing_minion.get_info_panel()
@@ -77,8 +78,12 @@
 	for(var/data/minion/M in minions)
 		if(!(M.status & STATUS_FAINTED))
 			return
-	notify_nearby("Having been defeated, <b>\the [src]</b> retreats!")
-	return_to_save_point()
+
+	if(client)
+		notify_nearby("Having been defeated, <b>\the [src]</b> retreats!")
+		return_to_save_point()
+		sleep(10)
+	restore()
 
 /mob/trainer/proc/return_to_save_point()
 	frozen = 1

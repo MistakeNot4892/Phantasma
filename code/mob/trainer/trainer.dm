@@ -13,23 +13,29 @@
 	var/list/minions = list()
 	var/list/inventory = list()
 
+	var/tmp/max_minions = 6
+	var/tmp/mob/minion/following
+	var/tmp/list/starting_minions
+	var/tmp/held_items = 0
+	var/tmp/max_items = 100
 	var/tmp/last_save_x
 	var/tmp/last_save_y
 	var/tmp/last_save_z
-	var/tmp/obj/screen/barrier/overworld_barrier
-	var/tmp/obj/screen/minion_toggle/minion_toggle
 	var/tmp/sleeping = 0
 	var/tmp/turf/last_loc
-	var/tmp/list/starting_minions
-	var/tmp/list/minion_status = list()
 	var/tmp/obj/screen/notify/notifications
+	var/tmp/obj/screen/barrier/overworld_barrier
+
+	var/tmp/show_minions
+	var/tmp/obj/screen/minion_toggle/minion_toggle
+	var/tmp/list/minion_status_panels = list()
+
+	var/tmp/show_inventory
+	var/tmp/obj/screen/inventory_toggle/inventory_toggle
+	var/tmp/list/inventory_panels = list()
+
 	var/tmp/data/minion/viewing_minion
 	var/tmp/data/radio/radio
-	var/tmp/max_minions = 6
-	var/tmp/mob/minion/following
-	var/tmp/show_minions
-	var/tmp/held_items = 0
-	var/tmp/max_items = 100
 
 /mob/trainer/New()
 	if(isnull(starting_minions))
@@ -67,7 +73,7 @@
 	update_minion_status()
 
 	if(show_minions)
-		client.screen += minion_status
+		client.screen += minion_status_panels
 	client.screen += overworld_barrier
 
 	spawn(0)
@@ -125,3 +131,6 @@ var/temporary_trainer_count = 100
 		animate(src,alpha=0,time=5)
 	sleep(15)
 	qdel(src)
+
+/mob/trainer/proc/update_inventory_status()
+	return

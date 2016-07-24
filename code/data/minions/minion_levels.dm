@@ -47,7 +47,7 @@
 /data/minion/proc/increase_level()
 
 	for(var/val in MD_COMBAT_STATISTICS)
-		data[val] += ceil(max(0,(template.data[val]/50.0)))
+		data[val] += max(0,ceil((template.data[val]/50.0)+genetics[val]))
 
 	data[MD_CHP] = data[MD_MHP]
 	data[MD_LVL]++

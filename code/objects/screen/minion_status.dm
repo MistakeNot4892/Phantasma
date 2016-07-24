@@ -1,6 +1,6 @@
 /obj/screen/minion_status
 	name = "Minion Status"
-	icon = 'icons/screen/minion_status.dmi'
+	icon = 'icons/screen/selection.dmi'
 	icon_state = "base"
 	maptext_x = 30
 	maptext_y = 12
