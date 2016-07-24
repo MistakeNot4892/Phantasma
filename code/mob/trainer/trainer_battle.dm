@@ -3,6 +3,7 @@
 	M.gain_exp((get_xp_threshold_for(M.data[MD_LVL])-M.data[MD_EXP])+1)
 
 /mob/trainer/get_minion()
+	update_following_minion()
 	if(following && !(following.minion_data.status & STATUS_FAINTED))
 		return following.minion_data
 	else
@@ -110,8 +111,8 @@
 /mob/trainer/restore()
 	for(var/data/minion/M in minions)
 		M.restore()
-	update_following_minion()
 	update_minion_status()
+	update_following_minion()
 
 /mob/trainer/clicked(var/client/clicker)
 	if(clicker.mob == src)

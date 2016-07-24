@@ -18,7 +18,7 @@
 			new_minion = temp
 			break
 
-	if(following && following.minion_data == new_minion)
+	if(following && following.alpha == 255 && following.minion_data == new_minion)
 		return
 
 	if(!new_minion)
@@ -39,6 +39,9 @@
 
 	if(!client)
 		return pick(options)
+
+	if(options.len == 1)
+		return options[1]
 
 	var/list/selection_panel = list()
 	var/data/selected_minion/choice = new()

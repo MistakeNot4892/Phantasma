@@ -6,6 +6,7 @@
 		inventory[item_data.name] = new /data/inventory_item(item_path, src)
 	var/data/inventory_item/inv = inventory[item_data.name]
 	inv.count++
+	update_inventory_status()
 	update_held_item_count()
 	return 1
 

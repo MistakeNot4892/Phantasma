@@ -30,6 +30,7 @@
 	var/tmp/obj/screen/minion_toggle/minion_toggle
 	var/tmp/list/minion_status_panels = list()
 
+	var/tmp/inv_index = 1
 	var/tmp/show_inventory
 	var/tmp/obj/screen/inventory_toggle/inventory_toggle
 	var/tmp/list/inventory_panels = list()
@@ -133,4 +134,22 @@ var/temporary_trainer_count = 100
 	qdel(src)
 
 /mob/trainer/proc/update_inventory_status()
-	return
+
+	if(inv_index<1)
+		inv_index = 1
+	else
+		if(inventory.len > 5)
+			if(inv_index>(inventory.len-5))
+				inv_index = (inventory.len-5)
+		else
+			if(inv_index > inventory.len)
+				inv_index = inventory.len
+
+	var/i = 0
+	for(var/obj/screen/inventory_panel/IP in inventory_panels)
+		var/effective_index = inv_index+i
+		if(inventory.len && effective_index <= inventory.len)
+			IP.update_with(effective_index, inventory[inventory[effective_index]])
+		else
+			IP.clear()
+		i++
