@@ -7,6 +7,17 @@
 
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+#define FILE_DIR "icons"
+#define FILE_DIR "icons/battle"
+#define FILE_DIR "icons/battle/humans"
+#define FILE_DIR "icons/html"
+#define FILE_DIR "icons/lighting"
+#define FILE_DIR "icons/minions"
+#define FILE_DIR "icons/overworld"
+#define FILE_DIR "icons/overworld/humans"
+#define FILE_DIR "icons/screen"
+#define FILE_DIR "icons/terrain"
+#define FILE_DIR "icons/turf"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
