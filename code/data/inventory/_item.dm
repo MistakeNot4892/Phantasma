@@ -6,6 +6,7 @@
 	var/can_use_battle
 	var/can_use_overmap
 	var/hostile
+	var/icon_state
 
 /data/item/proc/do_battle_animation(var/image/target)
 	set waitfor=0

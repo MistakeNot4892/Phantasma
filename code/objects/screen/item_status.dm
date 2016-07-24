@@ -4,7 +4,7 @@
 	icon_state = "base"
 	maptext_width = 300
 	maptext_x = 36
-	maptext_y = 12
+	maptext_y = 10
 
 /obj/screen/item_status/New()
 	..()
@@ -14,8 +14,10 @@
 	if(!item || !item.item_template)
 		clear()
 		return
-	maptext = "<b>[item.item_template.name]</b> x [item.count]: [item.item_template.desc]"
+	maptext = "<b>[item.item_template.name]</b> x [item.count]"
 	invisibility = 0
+	overlays.Cut()
+	overlays += image('icons/screen/inv_items.dmi', item.item_template.icon_state)
 
 /obj/screen/item_status/proc/clear()
 	maptext = null

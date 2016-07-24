@@ -3,6 +3,7 @@
 	desc = "Restores 20HP."
 	can_use_battle =    1
 	can_use_overmap =   1
+	icon_state = "potion"
 	var/heal_strength = 20
 
 /data/item/potion/do_battle_animation(var/image/target)

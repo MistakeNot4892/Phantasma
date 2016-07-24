@@ -15,6 +15,9 @@
 	hp_text = new("HP", _x=66, _y=307, _colour = DARK_RED)
 	xp_text = new("XP", _x=66, _y=263, _colour = DARK_RED)
 	update()
+	var/matrix/M = matrix()
+	M.Translate(-16,0)
+	transform = M
 
 /obj/screen/data_panel/proc/update()
 	maptext = null

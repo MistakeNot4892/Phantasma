@@ -19,6 +19,9 @@
 	contains = _contains
 	reporting_to = _reporting
 	appearance = emulate_appearance
+	var/matrix/M = matrix()
+	M.Translate(-16,0)
+	transform = M
 
 /obj/screen/select/clicked(var/client/clicker)
 	if(reporting_to && !reporting_to.selection && !reporting_to.cancelled)
@@ -37,6 +40,9 @@
 
 /obj/screen/cancel_select/New(var/data/selected/_reporting)
 	reporting_to = _reporting
+	var/matrix/M = matrix()
+	M.Translate(-16,0)
+	transform = M
 
 /obj/screen/cancel_select/clicked()
 	if(reporting_to && !reporting_to.selection && !reporting_to.cancelled)
