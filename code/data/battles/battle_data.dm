@@ -87,7 +87,7 @@
 /data/battle_data/proc/do_tech_animations(var/data/technique/tech, var/data/battle_data/user, var/data/battle_data/target)
 	return
 
-/data/battle_data/proc/award_experience(var/data/minion/defeated)
+/data/battle_data/proc/award_experience(var/data/minion/defeated, var/wild_mob)
 	return
 
 /data/battle_data/proc/award_winnings(var/val=0)

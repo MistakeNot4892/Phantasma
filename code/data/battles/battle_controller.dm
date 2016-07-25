@@ -265,7 +265,7 @@
 					sleep(8)
 					for(var/data/battle_data/witness in players)
 						witness.update_health_images()
-					award_experience(target.opponents, target.minion)
+					award_experience(target.opponents, target.minion, target.wild_mob)
 					target.minion = null
 					for(var/data/battle_data/witness in players)
 						witness.update_health_images()
@@ -406,9 +406,9 @@
 /data/battle_controller/proc/can_flee(var/data/battle_data/player)
 	return prob(90)
 
-/data/battle_controller/proc/award_experience(var/list/players, var/data/minion/defeated)
+/data/battle_controller/proc/award_experience(var/list/players, var/data/minion/defeated, var/wild_mob)
 	for(var/data/battle_data/player in players)
-		player.award_experience(defeated)
+		player.award_experience(defeated, wild_mob)
 
 /data/battle_controller/proc/award_winnings(var/list/players, var/list/defeated)
 	var/val = 1

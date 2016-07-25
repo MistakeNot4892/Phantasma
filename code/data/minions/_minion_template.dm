@@ -18,6 +18,7 @@
 		MD_SPEED_VAR_MAX = 3
 		)
 	var/gem_colour = WHITE
+	var/xp_value = 60
 
 /data/minion_template/proc/get_type_weakness(var/damtype)
 	return 1

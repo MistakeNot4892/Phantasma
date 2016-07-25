@@ -232,10 +232,10 @@
 	switch_objects.Cut()
 	return ..()
 
-/data/battle_data/player/award_experience(var/data/minion/defeated)
+/data/battle_data/player/award_experience(var/data/minion/defeated, var/wild_mob)
 	var/mob/trainer/T = owner
 	if(istype(T))
-		T.award_experience(get_xp_for(defeated), src)
+		T.award_experience(get_xp_for(defeated, wild_mob), src)
 	return
 
 /data/battle_data/player/get_next_minion()

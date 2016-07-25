@@ -19,8 +19,8 @@
 		current_level = level_totals.len
 	return level_totals[current_level]
 
-/proc/get_xp_for(var/data/minion/defeated)
-	return 50 * (defeated.data[MD_LVL])
+/proc/get_xp_for(var/data/minion/defeated, var/wild_mob)
+	return (wild_mob ? 1 : 1.5) * defeated.template.xp_value * (defeated.data[MD_LVL])
 
 /mob/trainer/proc/award_experience(var/amt=1, var/data/battle_data/player/battle_data)
 

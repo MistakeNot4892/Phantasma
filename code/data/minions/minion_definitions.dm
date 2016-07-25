@@ -15,6 +15,7 @@
 		MD_SPEED = 45
 		)
 	gem_colour = PALE_BROWN
+	xp_value = 70
 
 /data/minion_template/kelpice
 	name = "Kelpice"
@@ -33,6 +34,7 @@
 		MD_SPEED = 43
 		)
 	gem_colour = DARK_BLUE
+	xp_value = 75
 
 /data/minion_template/umbermote
 	name = "Umbermote"
@@ -51,6 +53,7 @@
 		MD_SPEED = 65
 		)
 	gem_colour = BRIGHT_ORANGE
+	xp_value = 70
 
 /data/minion_template/skywhit
 	name = "Skywhit"
@@ -69,3 +72,4 @@
 		MD_SPEED = 90
 		)
 	gem_colour = DARK_BROWN
+	xp_value = 65
