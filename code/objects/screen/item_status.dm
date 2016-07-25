@@ -4,7 +4,7 @@
 	icon_state = "base"
 	maptext_width = 300
 	maptext_x = 36
-	maptext_y = 10
+	maptext_y = 12
 
 /obj/screen/item_status/New()
 	..()
@@ -14,7 +14,7 @@
 	if(!item || !item.item_template)
 		clear()
 		return
-	maptext = "<b>[item.item_template.name]</b> x [item.count]"
+	maptext = "<span style = 'font-family:courier'><font color = '[PALE_BLUE]'><b>[item.item_template.name] x [item.count]</b></span></font>"
 	invisibility = 0
 	overlays.Cut()
 	overlays += image('icons/screen/inv_items.dmi', item.item_template.icon_state)

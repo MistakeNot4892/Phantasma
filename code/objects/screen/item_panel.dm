@@ -12,7 +12,7 @@
 		return
 
 	trainer.notify("You have selected \the [held_item.item_template.name].")
-	if(!held_item.item_template.can_use_battle)
+	if(!held_item.item_template.can_use_overmap)
 		owner.notify("You can't use \the [held_item.item_template.name] outside of battle.")
 		return
 
@@ -26,4 +26,5 @@
 		held_item.item_template.apply(chosen_target)
 		trainer.remove_item(held_item,1)
 
+	trainer.update_minion_status()
 	trainer.update_inventory_status()
