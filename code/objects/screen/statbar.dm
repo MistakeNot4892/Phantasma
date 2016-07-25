@@ -60,3 +60,11 @@
 
 /obj/screen/statbar/experience/get_bar_color()
 	return default_color
+
+/obj/screen/statbar/small
+	icon = 'icons/screen/statbar_small.dmi'
+	bar_size = 100
+
+/obj/screen/statbar/experience/small
+	icon = 'icons/screen/statbar_small.dmi'
+	bar_size = 100

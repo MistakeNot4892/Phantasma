@@ -14,6 +14,10 @@
 /obj/screen/minion_status/proc/update()
 	overlays.Cut()
 	maptext = null
+
+	minion.small_health_bar.update()
+	minion.small_xp_bar.update()
+
 	var/list/images_to_use = list()
 	images_to_use += image('icons/minions/status_icons.dmi', "[minion.template.icon_state]_static")
 	var/use_colour = PALE_BLUE
@@ -26,7 +30,21 @@
 	if(minion.status & STATUS_FAINTED)
 		use_colour = DARK_GREY
 		images_to_use += image('icons/minions/status_icons.dmi', "fainted")
+
+	var/image/I = image(null)
+	I.appearance = minion.small_health_bar
+	I.x = 32
+	I.y = 12
+	images_to_use += I
+
+	I = image(null)
+	I.appearance = minion.small_xp_bar
+	I.x = 32
+	I.y = 8
+	images_to_use += I
+
 	overlays += images_to_use
+
 	var/mob/trainer/T = minion.owner
 	if(istype(T))
 		maptext = "<span style = 'font-family:courier'><font color = '[use_colour]'><b>[T.minions.Find(minion)].</b>[minion.name]</span></font>"

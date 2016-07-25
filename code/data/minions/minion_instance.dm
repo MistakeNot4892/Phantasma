@@ -14,8 +14,14 @@
 	var/tmp/list/modifiers = list()
 	var/tmp/obj/screen/minion_status/status_bar
 	var/tmp/obj/screen/data_panel/data_panel
+
 	var/tmp/obj/screen/statbar/health_bar
+	var/tmp/obj/screen/statbar/small/small_health_bar
+
 	var/tmp/obj/screen/statbar/experience/xp_bar
+	var/tmp/obj/screen/statbar/experience/small/small_xp_bar
+
+
 	var/tmp/list/technique_panels = list()
 
 /data/minion/New(var/_minion_path, var/mob/trainer/_owner)
@@ -45,6 +51,8 @@
 
 	health_bar = new(src)
 	xp_bar = new(src)
+	small_health_bar = new(src)
+	small_xp_bar = new(src)
 	status_bar = new(src)
 
 	for(var/data/technique/T in techs)
@@ -71,9 +79,15 @@
 	if(health_bar)
 		qdel(health_bar)
 		health_bar = null
-	if(xp_bar )
+	if(xp_bar)
 		qdel(xp_bar)
 		xp_bar = null
+	if(small_health_bar)
+		qdel(small_health_bar)
+		small_health_bar = null
+	if(small_xp_bar)
+		qdel(small_xp_bar)
+		small_xp_bar = null
 	if(data_panel)
 		qdel(data_panel)
 		data_panel = null
