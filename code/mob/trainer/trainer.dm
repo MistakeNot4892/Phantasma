@@ -3,13 +3,12 @@
 	name = "placeholder human"
 	icon = 'icons/overworld/humans/human.dmi'
 	icon_state = "base"
-	icon_body = "base"
 
-	var/icon_eyes = "green"
-	var/icon_clothes
-	var/icon_hair
-	var/icon_beard
-	var/icon_hat
+	icon_strings = list(
+		TRAINER_ICON_BODY = "base",
+		TRAINER_ICON_EYES = "green"
+		)
+
 	var/list/minions = list()
 	var/list/inventory = list()
 

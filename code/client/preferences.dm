@@ -7,12 +7,7 @@
 
 	var/savefile = new/savefile("saves/[ckey]")
 	savefile["name"]      << trainer.name
-	savefile["body"]      << trainer.icon_body
-	savefile["eyes"]      << trainer.icon_eyes
-	savefile["clothes"]   << trainer.icon_clothes
-	savefile["hair"]      << trainer.icon_hair
-	savefile["neard"]     << trainer.icon_beard
-	savefile["hat"]       << trainer.icon_hat
+	savefile["icon"]      << trainer.icon_strings
 	savefile["minions"]   << trainer.minions
 	savefile["inventory"] << trainer.inventory
 
@@ -39,12 +34,7 @@
 
 	var/loadfile = new/savefile("saves/[ckey]")
 	loadfile["name"]      >> trainer.name
-	loadfile["body"]      >> trainer.icon_body
-	loadfile["eyes"]      >> trainer.icon_eyes
-	loadfile["clothes"]   >> trainer.icon_clothes
-	loadfile["hair"]      >> trainer.icon_hair
-	loadfile["neard"]     >> trainer.icon_beard
-	loadfile["hat"]       >> trainer.icon_hat
+	loadfile["icon"]      >> trainer.icon_strings
 	loadfile["minions"]   >> trainer.minions
 	loadfile["inventory"] >> trainer.inventory
 	loadfile["save_x"]    >> trainer.last_save_x

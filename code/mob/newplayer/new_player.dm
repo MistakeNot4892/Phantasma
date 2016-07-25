@@ -20,6 +20,9 @@ var/turf/initial_spawn_turf
 	if(load)
 		qdel(load)
 		load = null
+	if(new_character_panel)
+		qdel(new_character_panel)
+		new_character_panel = null
 	return ..()
 
 /mob/new_player/New()

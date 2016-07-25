@@ -12,6 +12,7 @@
 	maptext_width = _height
 	maptext_height = _width
 	color = _colour
+	set_text(message)
 
 /obj/screen/text/proc/set_text(var/message, var/centered=1)
 	if(centered)

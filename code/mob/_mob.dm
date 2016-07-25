@@ -1,12 +1,16 @@
 /mob
 	layer = MOB_LAYER
 
-	var/sprinting = 0
-	var/next_move = 0
-	var/icon_body
-	var/tmp/data/battle_controller/current_battle
-	var/frozen
 	glide_size = 4
+
+	var/tmp/sprinting = 0
+	var/tmp/next_move = 0
+	var/tmp/data/battle_controller/current_battle
+	var/tmp/frozen
+
+	var/list/icon_strings = list(
+		TRAINER_ICON_BODY = "base"
+		)
 
 /mob/New()
 	. = ..()

@@ -2,10 +2,12 @@
 	name = "Eleanor"
 	icon_state = "elea"
 	starting_minions = list(/data/minion_template/umbermote)
-	icon_body = "female"
-	icon_clothes = "elea"
-	icon_hair = "long_brown"
-	icon_eyes = "brown"
+	icon_strings = list(
+		TRAINER_ICON_BODY = "female",
+		TRAINER_ICON_CLOTHES = "elea",
+		TRAINER_ICON_HAIR = "long_brown",
+		TRAINER_ICON_EYES = "brown"
+		)
 
 /mob/trainer/npc/New()
 	..()

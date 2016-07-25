@@ -22,7 +22,8 @@ var/list/title_image
 	if(new_player.joining)
 		return
 	color = PALE_GREY
-	new_player.do_join(new /mob/trainer)
+	new_player.create_new_character()
+	sleep(3)
 	color = WHITE
 
 /obj/screen/title/option/load

@@ -2,6 +2,7 @@
 	name = "Minion Status"
 	icon = 'icons/screen/selection.dmi'
 	icon_state = "base"
+	layer = SCREEN_EFFECTS_LAYER+0.2
 	var/data/minion/minion
 
 /obj/screen/minion_panel/New(var/_owner, var/data/minion/_minion)
