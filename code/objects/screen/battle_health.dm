@@ -55,11 +55,15 @@
 	alpha = 255
 	invisibility = 0
 	maptext = initial(maptext)
+	if(level_display)
+		level_display.set_text("")
 
 	if(battle && tracking.minion)
 		tracking.minion.health_bar.update()
 		tracking.minion.xp_bar.update()
 		maptext = "[tracking.minion.name]"
+		if(level_display)
+			level_display.set_text("<b>LV.[tracking.minion.data[MD_LVL]]</b>")
 		return 1
 
 /obj/screen/battle_icon/health/ally/New()
@@ -70,11 +74,9 @@
 	if(..())
 		if(tracking.minion && tracking.minion)
 			if(health_display) health_display.set_text("<b>[tracking.minion.data[MD_CHP]]/[tracking.minion.data[MD_MHP]]</b> HP")
-			if(level_display)  level_display.set_text("<b>LV.[tracking.minion.data[MD_LVL]]</b>")
 		else
 			maptext = null
 			if(health_display) health_display.set_text("")
-			if(level_display)  level_display.set_text("")
 		return 1
 	return 0
 

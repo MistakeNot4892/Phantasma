@@ -1,5 +1,4 @@
 /mob/trainer/update_icon()
-	overlays = null
 	icon_state = null
 
 	var/list/images_to_add = list()
@@ -16,6 +15,7 @@
 	if(icon_strings[TRAINER_ICON_HAIR])    images_to_add += image('icons/overworld/humans/human_hair.dmi',   "[icon_strings[TRAINER_ICON_HAIR]][append]")
 	if(icon_strings[TRAINER_ICON_HAT])     images_to_add += image('icons/overworld/humans/human_hat.dmi',    "[icon_strings[TRAINER_ICON_HAT]][append]")
 
+	overlays.Cut()
 	overlays += images_to_add
 
 /mob/trainer/get_battle_image(var/mob/holder, var/frontal)

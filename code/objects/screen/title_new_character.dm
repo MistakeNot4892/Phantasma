@@ -39,3 +39,18 @@
 
 /obj/screen/title/panel/exit/clicked(var/client/clicker)
 	master_panel.clear()
+
+/obj/screen/title/panel/confirm
+	name = "Confirm"
+	icon = 'icons/screen/title_options.dmi'
+	icon_state = "confirm"
+	screen_loc = "9,3"
+
+/obj/screen/title/panel/confirm/clicked(var/client/clicker)
+	master_panel.finalize()
+
+/obj/screen/title/panel/confirm/New()
+	. = ..()
+	var/matrix/M = matrix()
+	M.Translate(0,3)
+	transform = M

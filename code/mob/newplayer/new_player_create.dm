@@ -7,9 +7,9 @@
 
 /data/new_character_panel/New(var/client/_client)
 	panel = new /obj/screen/title/panel(src)
-	elements += new /obj/screen/title/panel/exit(src)
 	elements += panel
-
+	elements += new /obj/screen/title/panel/exit(src)
+	elements += new /obj/screen/title/panel/confirm(src)
 	var/i = 0
 	for(var/slot in ALL_TRAINER_ICON_STRINGS)
 		text_objects[slot] = new /obj/screen/text(slot, _x=130, _y=330-(i*32), _colour=DARK_BROWN)
@@ -42,14 +42,14 @@
 	I.appearance = mannequin
 	I.layer = SCREEN_EFFECTS_LAYER+0.4
 	I.plane = SCREEN_PLANE
-	I.pixel_x = 24
+	I.pixel_x = 14
 	I.pixel_y = 185
 	images_to_add += I
 
 	I = mannequin.get_battle_image(frontal=1)
 	I.layer = SCREEN_EFFECTS_LAYER+0.4
 	I.plane = SCREEN_PLANE
-	I.pixel_x = -32
+	I.pixel_x = -42
 	I.pixel_y = 160
 	images_to_add += I
 
@@ -83,6 +83,16 @@
 		qdel(text_objects[slot])
 	text_objects.Cut()
 	return ..()
+
+/data/new_character_panel/proc/finalize()
+	clear()
+	var/mob/trainer/trainer = new()
+	trainer.name = mannequin.name
+	trainer.icon_strings = mannequin.icon_strings
+	trainer.update_icon()
+	var/mob/new_player/NP = client.mob
+	NP.do_join(trainer)
+	qdel(src)
 
 /mob/new_player
 	var/data/new_character_panel/new_character_panel

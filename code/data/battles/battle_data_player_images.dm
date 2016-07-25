@@ -112,6 +112,7 @@
 		else
 			first=1
 		hp_images[iref] = H.get_image()
-		owner.client.images += hp_images[iref]
+		if(owner.client)
+			owner.client.images += hp_images[iref]
 		if(first)
 			animate(hp_images[iref], alpha = 255, time = 5)
