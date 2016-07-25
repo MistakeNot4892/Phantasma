@@ -3,7 +3,7 @@
 	icon = 'icons/screen/technique_menu.dmi'
 	maptext_width = 112
 	maptext_x = 8
-	maptext_y = 10
+	maptext_y = 9
 
 	var/data/technique/tech
 	var/data/minion/owning_minion

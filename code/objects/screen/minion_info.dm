@@ -2,7 +2,7 @@
 	name = "Minion Info"
 	icon = 'icons/screen/infopanel.dmi'
 	icon_state = "base"
-	screen_loc = "7,4"
+	screen_loc = "7,3"
 
 	var/data/minion/minion
 	var/obj/screen/text/header_text
@@ -18,15 +18,15 @@
 /obj/screen/data_panel/New(var/data/minion/_minion)
 	minion = _minion
 
-	header_text = new("[minion.name]", _x=66, _y=323, _colour = DARK_BROWN)
+	header_text = new("[minion.name]", _x=66, _y=355, _colour = DARK_BROWN)
 
-	hp_text = new("HP",       _x=66, _y=307, _colour = DARK_RED)
-	xp_text = new("XP",       _x=66, _y=263, _colour = DARK_RED)
-	atk_text = new("HP",      _x=66, _y=120, _colour = DARK_RED)
-	def_text = new("XP",      _x=96, _y=120, _colour = DARK_RED)
-	spatk_text = new("SPATK", _x=66, _y=110, _colour = DARK_RED)
-	spdef_text = new("SPDEF", _x=96, _y=110, _colour = DARK_RED)
-	spd_text = new("SPD",     _x=81, _y=100, _colour = DARK_RED)
+	hp_text = new("HP",       _x=66, _y=339, _colour = DARK_RED)
+	xp_text = new("XP",       _x=66, _y=295, _colour = DARK_RED)
+	atk_text = new("HP",      _x=60, _y=100, _colour = DARK_RED)
+	def_text = new("XP",      _x=160, _y=100, _colour = DARK_RED)
+	spatk_text = new("SPATK", _x=60, _y=85, _colour = DARK_RED)
+	spdef_text = new("SPDEF", _x=160, _y=85, _colour = DARK_RED)
+	spd_text = new("SPD",     _x=110, _y=70, _colour = DARK_RED)
 
 	update()
 	var/matrix/M = matrix()
@@ -46,19 +46,19 @@
 
 	var/image/I = image('icons/battle/icons_front.dmi', minion.template.icon_state)
 	I.pixel_x = 16
-	I.pixel_y = 90
+	I.pixel_y = 118
 	images_to_add += I
 
 	I = image(null)
 	I.appearance = minion.health_bar
 	I.pixel_x = 25
-	I.pixel_y = 288
+	I.pixel_y = 320
 	images_to_add += I
 
 	I = image(null)
 	I.appearance = minion.xp_bar
 	I.pixel_x = 35
-	I.pixel_y = 278
+	I.pixel_y = 310
 	images_to_add += I
 
 	var/i = 1
@@ -67,7 +67,7 @@
 		I = image(null)
 		I.appearance = T
 		I.pixel_x = 13
-		I.pixel_y = 8
+		I.pixel_y = 4
 		if(i>2)
 			I.pixel_y += 30
 		if(stagger)
@@ -94,27 +94,27 @@
 	images_to_add += I
 
 	I = image(null)
-	atk_text.set_text("<b>ATK</b>: [minion.data[MD_ATK]]")
+	atk_text.set_text("<b>ATK</b>:   [minion.data[MD_ATK]]",centered=0)
 	I.appearance = atk_text
 	images_to_add += I
 
 	I = image(null)
-	def_text.set_text("<b>DEF</b>: [minion.data[MD_DEF]]")
+	def_text.set_text("<b>DEF</b>:   [minion.data[MD_DEF]]",centered=0)
 	I.appearance = def_text
 	images_to_add += I
 
 	I = image(null)
-	spatk_text.set_text("<b>SPATK</b>: [minion.data[MD_SPATK]]")
+	spatk_text.set_text("<b>SPATK</b>: [minion.data[MD_SPATK]]",centered=0)
 	I.appearance = spatk_text
 	images_to_add += I
 
 	I = image(null)
-	spdef_text.set_text("<b>SPDEF</b>: [minion.data[MD_SPDEF]]")
+	spdef_text.set_text("<b>SPDEF</b>: [minion.data[MD_SPDEF]]",centered=0)
 	I.appearance = spdef_text
 	images_to_add += I
 
 	I = image(null)
-	spd_text.set_text("<b>SPD</b>: [minion.data[MD_SPEED]]")
+	spd_text.set_text("<b>SPD</b>: [minion.data[MD_SPEED]]",centered=0)
 	I.appearance = spd_text
 	images_to_add += I
 

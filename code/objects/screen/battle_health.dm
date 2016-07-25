@@ -53,12 +53,17 @@
 
 /obj/screen/battle_icon/health/ally/self/get_image()
 	var/image/temp = ..()
-	var/image/I = image(null)
-	I.appearance = tracking.minion.xp_bar
-	I.pixel_y = -8
-	I.pixel_x += 10
-	I.plane = plane
-	temp.overlays += I
+	var/image/image_to_add
+	if(!tracking.minion)
+		image_to_add = image('icons/screen/statbar.dmi', "empty")
+	else
+		image_to_add = image(null)
+		image_to_add.appearance = tracking.minion.xp_bar
+
+	image_to_add.plane = plane
+	image_to_add.pixel_y = -8
+	image_to_add.pixel_x += 10
+	temp.overlays += image_to_add
 	return temp
 
 /obj/screen/battle_icon/health/enemy/update()

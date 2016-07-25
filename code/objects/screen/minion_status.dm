@@ -3,7 +3,7 @@
 	icon = 'icons/screen/selection.dmi'
 	icon_state = "base"
 	maptext_x = 30
-	maptext_y = 12
+	maptext_y = 13
 	maptext_width = 110
 	var/data/minion/minion
 
@@ -33,14 +33,14 @@
 
 	var/image/I = image(null)
 	I.appearance = minion.small_health_bar
-	I.x = 32
-	I.y = 12
+	I.pixel_x = 42
+	I.pixel_y = 9
 	images_to_use += I
 
 	I = image(null)
 	I.appearance = minion.small_xp_bar
-	I.x = 32
-	I.y = 8
+	I.pixel_x = 52
+	I.pixel_y = 7
 	images_to_use += I
 
 	overlays += images_to_use

@@ -13,5 +13,7 @@
 	maptext_height = _width
 	color = _colour
 
-/obj/screen/text/proc/set_text(var/message)
-	maptext = "<span style = 'font-family:courier'><font align='center'>[message]</font></span>"
+/obj/screen/text/proc/set_text(var/message, var/centered=1)
+	if(centered)
+		message = "<font align='center'>[message]</font>"
+	maptext = "<span style = 'font-family:courier'>[message]</span>"
