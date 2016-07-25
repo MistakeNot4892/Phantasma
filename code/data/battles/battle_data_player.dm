@@ -38,7 +38,7 @@
 		i++
 	i=0
 	for(var/data/battle_data/opponent in opponents)
-		hp_objects += new /obj/screen/battle_icon/health/enemy(src, opponent, -290, 210 - (i*38))
+		hp_objects += new /obj/screen/battle_icon/health(src, opponent, -290, 210 - (i*38))
 		i++
 
 	all_objects += menu_objects

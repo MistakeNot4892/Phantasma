@@ -7,6 +7,8 @@
 	maptext_x = 10
 	maptext_y = 18
 
+	var/obj/screen/text/level_display
+	var/obj/screen/text/health_display
 	var/data/battle_data/tracking
 
 /obj/screen/battle_icon/health/New(var/data/battle_data/_battle, var/data/battle_data/_tracking, var/_x = 0, var/_y = 0)
@@ -14,23 +16,36 @@
 	tracking = _tracking
 	pixel_x = _x
 	pixel_y = _y
+	level_display = new("LV.", _x=140, _y=maptext_y, _colour = PALE_BROWN)
 
 /obj/screen/battle_icon/health/proc/get_image()
 	update()
 	maptext = "<b><font color = [PALE_BLUE]>[maptext]</font></b>"
 
-	var/image/image_to_add
+	var/list/images_to_add = list()
 	if(!tracking.minion)
-		image_to_add = image('icons/screen/statbar_big.dmi', "empty")
+		images_to_add += image('icons/screen/statbar_big.dmi', "empty")
 	else
-		image_to_add = image(null)
-		image_to_add.appearance = tracking.minion.health_bar
-		image_to_add.plane = plane
+		var/image/temp = image(null)
+		temp.appearance = tracking.minion.health_bar
+		temp.plane = plane
+		images_to_add += temp
+
+		temp = image(null)
+		temp.appearance = level_display
+		temp.plane = plane
+		images_to_add += temp
+
+		if(health_display)
+			temp = image(null)
+			temp.appearance = health_display
+			temp.plane = plane
+			images_to_add += temp
 
 	var/image/I = image(loc=battle.owner)
 	I.appearance = src
 	I.plane = plane
-	I.overlays += image_to_add
+	I.overlays += images_to_add
 	I.pixel_x = pixel_x
 	I.pixel_y = pixel_y
 
@@ -40,14 +55,26 @@
 	alpha = 255
 	invisibility = 0
 	maptext = initial(maptext)
+
 	if(battle && tracking.minion)
 		tracking.minion.health_bar.update()
 		tracking.minion.xp_bar.update()
+		maptext = "[tracking.minion.name]"
 		return 1
+
+/obj/screen/battle_icon/health/ally/New()
+	health_display = new("HP.", _x=70, _y=maptext_y, _colour = PALE_BLUE)
+	..()
 
 /obj/screen/battle_icon/health/ally/update()
 	if(..())
-		maptext = "[tracking.minion.name] [tracking.minion.data[MD_CHP]]/[tracking.minion.data[MD_MHP]]HP       LV.[tracking.minion.data[MD_LVL]]"
+		if(tracking.minion && tracking.minion)
+			if(health_display) health_display.set_text("<b>[tracking.minion.data[MD_CHP]]/[tracking.minion.data[MD_MHP]]</b> HP")
+			if(level_display)  level_display.set_text("<b>LV.[tracking.minion.data[MD_LVL]]</b>")
+		else
+			maptext = null
+			if(health_display) health_display.set_text("")
+			if(level_display)  level_display.set_text("")
 		return 1
 	return 0
 
@@ -65,9 +92,3 @@
 	image_to_add.pixel_x += 10
 	temp.overlays += image_to_add
 	return temp
-
-/obj/screen/battle_icon/health/enemy/update()
-	if(..())
-		maptext = "[tracking.minion.name]       LV.[tracking.minion.data[MD_LVL]]"
-		return 1
-	return 0
