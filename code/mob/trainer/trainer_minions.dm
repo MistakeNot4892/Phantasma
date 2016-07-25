@@ -8,7 +8,7 @@
 
 /mob/trainer/proc/update_following_minion(var/data/minion/new_minion)
 
-	if(following && following.minion_data == new_minion)
+	if(following && following.alpha == 255 && following.minion_data == new_minion)
 		return
 
 	if(!new_minion || (new_minion.status & STATUS_FAINTED))
