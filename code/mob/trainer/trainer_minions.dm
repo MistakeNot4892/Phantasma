@@ -80,6 +80,10 @@
 
 /mob/trainer/proc/select_from_visual_list(var/list/elements = list(), var/data/selected/choice, var/select_plane = 99, var/select_layer = 99, var/can_cancel = 1)
 
+	if(current_list)
+		current_list.cancelled = 1
+		sleep(1)
+
 	if(!choice) choice = new()
 
 	if(can_cancel)
@@ -94,6 +98,7 @@
 	if(client)
 		client.screen += elements
 
+	current_list = choice
 	while(choice && client && !(choice.cancelled || choice.selection))
 		sleep(1)
 

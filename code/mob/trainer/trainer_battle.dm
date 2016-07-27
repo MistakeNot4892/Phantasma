@@ -115,6 +115,7 @@
 	update_following_minion()
 
 /mob/trainer/clicked(var/client/clicker)
+
 	if(clicker.mob == src)
 		return
 	var/mob/trainer/trainer = clicker.mob

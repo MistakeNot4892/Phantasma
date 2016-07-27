@@ -17,9 +17,6 @@
 	icon_state = "arrow_left"
 	var/slot_type
 
-/obj/screen/title/panel/arrow/clicked()
-	world << "[slot_type] [icon_state]"
-
 /obj/screen/title/panel/arrow/New(var/data/new_character_panel/_master, var/_slot_type, var/_row)
 	. = ..()
 	screen_loc = "11,13-[_row]"

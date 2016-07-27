@@ -29,7 +29,7 @@
 		if(!(M.status & STATUS_FAINTED) && M.participated_in_last_fight)
 			minions_who_fought += M
 
-	if(!minions_who_fought)
+	if(!minions_who_fought || !minions_who_fought.len)
 		return
 
 	var/per_minion = max(1,round(amt/minions_who_fought.len))

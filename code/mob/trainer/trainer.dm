@@ -24,6 +24,7 @@
 	var/tmp/turf/last_loc
 	var/tmp/obj/screen/notify/notifications
 	var/tmp/obj/screen/barrier/overworld_barrier
+	var/tmp/data/selected/current_list
 
 	var/tmp/show_minions
 	var/tmp/obj/screen/minion_toggle/minion_toggle

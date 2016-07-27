@@ -55,10 +55,12 @@
 			client.images += I
 
 /data/battle_data/player/remove_minion(var/data/battle_data/minion_owner)
+
 	. = ..()
 
-	for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
-		t_menu.set_tech()
+	if(minion_owner == src)
+		for(var/obj/screen/battle_icon/menu/tech/t_menu in technique_objects)
+			t_menu.set_tech()
 
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
 	if(minion_img.alpha == 0)
@@ -86,7 +88,7 @@
 			var/mob/trainer/T = owner
 			T.update_following_minion(minion)
 
-	minion_owner.minion.participated_in_last_fight = 1
+		minion.participated_in_last_fight = 1
 
 	// Update visuals.
 	var/image/minion_img = minion_images["\ref[minion_owner]"]
@@ -109,6 +111,11 @@
 		M.minion_data.participated_in_last_fight = 0
 
 /data/battle_data/player/start_turn(var/new_turn)
+
+	if(!minion)
+		next_action = list("action" = null)
+		return
+
 	. = ..()
 
 	for(var/obj/screen/battle_icon/menu/M in all_objects)
@@ -170,7 +177,7 @@
 			return
 		target = possible_targets[chosen_target]
 
-	next_action = list("action" = "item", "ref" = use_item, "target" = target, "hostile_action" = use_item.item_template.hostile, "priority" = MAX_ACTION_PRIORITY)
+	next_action = list("action" = "item", "ref" = use_item, "tar" = target, "hostile_action" = use_item.item_template.hostile, "priority" = MAX_ACTION_PRIORITY)
 	end_turn()
 	return 1
 

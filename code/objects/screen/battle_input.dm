@@ -19,8 +19,10 @@
 	screen_loc = "12,5"
 
 /obj/screen/battle_icon/menu/fight/clicked(var/client/clicker)
+
 	if(!..())
 		return
+
 	for(var/obj/screen/battle_icon/menu/tech/O in battle.technique_objects)
 		O.invisibility = 0
 		animate(O, alpha = (toggled ? 255 : 0), time = 3)
@@ -76,6 +78,7 @@
 	set_tech()
 
 /obj/screen/battle_icon/menu/tech/proc/set_tech(var/obj/screen/technique/_tech)
+
 	if(!_tech)
 		technique = null
 		invisibility = 100
@@ -96,7 +99,10 @@
 
 /obj/screen/battle_icon/menu/tech/clicked(var/client/clicker)
 
-	if(!..() || !technique)
+	if(!..())
+		return
+
+	if(!technique)
 		return
 
 	var/list/possible_targets
