@@ -18,11 +18,14 @@
 "r" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (EAST)"; icon_state = "rock_grass_corners"; dir = 4},/area)
 "s" = (/turf/grass/rock/corners{tag = "icon-rock_grass_corners (WEST)"; icon_state = "rock_grass_corners"; dir = 8},/area)
 "t" = (/turf/grass/rock{tag = "icon-rock_grass (SOUTHEAST)"; icon_state = "rock_grass"; dir = 6},/area)
-"u" = (/obj/item/potion,/turf,/area)
-"v" = (/mob/npc,/turf/grass,/area)
-"w" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
-"x" = (/obj/item/potion,/turf/grass,/area)
-"y" = (/mob/npc/fightmaster,/turf/brick,/area)
+"u" = (/turf/wall/stone,/area)
+"v" = (/turf/wall/forest,/area)
+"w" = (/turf/wall/city,/area)
+"x" = (/obj/item/potion,/turf,/area)
+"y" = (/mob/npc,/turf/grass,/area)
+"z" = (/turf/grass/rock{tag = "icon-rock_grass (NORTH)"; icon_state = "rock_grass"; dir = 1},/area)
+"A" = (/obj/item/potion,/turf/grass,/area)
+"B" = (/mob/npc/fightmaster,/turf/brick,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -64,14 +67,14 @@ aemkklhhjknkkkkkkkkkkklbbbbbccccbbbbbbbbbbbbbbbbba
 aemkkkkkkkkkkoooooooookpbbbbccccbbbbbbbbbbbbbbbbba
 aemkkkkkkkkoooooooooookpbbbbccccbbbbbbbbbbbbbbbbba
 aeqrkkkkkkooooooooookkstbbbbccccbbbbbbbbbbbbbbbbba
-aegjkkkkooooooookkkkkkpbbbbbccccbbbbbbbbbbbbbbbbba
-aemkkkkoooooookkkkkkkkpbbbbbccccbbbbbbbbbbbbbbbbba
-aemkkkoooooookkkkkkkkkpbbbbuccccbbbbbbbbbbbbbbbbba
-aemkooooooookkkvkkkkkklibbbbccccbbbbbbbbbbbbbbbbba
-aemkooooookkswwrkkkkkkkpbbbbccccbbbbbbbbbbbbbbbbba
-aemkoooookkstbbqrkkkxkkpbbbbccccbbbbbbbbbbbbbbbbba
-aemkkkkkkkstbeebqrkkkkkpbbfbccycubbbbbbbbbbbbbbbba
-aeqwwwwwwwtbbeebbqwwwwwtbbbbccccbbbbbbbbbbbbbbbbba
+aegjkkkkooooooookuukvvpbwwbbccccbbbbbbbbbbbbbbbbba
+aemkkkkoooooookkkuukvvpbwwbbccccbbbbbbbbbbbbbbbbba
+aemkkkoooooookkkkkkkkkpbbbbxccccbbbbbbbbbbbbbbbbba
+aemkooooooookkkykkkkkklibbbbccccbbbbbbbbbbbbbbbbba
+aemkooooookkszzrkkkkkkkpbbbbccccbbbbbbbbbbbbbbbbba
+aemkoooookkstbbqrkkkAkkpbbbbccccbbbbbbbbbbbbbbbbba
+aemkkkkkkkstbeebqrkkkkkpbbfbccBcxbbbbbbbbbbbbbbbba
+aeqzzzzzzztbbeebbqzzzzztbbbbccccbbbbbbbbbbbbbbbbba
 aeeeeeeeeeeeeeeeccccccccccccccccbbbbbbbbbbbbbbbbba
 aeeeeeeeeeeeeeeeccccccccccccccccbbbbbbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

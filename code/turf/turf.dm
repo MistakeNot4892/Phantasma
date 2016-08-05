@@ -25,8 +25,8 @@
 	icon_state = "rock_grass_corners"
 
 /turf/wall
-	name = "wall"
+	name = "brick wall"
 	density = 1
 	layer = MOB_LAYER
 	icon = 'icons/turf/walls.dmi'
-	icon_state = "wall"
+	icon_state = "brick"

@@ -102,6 +102,7 @@
 #include "code\objects\terrain\terrain.dm"
 #include "code\objects\text\text.dm"
 #include "code\turf\turf.dm"
+#include "code\turf\turf_placeholders.dm"
 #include "interface\skin.dmf"
 #include "maps\overworld.dmm"
 // END_INCLUDE
